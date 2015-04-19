@@ -8,16 +8,16 @@ public class Empleado extends Persona {
 	 */
 	private static final long serialVersionUID = 7999444890126630022L;
 
-	private String cuil;
+	private String cuit;
 	private TipoPuesto puesto;
 	private Date fechaNacimiento;
 
-	public String getCuil() {
-		return cuil;
+	public String getCuit() {
+		return cuit;
 	}
 
-	public void setCuil(String cuil) {
-		this.cuil = cuil;
+	public void setCuit(String cuit) {
+		this.cuit = cuit;
 	}
 
 	public TipoPuesto getPuesto() {

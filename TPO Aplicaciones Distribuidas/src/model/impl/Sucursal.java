@@ -59,4 +59,52 @@ public class Sucursal implements Serializable {
 	public void setViajes(List<Viaje> viajes) {
 		this.viajes = viajes;
 	}
+	
+	public Carga obtenerCarga(Integer codigoCarga) {
+		for (Deposito deposito : depositos) {
+			for (Carga carga : deposito.getCargas()) {
+				if (carga.getCodigo().equals(codigoCarga)) {
+					return carga;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Vehiculo obtenerVehiculo(String patente) {
+		for (Vehiculo vehiculo : vehiculos) {
+			if (vehiculo.getPatente().equals(patente)) {
+				return vehiculo;
+			}
+		}
+		return null;
+	}
+	
+	public Empleado obtenerEmpleado(String cuit) {
+		for (Empleado empleado : empleados) {
+			if (empleado.getCuit().equals(cuit)) {
+				return empleado;
+			}
+		}
+		return null;
+	}
+	
+	public Viaje obtenerViaje(Integer codigoViaje) {
+		for (Viaje viaje : viajes) {
+			if (viaje.getCodigo().equals(codigoViaje)) {
+				return viaje;
+			}
+		}
+		return null;
+	}
+	
+	public Deposito obtenerDeposito(Integer codigoDeposito) {
+		for (Deposito deposito : depositos) {
+			if (deposito.getCodigo().equals(codigoDeposito)) {
+				return deposito;
+			}
+		}
+		return null;
+	}
+	
 }

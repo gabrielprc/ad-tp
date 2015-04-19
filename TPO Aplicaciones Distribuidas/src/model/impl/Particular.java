@@ -11,6 +11,7 @@ public class Particular extends Cliente {
 	private List<Persona> receptores;
 	private Persona titular;
 	
+	
 	public List<Persona> getReceptores() {
 		return receptores;
 	}

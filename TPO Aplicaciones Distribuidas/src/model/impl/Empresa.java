@@ -9,7 +9,6 @@ public class Empresa extends Cliente {
 	
 	private boolean regular;
 	private String nombre;
-	private String cuil;
 	private CuentaCorriente cuentaCorriente;
 	
 	public boolean isRegular() {
@@ -23,12 +22,6 @@ public class Empresa extends Cliente {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	public String getCuil() {
-		return cuil;
-	}
-	public void setCuil(String cuil) {
-		this.cuil = cuil;
 	}
 	public CuentaCorriente getCuentaCorriente() {
 		return cuentaCorriente;

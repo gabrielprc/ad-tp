@@ -8,17 +8,10 @@ public class Persona implements Serializable {
 	 */
 	private static final long serialVersionUID = -3613165521778210794L;
 	
-	private String cuit;
 	private String dni;
 	private String nombre;
 	private String apellido;
 	
-	public String getCuit() {
-		return cuit;
-	}
-	public void setCuit(String cuit) {
-		this.cuit = cuit;
-	}
 	public String getDni() {
 		return dni;
 	}

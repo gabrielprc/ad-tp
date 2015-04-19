@@ -20,15 +20,16 @@ public class ControladorPrincipal {
 	private List<Pago> pagos;
 	private List<Cobro> cobro;
 	private List<EstrategiaMantenimiento> mantenimientos;
-	
+
 	private ControladorPrincipal() {
-		
+
 	}
-	
+
 	public static ControladorPrincipal getInstance() {
 		if (instance == null) {
 			instance = new ControladorPrincipal();
 		}
 		return instance;
 	}
+
 }

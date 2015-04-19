@@ -8,13 +8,13 @@ public class Cliente implements Serializable {
 	 */
 	private static final long serialVersionUID = 6178101173670139637L;
 	
-	private Integer codigo;
+	private String codigoUnico;
 
-	public Integer getCodigo() {
-		return codigo;
+	public String getCodigoUnico() {
+		return codigoUnico;
 	}
 
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
+	public void setCodigoUnico(String codigoUnico) {
+		this.codigoUnico = codigoUnico;
 	}
 }

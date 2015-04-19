@@ -13,12 +13,12 @@ public class Tarea implements Serializable {
 	private Date fechaEntrega;
 	private Date fechaDevolucion;
 	
-	public Float getKilometraje() {
-		return kilometraje;
-	}
-	public void setKilometraje(Float kilometraje) {
+	public Tarea(Float kilometraje, Date fechaEntrega, Date fechaDevolucion) {
 		this.kilometraje = kilometraje;
+		this.fechaEntrega = fechaEntrega;
+		this.fechaDevolucion = fechaDevolucion;
 	}
+	
 	public Date getFechaEntrega() {
 		return fechaEntrega;
 	}
@@ -30,6 +30,12 @@ public class Tarea implements Serializable {
 	}
 	public void setFechaDevolucion(Date fechaDevolucion) {
 		this.fechaDevolucion = fechaDevolucion;
+	}
+	public Float getKilometraje() {
+		return kilometraje;
+	}
+	public void setKilometraje(Float kilometraje) {
+		this.kilometraje = kilometraje;
 	}
 	
 }

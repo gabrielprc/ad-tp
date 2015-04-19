@@ -1,17 +1,19 @@
 package model.impl;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
-public class PlanMantenimiento implements Serializable {
+public abstract class PlanMantenimiento implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8624311545758941518L;
+	protected Float kilometraje;
+	protected Date fechaFabricacion;
+	protected List<Tarea> tareas;
 	
-	private List<Tarea> tareas;
-	private Float kilometrajeActual;
-	private Float puntoControl;
+	private EstrategiaMantenimiento estrategiaMantenimiento;
 	
 	public List<Tarea> getTareas() {
 		return tareas;
@@ -19,17 +21,29 @@ public class PlanMantenimiento implements Serializable {
 	public void setTareas(List<Tarea> tareas) {
 		this.tareas = tareas;
 	}
-	public Float getKilometrajeActual() {
-		return kilometrajeActual;
+	public EstrategiaMantenimiento getEstrategiaMantenimiento() {
+		return estrategiaMantenimiento;
 	}
-	public void setKilometrajeActual(Float kilometrajeActual) {
-		this.kilometrajeActual = kilometrajeActual;
+	public void setEstrategiaMantenimiento(EstrategiaMantenimiento estrategiaMantenimiento) {
+		this.estrategiaMantenimiento = estrategiaMantenimiento;
 	}
-	public Float getPuntoControl() {
-		return puntoControl;
+	public Float getKilometraje() {
+		return kilometraje;
 	}
-	public void setPuntoControl(Float puntoControl) {
-		this.puntoControl = puntoControl;
+	public void setKilometraje(Float kilometraje) {
+		this.kilometraje = kilometraje;
 	}
+	public Date getFechaFabricacion() {
+		return fechaFabricacion;
+	}
+	public void setFechaFabricacion(Date fechaFabricacion) {
+		this.fechaFabricacion = fechaFabricacion;
+	}
+	
+	public void realizarMantenimiento() {
+		tareas.add(estrategiaMantenimiento.realizarMantenimiento(this));
+	}
+	
+	public abstract float calcularRetraso();
 	
 }

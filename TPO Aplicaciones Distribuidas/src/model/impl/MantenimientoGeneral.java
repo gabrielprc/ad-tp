@@ -1,13 +1,26 @@
 package model.impl;
 
-import model.interfaces.EstrategiaMantenimiento;
+import java.util.Calendar;
+import java.util.Date;
 
-public class MantenimientoGeneral implements EstrategiaMantenimiento {
+
+public class MantenimientoGeneral extends EstrategiaMantenimiento {
 
 	@Override
-	public void realizarMantenimiento() {
+	protected void mantener() {
 		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	protected Tarea generarTarea(PlanMantenimiento plan) {
+		Calendar cal = Calendar.getInstance();
+		Date entrega = cal.getTime();
+		
+		cal.add(Calendar.DATE, 1);
+		Date devolucion = cal.getTime();
+		
+		return new Tarea(plan.kilometraje, entrega, devolucion);
 	}
 
 }

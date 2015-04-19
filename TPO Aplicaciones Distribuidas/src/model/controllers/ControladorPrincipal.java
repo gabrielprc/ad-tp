@@ -5,10 +5,10 @@ import java.util.List;
 import model.impl.Cliente;
 import model.impl.Cobro;
 import model.impl.CompaniaSeguro;
+import model.impl.EstrategiaMantenimiento;
 import model.impl.Pago;
 import model.impl.Proveedor;
 import model.impl.Sucursal;
-import model.interfaces.EstrategiaMantenimiento;
 
 public class ControladorPrincipal {
 	private static ControladorPrincipal instance;

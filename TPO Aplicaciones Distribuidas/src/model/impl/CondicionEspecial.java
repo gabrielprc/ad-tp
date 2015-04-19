@@ -1,9 +1,9 @@
 package model.impl;
 
 public enum CondicionEspecial {
-	Temperatura("Temperatura"),
-	Seguridad("Seguridad"),
-	MonitoreoSatelital("Monitoreo satelital");
+	TEMPERATURA("Temperatura"),
+	SEGURIDAD("Seguridad"),
+	MONITOREO_SATELITAL("Monitoreo satelital");
 	
 	private String condicion;
 	

@@ -3,6 +3,11 @@ package model.impl;
 import java.io.Serializable;
 
 public class CuentaCorriente implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8724917442960945342L;
+	
 	private boolean depositoPrevio;
 	private Float montoAutorizado;
 	private Float montoActual;

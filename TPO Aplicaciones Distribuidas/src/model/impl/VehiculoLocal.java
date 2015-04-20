@@ -43,8 +43,8 @@ public class VehiculoLocal extends Vehiculo {
 		return true;
 	}
 	
-	public void realizarMantenimiento() {
-		planMantenimiento.realizarMantenimiento();
+	public void realizarMantenimiento(EstrategiaMantenimiento estrategiaMantenimiento) {
+		planMantenimiento.realizarMantenimiento(estrategiaMantenimiento);
 	}
 	
 }

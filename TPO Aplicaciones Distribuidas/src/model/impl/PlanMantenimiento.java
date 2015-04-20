@@ -1,6 +1,7 @@
 package model.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,38 +13,41 @@ public abstract class PlanMantenimiento implements Serializable {
 	protected Float kilometraje;
 	protected Date fechaFabricacion;
 	protected List<Tarea> tareas;
-	
-	private EstrategiaMantenimiento estrategiaMantenimiento;
-	
+
+	public PlanMantenimiento(EstrategiaMantenimiento estrategia) {
+		this.tareas = new ArrayList<Tarea>();
+		this.fechaFabricacion = new Date();
+	}
+
 	public List<Tarea> getTareas() {
 		return tareas;
 	}
+
 	public void setTareas(List<Tarea> tareas) {
 		this.tareas = tareas;
 	}
-	public EstrategiaMantenimiento getEstrategiaMantenimiento() {
-		return estrategiaMantenimiento;
-	}
-	public void setEstrategiaMantenimiento(EstrategiaMantenimiento estrategiaMantenimiento) {
-		this.estrategiaMantenimiento = estrategiaMantenimiento;
-	}
+
 	public Float getKilometraje() {
 		return kilometraje;
 	}
+
 	public void setKilometraje(Float kilometraje) {
 		this.kilometraje = kilometraje;
 	}
+
 	public Date getFechaFabricacion() {
 		return fechaFabricacion;
 	}
+
 	public void setFechaFabricacion(Date fechaFabricacion) {
 		this.fechaFabricacion = fechaFabricacion;
 	}
-	
-	public void realizarMantenimiento() {
+
+	public void realizarMantenimiento(
+			EstrategiaMantenimiento estrategiaMantenimiento) {
 		tareas.add(estrategiaMantenimiento.realizarMantenimiento(this));
 	}
-	
+
 	public abstract float calcularRetraso();
-	
+
 }

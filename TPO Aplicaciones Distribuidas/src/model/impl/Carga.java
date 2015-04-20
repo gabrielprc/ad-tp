@@ -1,6 +1,7 @@
 package model.impl;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 public class Carga implements Serializable {
@@ -10,7 +11,7 @@ public class Carga implements Serializable {
 	private static final long serialVersionUID = -875716574330563168L;
 	
 	private Integer codigo;
-	private Producto producto;
+	private Collection<ItemProducto> productos;
 	private TipoCarga tipo;
 	private Date fechaMaximaEntrega;
 	private Date fechaProbableEntrega;
@@ -26,12 +27,7 @@ public class Carga implements Serializable {
 	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
-	public Producto getProducto() {
-		return producto;
-	}
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
+	
 	public TipoCarga getTipo() {
 		return tipo;
 	}
@@ -73,6 +69,16 @@ public class Carga implements Serializable {
 	}
 	public void setDestino(Ubicacion destino) {
 		this.destino = destino;
+	}
+	public Collection<ItemProducto> getProductos() {
+		return productos;
+	}
+	public void setProductos(Collection<ItemProducto> productos) {
+		this.productos = productos;
+	}
+	
+	public float calcularCosto(){
+		return 0;
 	}
 	
 }

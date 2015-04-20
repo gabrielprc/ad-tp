@@ -2,18 +2,23 @@ package model.impl;
 
 public class PlanMantenimientoKilometraje extends PlanMantenimiento {
 
-	private Float puntoControl;
+	private float puntoControl;
+	
+	public PlanMantenimientoKilometraje(float puntoControl, EstrategiaMantenimiento estrategia) {
+		super(estrategia);
+		this.puntoControl = puntoControl;
+	}
 	
 	@Override
 	public float calcularRetraso() {
 		return kilometraje / puntoControl;
 	}
 
-	public Float getPuntoControl() {
+	public float getPuntoControl() {
 		return puntoControl;
 	}
 
-	public void setPuntoControl(Float puntoControl) {
+	public void setPuntoControl(float puntoControl) {
 		this.puntoControl = puntoControl;
 	}
 

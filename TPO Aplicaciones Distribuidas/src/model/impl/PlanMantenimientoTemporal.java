@@ -11,6 +11,11 @@ public class PlanMantenimientoTemporal extends PlanMantenimiento {
 	
 	private int intervaloMantenimiento;
 	
+	public PlanMantenimientoTemporal(int intervaloMantenimiento, EstrategiaMantenimiento estrategia) {
+		super(estrategia);
+		this.intervaloMantenimiento = intervaloMantenimiento;
+	}
+	
 	@Override
 	public float calcularRetraso() {
 		Date hoy = new Date();

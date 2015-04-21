@@ -14,6 +14,12 @@ public class Sucursal implements Serializable {
 	private String nombre;
 	private Ubicacion ubicacion;
 	private Deposito deposito;
+	
+	public Sucursal(int numero, String nombre){
+	
+		this.numero = numero;
+		this.nombre = nombre;	
+	}
 
 	public Deposito getDeposito() {
 		return deposito;
@@ -75,7 +81,7 @@ public class Sucursal implements Serializable {
 		this.viajes = viajes;
 	}
 
-	public Carga obtenerCarga(Integer codigoCarga) {
+	public Carga retirarCarga(Integer codigoCarga) {
 
 		for (Carga carga : deposito.getCargas()) {
 			if (carga.getCodigo().equals(codigoCarga)) {
@@ -112,5 +118,27 @@ public class Sucursal implements Serializable {
 		}
 		return null;
 	}
-
+	
+	public void almacenarCarga(Carga carga){
+		
+		this.deposito.almacenarCarga(carga);
+	}
+	
+	public void crearViaje(){
+		
+	}
+	
+	public void agregarCargaAViaje(Integer codigoViaje, Carga carga){
+		
+		obtenerViaje(codigoViaje).agregarCarga(carga);
+		
+	}
+	
+	public void asignarSeguroAViaje(Seguro seguro, Viaje viaje){
+		
+		
+		
+		
+	}
+	
 }

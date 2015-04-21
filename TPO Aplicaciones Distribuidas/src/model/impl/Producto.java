@@ -89,4 +89,5 @@ public class Producto implements Serializable {
 		this.refrigerada = refrigerada;
 	}
 	
+	
 }

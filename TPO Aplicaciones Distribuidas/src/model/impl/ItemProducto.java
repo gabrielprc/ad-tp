@@ -1,12 +1,12 @@
 package model.impl;
 
 public class ItemProducto {
-	
+
 	private Producto producto;
 	private int cantidad;
-	
-	public ItemProducto(Producto producto, int cantidad){
-		
+
+	public ItemProducto(Producto producto, int cantidad) {
+
 		this.setProducto(producto);
 		this.setCantidad(cantidad);
 	}
@@ -27,4 +27,12 @@ public class ItemProducto {
 		this.cantidad = cantidad;
 	}
 
+	public float calcularVolumenParcial() {
+		return producto.getTamano().calcularVolumen() * cantidad;
+	}
+	
+	public float calcularPesoParcial(){
+		return producto.getPeso() * cantidad;
+	}
+	
 }

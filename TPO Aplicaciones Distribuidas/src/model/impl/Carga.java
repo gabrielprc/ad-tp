@@ -81,4 +81,24 @@ public class Carga implements Serializable {
 		return 0;
 	}
 	
+	public float calcularVolumenTotal(){
+		
+		float volumen = 0;
+		
+		for(ItemProducto p : productos)
+			volumen += p.calcularPesoParcial();
+		
+		return volumen;	
+	}
+	
+	public float calcularPesoTotal(){
+		
+		float peso = 0;
+		
+		for(ItemProducto p : productos){
+			peso += p.calcularPesoParcial();
+		}
+		return peso;
+	}
+	
 }

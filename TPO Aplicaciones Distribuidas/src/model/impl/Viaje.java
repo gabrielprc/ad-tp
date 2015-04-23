@@ -22,63 +22,6 @@ public class Viaje implements Serializable {
 	private boolean estaAtrasado;
 	private Vector<ParadaIntermedia> paradasIntermedias;
 
-	public Integer getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
-	}
-
-	public List<Carga> getEnvios() {
-		return envios;
-	}
-
-	public void setEnvios(List<Carga> envios) {
-		this.envios = envios;
-	}
-
-	public Seguro getSeguro() {
-		return seguro;
-	}
-
-	public void setSeguro(Seguro seguro) {
-		this.seguro = seguro;
-	}
-
-	public Vehiculo getVehiculo() {
-		return vehiculo;
-	}
-
-	public void setVehiculo(Vehiculo vehiculo) {
-		this.vehiculo = vehiculo;
-	}
-
-	public Date getFechaSalida() {
-		return fechaSalida;
-	}
-
-	public void setFechaSalida(Date fechaSalida) {
-		this.fechaSalida = fechaSalida;
-	}
-
-	public Date getFechaLlegada() {
-		return fechaLlegada;
-	}
-
-	public void setFechaLlegada(Date fechaLlegada) {
-		this.fechaLlegada = fechaLlegada;
-	}
-
-	public List<CondicionEspecial> getCondicionesEspeciales() {
-		return condicionesEspeciales;
-	}
-
-	public void setCondicionesEspeciales(
-			List<CondicionEspecial> condicionesEspeciales) {
-		this.condicionesEspeciales = condicionesEspeciales;
-	}
-
 	public void agregarCarga(Carga carga) {
 
 		if (carga.calcularPesoTotal() <= calcularPesoDisponible()
@@ -86,21 +29,12 @@ public class Viaje implements Serializable {
 			envios.add(carga);
 	}
 
-	public boolean isEstaAtrasado() {
-		return estaAtrasado;
-	}
+	public float calcularPesoDisponible() {
 
-	public void setEstaAtrasado(boolean estaAtrasado) {
-		this.estaAtrasado = estaAtrasado;
-	}
-
-	public Vector<ParadaIntermedia> getParadasIntermedias() {
-		return paradasIntermedias;
-	}
-
-	public void setParadasIntermedias(
-			Vector<ParadaIntermedia> paradasIntermedias) {
-		this.paradasIntermedias = paradasIntermedias;
+		float peso = 0;
+		for (Carga c : envios)
+			peso += c.calcularPesoTotal();
+		return vehiculo.getPeso() - peso;
 	}
 
 	public float calcularVolumenDisponible() {
@@ -111,12 +45,87 @@ public class Viaje implements Serializable {
 		return vehiculo.getTamano().calcularVolumen() - volumen;
 	}
 
-	public float calcularPesoDisponible() {
+	public int cantidadParadasIntemedias(){
+		
+		return paradasIntermedias.capacity();
+	}
 
-		float peso = 0;
-		for (Carga c : envios)
-			peso += c.calcularPesoTotal();
-		return vehiculo.getPeso() - peso;
+	public void generarRemito(){
+		
+	}
+
+	public Integer getCodigo() {
+		return codigo;
+	}
+
+	public List<CondicionEspecial> getCondicionesEspeciales() {
+		return condicionesEspeciales;
+	}
+
+	public List<Carga> getEnvios() {
+		return envios;
+	}
+
+	public Date getFechaLlegada() {
+		return fechaLlegada;
+	}
+
+	public Date getFechaSalida() {
+		return fechaSalida;
+	}
+
+	public Vector<ParadaIntermedia> getParadasIntermedias() {
+		return paradasIntermedias;
+	}
+
+	public Seguro getSeguro() {
+		return seguro;
+	}
+
+	public Vehiculo getVehiculo() {
+		return vehiculo;
+	}
+
+	public boolean isEstaAtrasado() {
+		return estaAtrasado;
+	}
+
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
+	}
+
+	public void setCondicionesEspeciales(
+			List<CondicionEspecial> condicionesEspeciales) {
+		this.condicionesEspeciales = condicionesEspeciales;
+	}
+
+	public void setEnvios(List<Carga> envios) {
+		this.envios = envios;
+	}
+
+	public void setEstaAtrasado(boolean estaAtrasado) {
+		this.estaAtrasado = estaAtrasado;
+	}
+
+	public void setFechaLlegada(Date fechaLlegada) {
+		this.fechaLlegada = fechaLlegada;
+	}
+
+	public void setFechaSalida(Date fechaSalida) {
+		this.fechaSalida = fechaSalida;
+	}
+
+	public void setParadasIntermedias(
+			Vector<ParadaIntermedia> paradasIntermedias) {
+		this.paradasIntermedias = paradasIntermedias;
+	}
+	
+	public void setSeguro(Seguro seguro) {
+		this.seguro = seguro;
+	}
+	
+	public void setVehiculo(Vehiculo vehiculo) {
+		this.vehiculo = vehiculo;
 	}
 
 }

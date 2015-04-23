@@ -14,11 +14,14 @@ public class Sucursal implements Serializable {
 	private String nombre;
 	private Ubicacion ubicacion;
 	private Deposito deposito;
-	
-	public Sucursal(int numero, String nombre){
-	
+	private List<Empleado> empleados;
+	private List<Vehiculo> vehiculos;
+	private List<Viaje> viajes;
+
+	public Sucursal(int numero, String nombre) {
+
 		this.numero = numero;
-		this.nombre = nombre;	
+		this.nombre = nombre;
 	}
 
 	public Deposito getDeposito() {
@@ -28,10 +31,6 @@ public class Sucursal implements Serializable {
 	public void setDeposito(Deposito deposito) {
 		this.deposito = deposito;
 	}
-
-	private List<Empleado> empleados;
-	private List<Vehiculo> vehiculos;
-	private List<Viaje> viajes;
 
 	public Integer getNumero() {
 		return numero;
@@ -118,27 +117,29 @@ public class Sucursal implements Serializable {
 		}
 		return null;
 	}
-	
-	public void almacenarCarga(Carga carga){
-		
+
+	public void almacenarCarga(Carga carga) {
+
 		this.deposito.almacenarCarga(carga);
 	}
-	
-	public void crearViaje(){
-		
+
+	public void crearViaje() {
+
 	}
-	
-	public void agregarCargaAViaje(Integer codigoViaje, Carga carga){
-		
+
+	public void agregarCargaAViaje(Integer codigoViaje, Carga carga) {
+
 		obtenerViaje(codigoViaje).agregarCarga(carga);
-		
+
 	}
-	
-	public void asignarSeguroAViaje(Seguro seguro, Viaje viaje){
-		
-		
-		
-		
+
+	public void asignarSeguroAViaje(Seguro seguro, Viaje viaje) {
+
 	}
-	
+
+	public void agregarEmpleado(Empleado e) {
+
+		this.empleados.add(e);
+	}
+
 }

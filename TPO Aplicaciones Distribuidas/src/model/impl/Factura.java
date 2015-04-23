@@ -11,6 +11,12 @@ public class Factura implements Serializable {
 	private Float monto;
 	private Carga carga;
 	
+	public Factura(Float monto, Carga carga){
+		
+		this.monto = monto;
+		this.carga = carga;
+	}
+	
 	public Float getMonto() {
 		return monto;
 	}

@@ -3,12 +3,17 @@ package model.impl;
 public class DistanciaEntreSucursales {
 	private Sucursal sucursalA;
 	private Sucursal sucursalB;
-	private float distancia;
+	private float distanciaEnKm;
+	private float duracionEnHoras;
+	private float costo;
 	
-	public DistanciaEntreSucursales (Sucursal sucursalA, Sucursal sucursalB, float distancia){
+	public DistanciaEntreSucursales (Sucursal sucursalA, Sucursal sucursalB, float distanciaEnKm,
+			float duracionEnHoras, float costo){
 		this.sucursalA = sucursalA;
 		this.sucursalB = sucursalB;
-		this.distancia = distancia;
+		this.distanciaEnKm = distanciaEnKm;
+		this.duracionEnHoras = duracionEnHoras;
+		this.costo = costo;
 	}
 
 	public Sucursal getSucursalA() {
@@ -27,11 +32,28 @@ public class DistanciaEntreSucursales {
 		this.sucursalB = sucursalB;
 	}
 
-	public float getDistancia() {
-		return distancia;
+	public float getDistanciaEnKm() {
+		return distanciaEnKm;
 	}
 
-	public void setDistancia(float distancia) {
-		this.distancia = distancia;
+	public void setDistanciaEnKm(float distanciaEnKm) {
+		this.distanciaEnKm = distanciaEnKm;
 	}
+
+	public float getDuracionEnHoras() {
+		return duracionEnHoras;
+	}
+
+	public void setDuracionEnHoras(float duracionEnHoras) {
+		this.duracionEnHoras = duracionEnHoras;
+	}
+
+	public float getCosto() {
+		return costo;
+	}
+
+	public void setCosto(float costo) {
+		this.costo = costo;
+	}
+
 }

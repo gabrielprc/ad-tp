@@ -2,7 +2,7 @@ package model.impl;
 
 import java.util.Date;
 
-public class Empleado extends Persona {
+public class Empleado {
 	/**
 	 * 
 	 */

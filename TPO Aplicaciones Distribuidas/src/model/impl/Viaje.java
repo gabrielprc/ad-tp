@@ -19,7 +19,6 @@ public class Viaje implements Serializable {
 	private Date fechaSalida;
 	private Date fechaLlegada;
 	private List<CondicionEspecial> condicionesEspeciales;
-	private Collection<Ubicacion> ubicaciones;
 	private boolean estaAtrasado;
 	private Vector<ParadaIntermedia> paradasIntermedias;
 
@@ -80,17 +79,11 @@ public class Viaje implements Serializable {
 		this.condicionesEspeciales = condicionesEspeciales;
 	}
 
-	public Collection<Ubicacion> getUbicaciones() {
-		return ubicaciones;
-	}
-
-	public void setUbicaciones(Collection<Ubicacion> ubicaciones) {
-		this.ubicaciones = ubicaciones;
-	}
-
 	public void agregarCarga(Carga carga) {
 
-		envios.add(carga);
+		if (carga.calcularPesoTotal() <= calcularPesoDisponible()
+				&& carga.calcularVolumenTotal() <= calcularVolumenDisponible())
+			envios.add(carga);
 	}
 
 	public boolean isEstaAtrasado() {
@@ -105,8 +98,25 @@ public class Viaje implements Serializable {
 		return paradasIntermedias;
 	}
 
-	public void setParadasIntermedias(Vector<ParadaIntermedia> paradasIntermedias) {
+	public void setParadasIntermedias(
+			Vector<ParadaIntermedia> paradasIntermedias) {
 		this.paradasIntermedias = paradasIntermedias;
+	}
+
+	public float calcularVolumenDisponible() {
+
+		float volumen = 0;
+		for (Carga c : envios)
+			volumen += c.calcularVolumenTotal();
+		return vehiculo.getTamano().calcularVolumen() - volumen;
+	}
+
+	public float calcularPesoDisponible() {
+
+		float peso = 0;
+		for (Carga c : envios)
+			peso += c.calcularPesoTotal();
+		return vehiculo.getPeso() - peso;
 	}
 
 }

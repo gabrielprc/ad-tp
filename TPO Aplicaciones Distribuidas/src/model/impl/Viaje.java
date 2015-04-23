@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 public class Viaje implements Serializable {
 	/**
@@ -20,6 +21,7 @@ public class Viaje implements Serializable {
 	private List<CondicionEspecial> condicionesEspeciales;
 	private Collection<Ubicacion> ubicaciones;
 	private boolean estaAtrasado;
+	private Vector<ParadaIntermedia> paradasIntermedias;
 
 	public Integer getCodigo() {
 		return codigo;
@@ -97,6 +99,14 @@ public class Viaje implements Serializable {
 
 	public void setEstaAtrasado(boolean estaAtrasado) {
 		this.estaAtrasado = estaAtrasado;
+	}
+
+	public Vector<ParadaIntermedia> getParadasIntermedias() {
+		return paradasIntermedias;
+	}
+
+	public void setParadasIntermedias(Vector<ParadaIntermedia> paradasIntermedias) {
+		this.paradasIntermedias = paradasIntermedias;
 	}
 
 }

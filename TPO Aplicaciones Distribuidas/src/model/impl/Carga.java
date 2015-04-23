@@ -3,13 +3,14 @@ package model.impl;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Vector;
 
 public class Carga implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -875716574330563168L;
-	
+
 	private Integer codigo;
 	private Collection<ItemProducto> productos;
 	private TipoCarga tipo;
@@ -19,86 +20,110 @@ public class Carga implements Serializable {
 	private String manifiesto;
 	private Ubicacion origen;
 	private Ubicacion destino;
-	
-	
+	private EstadoCarga estadoCarga;
+
 	public Integer getCodigo() {
 		return codigo;
 	}
+
 	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
-	
+
 	public TipoCarga getTipo() {
 		return tipo;
 	}
+
 	public void setTipo(TipoCarga tipo) {
 		this.tipo = tipo;
 	}
+
 	public Date getFechaMaximaEntrega() {
 		return fechaMaximaEntrega;
 	}
+
 	public void setFechaMaximaEntrega(Date fechaMaximaEntrega) {
 		this.fechaMaximaEntrega = fechaMaximaEntrega;
 	}
+
 	public Date getFechaProbableEntrega() {
 		return fechaProbableEntrega;
 	}
+
 	public void setFechaProbableEntrega(Date fechaProbableEntrega) {
 		this.fechaProbableEntrega = fechaProbableEntrega;
 	}
+
 	public Cliente getCliente() {
 		return cliente;
 	}
+
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+
 	public String getManifiesto() {
 		return manifiesto;
 	}
+
 	public void setManifiesto(String manifiesto) {
 		this.manifiesto = manifiesto;
 	}
+
 	public Ubicacion getOrigen() {
 		return origen;
 	}
+
 	public void setOrigen(Ubicacion origen) {
 		this.origen = origen;
 	}
+
 	public Ubicacion getDestino() {
 		return destino;
 	}
+
 	public void setDestino(Ubicacion destino) {
 		this.destino = destino;
 	}
+
 	public Collection<ItemProducto> getProductos() {
 		return productos;
 	}
+
 	public void setProductos(Collection<ItemProducto> productos) {
 		this.productos = productos;
 	}
-	
-	public float calcularCosto(){
+
+	public float calcularCosto() {
 		return 0;
 	}
-	
-	public float calcularVolumenTotal(){
-		
+
+	public float calcularVolumenTotal() {
+
 		float volumen = 0;
-		
-		for(ItemProducto p : productos)
+
+		for (ItemProducto p : productos)
 			volumen += p.calcularPesoParcial();
-		
-		return volumen;	
+
+		return volumen;
 	}
-	
-	public float calcularPesoTotal(){
-		
+
+	public float calcularPesoTotal() {
+
 		float peso = 0;
-		
-		for(ItemProducto p : productos){
+
+		for (ItemProducto p : productos) {
 			peso += p.calcularPesoParcial();
 		}
 		return peso;
 	}
-	
+
+	public EstadoCarga getEstadoCarga() {
+		return estadoCarga;
+	}
+
+	public void setEstadoCarga(EstadoCarga estadoCarga) {
+		this.estadoCarga = estadoCarga;
+	}
+
 }

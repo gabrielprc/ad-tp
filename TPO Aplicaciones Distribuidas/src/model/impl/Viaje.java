@@ -81,14 +81,9 @@ public class Viaje implements Serializable {
 
 	public void agregarCarga(Carga carga) {
 
-		float volumenActual = vehiculo.getTamano().calcularVolumen()
-				- calcularVolumenCargas();
-		float pesoActual = vehiculo.getPeso() - calcularPesoCargas();
-
-		if (carga.calcularPesoTotal() <= pesoActual
-				&& carga.calcularVolumenTotal() <= volumenActual)
+		if (carga.calcularPesoTotal() <= calcularPesoDisponible()
+				&& carga.calcularVolumenTotal() <= calcularVolumenDisponible())
 			envios.add(carga);
-
 	}
 
 	public boolean isEstaAtrasado() {
@@ -108,20 +103,20 @@ public class Viaje implements Serializable {
 		this.paradasIntermedias = paradasIntermedias;
 	}
 
-	public float calcularVolumenCargas() {
+	public float calcularVolumenDisponible() {
 
 		float volumen = 0;
 		for (Carga c : envios)
 			volumen += c.calcularVolumenTotal();
-		return volumen;
+		return vehiculo.getTamano().calcularVolumen() - volumen;
 	}
 
-	public float calcularPesoCargas() {
+	public float calcularPesoDisponible() {
 
 		float peso = 0;
 		for (Carga c : envios)
 			peso += c.calcularPesoTotal();
-		return peso;
+		return vehiculo.getPeso() - peso;
 	}
 
 }

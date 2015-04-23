@@ -19,7 +19,6 @@ public class Viaje implements Serializable {
 	private Date fechaSalida;
 	private Date fechaLlegada;
 	private List<CondicionEspecial> condicionesEspeciales;
-	private Collection<Ubicacion> ubicaciones;
 	private boolean estaAtrasado;
 	private Vector<ParadaIntermedia> paradasIntermedias;
 
@@ -78,14 +77,6 @@ public class Viaje implements Serializable {
 	public void setCondicionesEspeciales(
 			List<CondicionEspecial> condicionesEspeciales) {
 		this.condicionesEspeciales = condicionesEspeciales;
-	}
-
-	public Collection<Ubicacion> getUbicaciones() {
-		return ubicaciones;
-	}
-
-	public void setUbicaciones(Collection<Ubicacion> ubicaciones) {
-		this.ubicaciones = ubicaciones;
 	}
 
 	public void agregarCarga(Carga carga) {

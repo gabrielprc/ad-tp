@@ -66,4 +66,8 @@ public class Ubicacion implements Serializable {
 		this.coordenadaDestino = coordenadaDestino;
 	}
 	
+	public float calcularDistanciaEnKilometros(Ubicacion ubicacion) {
+		return this.coordenadaDestino.calcularDistanciaEnKilometros(ubicacion.getCoordenadaDestino());
+	}
+	
 }

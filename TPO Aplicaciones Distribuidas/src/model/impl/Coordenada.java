@@ -17,4 +17,15 @@ public class Coordenada {
 		this.longitud = longitud;
 	}
 	
+	public float calcularDistanciaEnKilometros(Coordenada coordenada) {
+		float kilometrosPorGrado = 111.12F;
+		
+		float difLatitud = Math.abs(this.latitud - coordenada.getLatitud());
+		float difLongitud = Math.abs(this.longitud - coordenada.getLongitud());
+		
+		float cateto = (float) Math.sqrt((difLatitud * difLatitud) + (difLongitud * difLongitud));
+		
+		return cateto * kilometrosPorGrado;
+	}
+	
 }

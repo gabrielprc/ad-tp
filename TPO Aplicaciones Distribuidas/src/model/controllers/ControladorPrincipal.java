@@ -1,17 +1,22 @@
 package model.controllers;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import model.impl.Cliente;
 import model.impl.Cobro;
 import model.impl.CompaniaSeguro;
+import model.impl.DistanciaEntreSucursales;
 import model.impl.Empresa;
 import model.impl.EstrategiaMantenimiento;
+import model.impl.ItemProducto;
 import model.impl.Pago;
 import model.impl.Particular;
 import model.impl.Proveedor;
 import model.impl.Sucursal;
+import model.impl.Ubicacion;
 
 public class ControladorPrincipal {
 	private static ControladorPrincipal instance;
@@ -23,6 +28,7 @@ public class ControladorPrincipal {
 	private List<Pago> pagos;
 	private List<Cobro> cobros;
 	private List<EstrategiaMantenimiento> mantenimientos;
+	private List<DistanciaEntreSucursales> distancias;
 
 	private ControladorPrincipal() {
 
@@ -62,6 +68,42 @@ public class ControladorPrincipal {
 			if (c.getCodigoUnico().equals(codigoUnico))
 				return c;
 		return null;
+	}
+	
+	public Date estimarLlegada(List<ItemProducto> productos, Ubicacion origen, Ubicacion destino) {
+		Date partida = new Date();
+		
+		Sucursal cercana = obtenerSucursalCercana(destino);
+		
+		DistanciaEntreSucursales distancia = null;
+		
+		for (DistanciaEntreSucursales dist : distancias) {
+			if (dist.getSucursalA().getUbicacion().equals(origen) && dist.getSucursalB().getUbicacion().equals(destino)
+				|| dist.getSucursalA().getUbicacion().equals(destino) && dist.getSucursalB().getUbicacion().equals(origen)) {
+				distancia = dist;
+			}
+		}
+		
+		int minutos = (int) (distancia.getDuracionEnHoras() % 1) * 60;
+		int horas = (int) (distancia.getDuracionEnHoras() - distancia.getDuracionEnHoras() % 1);
+		
+		Calendar cal = Calendar.getInstance(); 
+		cal.add(Calendar.HOUR, horas);
+		cal.add(Calendar.MINUTE, minutos);
+		
+		return cal.getTime();
+	}
+	
+	private Sucursal obtenerSucursalCercana(Ubicacion ubicacion) {
+		Sucursal cercana = null;
+		
+		for (Sucursal sucursal : sucursales) {
+			if (cercana == null || cercana.getUbicacion().calcularDistanciaEnKilometros(ubicacion) > sucursal.getUbicacion().calcularDistanciaEnKilometros(ubicacion)) {
+				cercana = sucursal;
+			}
+		}
+		
+		return cercana;
 	}
 	
 	

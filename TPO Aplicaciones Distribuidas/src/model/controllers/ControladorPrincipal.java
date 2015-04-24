@@ -63,7 +63,7 @@ public class ControladorPrincipal {
 		viajes = new ArrayList<Viaje>();
 	}
 
-	//ABM CLIENTES
+	/* ABM CLIENTES */
 
 	public void altaClienteEmpresa(String codigoUnico, String nombre) throws Exception {
 
@@ -91,14 +91,13 @@ public class ControladorPrincipal {
 		}
 	}
 
-	//ABM SUCURSALES
+	/* ABM SUCURSALES */
 
 	public void altaSucursal(Integer numero, String nombre){		
 		sucursales.add(new Sucursal(numero, nombre));
 	}
 
-
-	//ABM EMPLEADOS
+	/* ABM EMPLEADOS */
 
 	public void altaEmpleado(String cuit, String dni, String nombre,
 			String apellido, Date fechaNacimiento, Integer numeroSucursal) throws Exception {
@@ -111,7 +110,35 @@ public class ControladorPrincipal {
 
 	}
 
-	//OTROS
+	/* ABM VIAJES */
+
+	public void altaViaje(int codigo, List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida,
+			List<CondicionEspecial> condicionesEspeciales, Vector<ParadaIntermedia> paradasIntermedias) throws Exception{
+		if (obtenerViaje(codigo) == null){
+			viajes.add(new Viaje(codigo, cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, paradasIntermedias));
+		}
+		else{
+			throw new Exception("Ya existe un viaje con el codigo: " + codigo);
+		}
+	}
+	
+	public void actualizarViaje(Viaje viaje, Sucursal sucursal) {
+		for (Iterator<Carga> iterator = viaje.getCargas().iterator(); iterator.hasNext();) {
+			Carga carga = iterator.next();
+			if (false/*TODO chequear si hay un viaje mejor parando en esta sucursal ahora*/) {
+				sucursal.getDeposito().almacenarCarga(carga);
+				iterator.remove();
+			}
+		}
+		for (ParadaIntermedia parada : viaje.getParadasIntermedias()) {
+			if (parada.getUbicacion().equals(sucursal.getUbicacion())) {
+				parada.setChecked(true);
+				break;
+			}
+		}
+	}
+	
+	/* OTROS */
 
 	public void asignarCuentaCorriente(String codigoUnico, Float montoActual, Float montoAutorizado) throws Exception{
 
@@ -169,15 +196,6 @@ public class ControladorPrincipal {
 		return 0;	
 	}
 
-
-	public Cliente obtenerCliente(String codigoUnico) {
-
-		for (Cliente c : clientes)
-			if (c.getCodigoUnico().equals(codigoUnico))
-				return c;
-		return null;
-	}
-
 	public void asignarCargaASucursal(int codigoSucursal, Carga carga) throws Exception{
 		Sucursal sucursal = obtenerSucursal(codigoSucursal);
 		if (sucursal != null){
@@ -204,30 +222,22 @@ public class ControladorPrincipal {
 		}
 	}
 
-	public void actualizarViaje(Viaje viaje, Sucursal sucursal) {
-		for (Iterator<Carga> iterator = viaje.getCargas().iterator(); iterator.hasNext();) {
-			Carga carga = iterator.next();
-			if (false/*TODO chequear si hay un viaje mejor parando en esta sucursal ahora*/) {
-				sucursal.getDeposito().almacenarCarga(carga);
-				iterator.remove();
+	private boolean tieneMaterialesProhibidos(Carga carga){
+		for (ItemProducto ip : carga.getProductos()){
+			if (esMaterialProhibido(ip.getProducto().getMaterial())){
+				return true;
 			}
 		}
-		for (ParadaIntermedia parada : viaje.getParadasIntermedias()) {
-			if (parada.getUbicacion().equals(sucursal.getUbicacion())) {
-				parada.setChecked(true);
-				break;
-			}
-		}
+		return false;
 	}
 
-	public void altaViaje(int codigo, List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida,
-			List<CondicionEspecial> condicionesEspeciales, Vector<ParadaIntermedia> paradasIntermedias) throws Exception{
-		if (obtenerViaje(codigo) == null){
-			viajes.add(new Viaje(codigo, cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, paradasIntermedias));
+	private boolean esMaterialProhibido(String material){
+		for (String s : materialesProhibidos){
+			if (s.equals(material)){
+				return true;
+			}
 		}
-		else{
-			throw new Exception("Ya existe un viaje con el codigo: " + codigo);
-		}
+		return false;
 	}
 	
 	public float calcularCostoSucursales(Sucursal sucursalA, Sucursal sucursalB) {
@@ -272,7 +282,7 @@ public class ControladorPrincipal {
 		if (v.getParadasIntermedias().size() > 0) {
 
 			float costo = calcularCostoSucursales(
-					obtenerUbicacion(v.getOrigen()), obtenerUbicacion(v
+					obtenerSucursalPorUbicacion(v.getOrigen()), obtenerSucursalPorUbicacion(v
 							.getParadasIntermedias().firstElement()
 							.getUbicacion()));
 
@@ -300,16 +310,15 @@ public class ControladorPrincipal {
 
 	}
 
-	public Sucursal obtenerUbicacion(Ubicacion u) {
+	/* OBTENER */
+	
+	public Cliente obtenerCliente(String codigoUnico) {
 
-		for (Sucursal s : sucursales)
-			if (s.getUbicacion().equals(u))
-				return s;
+		for (Cliente c : clientes)
+			if (c.getCodigoUnico().equals(codigoUnico))
+				return c;
 		return null;
-
 	}
-
-	//OBTENER COSAS
 
 	public Empleado obtenerEmpleado(String cuit) {
 
@@ -344,7 +353,6 @@ public class ControladorPrincipal {
 		return null;
 	}
 
-
 	private Sucursal obtenerSucursalCercana(Ubicacion ubicacion) {
 		Sucursal cercana = null;
 
@@ -369,27 +377,14 @@ public class ControladorPrincipal {
 		return null;
 	}
 
-	private boolean tieneMaterialesProhibidos(Carga carga){
-		for (ItemProducto ip : carga.getProductos()){
-			if (esMaterialProhibido(ip.getProducto().getMaterial())){
-				return true;
-			}
-		}
-		return false;
+	public Sucursal obtenerSucursalPorUbicacion(Ubicacion u) {
+		for (Sucursal s : sucursales)
+			if (s.getUbicacion().equals(u))
+				return s;
+		return null;
 	}
-
-	private boolean esMaterialProhibido(String material){
-		for (String s : materialesProhibidos){
-			if (s.equals(material)){
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/*******************************/
-	/****** metodos de prueba ******/
-	/*******************************/
+	
+	/* GETTERS Y SETTERS PARA TESTEAR */
 
 	public List<Sucursal> getSucursales() {
 		return sucursales;
@@ -470,7 +465,6 @@ public class ControladorPrincipal {
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
-
 
 	public List<Viaje> getViajes() {
 		return viajes;

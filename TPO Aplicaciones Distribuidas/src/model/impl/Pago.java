@@ -12,6 +12,14 @@ public class Pago implements Serializable {
 	private Proveedor proveedor;
 	private Float monto;
 	private Date fecha;
+	private boolean estado;
+	
+	public Pago(Proveedor proveedor, Float monto, Date fecha){
+		
+		this.proveedor = proveedor;
+		this.monto = monto;
+		this.fecha = fecha;
+	}
 	
 	public Proveedor getProveedor() {
 		return proveedor;
@@ -30,6 +38,15 @@ public class Pago implements Serializable {
 	}
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+	public boolean isEstado() {
+		return estado;
+	}
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+	public void pagarAProveedor(){
+		setEstado(true);
 	}
 	
 }

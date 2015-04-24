@@ -41,7 +41,7 @@ public class ControladorPrincipal {
 	private List<Sucursal> sucursales;
 	private List<Cliente> clientes;
 	private List<CompaniaSeguro> companiasSeguros;
-	private List<String> materialesNoTransportables;
+	private List<String> materialesProhibidos;
 	private List<Proveedor> proveedores;
 	private List<Pago> pagos;
 	private List<Cobro> cobros;
@@ -54,7 +54,7 @@ public class ControladorPrincipal {
 		clientes = new ArrayList<Cliente>();
 		sucursales = new ArrayList<Sucursal>();
 		companiasSeguros = new ArrayList<CompaniaSeguro>();
-		materialesNoTransportables = new ArrayList<String>();
+		materialesProhibidos = new ArrayList<String>();
 		proveedores = new ArrayList<Proveedor>();
 		pagos = new ArrayList<Pago>();
 		cobros = new ArrayList<Cobro>();
@@ -192,8 +192,13 @@ public class ControladorPrincipal {
 		if (sucursal != null){
 			Cliente cliente = carga.getCliente();
 			if (cliente != null){
-				if (!sucursal.getDeposito().existeCarga(carga.getCodigo())){					
-					sucursal.getDeposito().almacenarCarga(carga);
+				if (!sucursal.getDeposito().existeCarga(carga.getCodigo())){
+					if (!tieneMaterialesProhibidos(carga)){
+						sucursal.getDeposito().almacenarCarga(carga);
+					}
+					else{
+						throw new Exception("La carga de codigo " + carga.getCodigo() + " tiene materiales prohibidos.");
+					}
 				}
 				else{
 					throw new Exception("Esta sucursal ya tiene una carga de codigo: " + carga.getCodigo() + ".");
@@ -294,6 +299,24 @@ public class ControladorPrincipal {
 		return null;
 	}
 
+	private boolean tieneMaterialesProhibidos(Carga carga){
+		for (ItemProducto ip : carga.getProductos()){
+			if (esMaterialProhibido(ip.getProducto().getMaterial())){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean esMaterialProhibido(String material){
+		for (String s : materialesProhibidos){
+			if (s.equals(material)){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/*******************************/
 	/****** metodos de prueba ******/
 	/*******************************/
@@ -322,13 +345,12 @@ public class ControladorPrincipal {
 		this.companiasSeguros = companiasSeguros;
 	}
 
-	public List<String> getMaterialesNoTransportables() {
-		return materialesNoTransportables;
+	public List<String> getMaterialesProhibidos() {
+		return materialesProhibidos;
 	}
 
-	public void setMaterialesNoTransportables(
-			List<String> materialesNoTransportables) {
-		this.materialesNoTransportables = materialesNoTransportables;
+	public void setMaterialesProhibidos(List<String> materialesProhibidos) {
+		this.materialesProhibidos = materialesProhibidos;
 	}
 
 	public List<Proveedor> getProveedores() {

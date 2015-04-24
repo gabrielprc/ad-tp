@@ -49,13 +49,14 @@ public class Test1 {
 			List<String> materialesNoTransportables = new ArrayList<String>();
 			materialesNoTransportables.add("Bombas");
 			materialesNoTransportables.add("Droga");
-			con.setMaterialesNoTransportables(materialesNoTransportables);
+			con.setMaterialesProhibidos(materialesNoTransportables);
 
 			//agrego un par de productos
 			List<Producto> productosControlador = new ArrayList<Producto>();
 			Producto producto1 = new Producto();
 			producto1.setCodigoProducto(1);
 			productosControlador.add(producto1);
+			//producto1.setMaterial("Bombas");
 			Producto producto2 = new Producto();
 			producto2.setCodigoProducto(2);
 			productosControlador.add(producto2);
@@ -64,18 +65,18 @@ public class Test1 {
 			//intento agregar una carga
 			Ubicacion origen =  new Ubicacion (1,"a","a","a","a","a","a","a",new Coordenada(1,1));
 			Ubicacion destino = new Ubicacion (2,"a","a","a","a","a","a","a",new Coordenada(1,1));
-			/*CargaView carga = new CargaView(1, TipoCarga.BARRIL, new Date(), new Date(), "codigoempresa1", "ayylmao", origen, destino, EstadoCarga.ENTREGADA);
-			List<ItemProductoView> productos = new ArrayList<ItemProductoView>();
-			productos.add(new ItemProductoView(1, 10));
-			productos.add(new ItemProductoView(2, 40));
-			productos.add(new ItemProductoView(3, 5000));
-			carga.setProductos(productos);*/
+			//CargaView carga = new CargaView(1, TipoCarga.BARRIL, new Date(), new Date(), "codigoempresa1", "ayylmao", origen, destino, EstadoCarga.ENTREGADA);
+			List<ItemProducto> productos = new ArrayList<ItemProducto>();
+			productos.add(new ItemProducto(producto1, 10));
+			productos.add(new ItemProducto(producto2, 40));
+			
 
 			//con.asignarCargaASucursal(1, carga);
 			
 			Carga carga1 = new Carga(1, TipoCarga.BARRIL, new Date(),
 			new Date(), con.obtenerCliente("codigoempresa1"), "a",
 			origen, destino, EstadoCarga.EN_DEPOSITO);
+			carga1.setProductos(productos);
 			
 			con.asignarCargaASucursal(1, carga1);
 			

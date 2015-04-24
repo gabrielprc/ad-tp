@@ -51,6 +51,7 @@ public class Cobro implements Serializable {
 		return factura.getMonto() / cantidadCuotas;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void establecerPagoEnCuotas(Integer cantidadCuotas){
 		
 		Float cuota = calcularMontoPorCuota(cantidadCuotas);

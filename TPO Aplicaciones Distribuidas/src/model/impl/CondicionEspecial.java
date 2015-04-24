@@ -10,4 +10,8 @@ public enum CondicionEspecial {
 	private CondicionEspecial(String condicion) {
 		this.condicion = condicion;
 	}
+
+	public String getCondicion() {
+		return condicion;
+	}
 }

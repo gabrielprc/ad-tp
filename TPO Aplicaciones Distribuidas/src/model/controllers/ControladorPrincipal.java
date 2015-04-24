@@ -5,11 +5,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import model.impl.Carga;
 import model.impl.Cliente;
 import model.impl.Cobro;
 import model.impl.CompaniaSeguro;
+import model.impl.CondicionEspecial;
 import model.impl.CuentaCorriente;
 import model.impl.DistanciaEntreSucursales;
 import model.impl.Empleado;
@@ -21,11 +23,14 @@ import model.impl.ParadaIntermedia;
 import model.impl.Particular;
 import model.impl.Producto;
 import model.impl.Proveedor;
+import model.impl.Seguro;
 import model.impl.Sucursal;
 import model.impl.Ubicacion;
+import model.impl.Vehiculo;
 import model.impl.Viaje;
 import model.views.CargaView;
 import model.views.ItemProductoView;
+import model.views.UbicacionView;
 
 public class ControladorPrincipal {
 
@@ -34,6 +39,7 @@ public class ControladorPrincipal {
 			instance = new ControladorPrincipal();
 		return instance;
 	}
+	
 	private static ControladorPrincipal instance;
 	private List<Sucursal> sucursales;
 	private List<Cliente> clientes;
@@ -48,7 +54,6 @@ public class ControladorPrincipal {
 	private List<Viaje> viajes;
 
 	private ControladorPrincipal() {
-
 		clientes = new ArrayList<Cliente>();
 		sucursales = new ArrayList<Sucursal>();
 		companiasSeguros = new ArrayList<CompaniaSeguro>();
@@ -60,7 +65,6 @@ public class ControladorPrincipal {
 		productos = new ArrayList<Producto>();
 		viajes = new ArrayList<Viaje>();
 	}
-
 
 	//ABM CLIENTES
 
@@ -158,9 +162,9 @@ public class ControladorPrincipal {
 
 		return cal.getTime();
 	}
-	
+
 	public float calcularCostoViaje(Integer sucursalA, Integer sucursalB){
-		
+
 		for(DistanciaEntreSucursales d : distancias)
 			if(d.getSucursalA().getNumero() == sucursalA || d.getSucursalB().getNumero() == sucursalB)
 				if(d.getSucursalB().getNumero() == sucursalB || d.getSucursalB().getNumero() == sucursalA)
@@ -182,10 +186,14 @@ public class ControladorPrincipal {
 			Cliente cliente = obtenerCliente(carga.getCliente());
 			if (cliente != null){
 				if (!sucursal.getDeposito().existeCarga(carga.getCodigo())){
+					Ubicacion origen = obtenerUbicacion(carga.getOrigen());
+					Ubicacion destino = obtenerUbicacion(carga.getDestino());
+					
 					Carga cg = new Carga(carga.getCodigo(), carga.getTipo(), carga.getFechaMaximaEntrega(),
-							carga.getFechaProbableEntrega(), cliente, carga.getManifiesto(), carga.getOrigen(),
-							carga.getDestino(), carga.getEstadoCarga());
-					sucursal.getDeposito().almacenarCarga();
+							carga.getFechaProbableEntrega(), cliente, carga.getManifiesto(), origen,
+							destino, carga.getEstadoCarga());
+					
+					sucursal.getDeposito().almacenarCarga(cg);
 					for (ItemProductoView ipv : carga.getProductos()){
 						Producto producto = obtenerProducto(ipv.getProducto());
 						if(producto != null){
@@ -207,7 +215,7 @@ public class ControladorPrincipal {
 	}
 	
 	public void actualizarViaje(Viaje viaje, Sucursal sucursal) {
-		for (Iterator<Carga> iterator = viaje.getEnvios().iterator(); iterator.hasNext();) {
+		for (Iterator<Carga> iterator = viaje.getCargas().iterator(); iterator.hasNext();) {
 			Carga carga = iterator.next();
 			if (false/*TODO chequear si hay un viaje mejor parando en esta sucursal ahora*/) {
 				sucursal.getDeposito().almacenarCarga(carga);
@@ -258,7 +266,7 @@ public class ControladorPrincipal {
 		return null;
 	}
 
-	public Viaje obtenerViaje(Integer codigoViaje) {
+	private Viaje obtenerViaje(Integer codigoViaje) {
 		for (Viaje viaje : viajes) {
 			if (viaje.getCodigo().equals(codigoViaje)) {
 				return viaje;
@@ -281,6 +289,18 @@ public class ControladorPrincipal {
 		}
 
 		return cercana;
+	}
+	
+	private Ubicacion obtenerUbicacion(UbicacionView view) {
+		Ubicacion u = new Ubicacion(view);
+		
+		for (Sucursal sucursal : sucursales) {
+			if (sucursal.getUbicacion().equals(u)) {
+				return sucursal.getUbicacion();
+			}
+		}
+		
+		return u;
 	}
 
 	/*******************************/

@@ -3,6 +3,7 @@ package model.impl;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 public class Viaje implements Serializable {
 	/**
@@ -18,7 +19,7 @@ public class Viaje implements Serializable {
 	private Date fechaLlegada;
 	private List<CondicionEspecial> condicionesEspeciales;
 	private boolean estaAtrasado;
-	private List<ParadaIntermedia> paradasIntermedias;
+	private Vector<ParadaIntermedia> paradasIntermedias;
 
 	public Viaje(int codigo, List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida,
 			List<CondicionEspecial> condicionesEspeciales, Vector<ParadaIntermedia> paradasIntermedias) {
@@ -79,7 +80,7 @@ public class Viaje implements Serializable {
 		return fechaSalida;
 	}
 
-	public List<ParadaIntermedia> getParadasIntermedias() {
+	public Vector<ParadaIntermedia> getParadasIntermedias() {
 		return paradasIntermedias;
 	}
 
@@ -117,7 +118,7 @@ public class Viaje implements Serializable {
 	}
 
 	public void setParadasIntermedias(
-			List<ParadaIntermedia> paradasIntermedias) {
+			Vector<ParadaIntermedia> paradasIntermedias) {
 		this.paradasIntermedias = paradasIntermedias;
 	}
 	

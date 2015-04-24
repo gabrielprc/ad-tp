@@ -3,10 +3,6 @@ package model.impl;
 import java.util.Date;
 
 public class Empleado {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7999444890126630022L;
 
 	private String cuit;
 	private String dni;

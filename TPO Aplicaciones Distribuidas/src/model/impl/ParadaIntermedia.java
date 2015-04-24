@@ -6,6 +6,15 @@ public class ParadaIntermedia {
 
 	private Ubicacion ubicacion;
 	private Date llegada;
+	private boolean checked;
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
 
 	public Ubicacion getUbicacion() {
 		return ubicacion;

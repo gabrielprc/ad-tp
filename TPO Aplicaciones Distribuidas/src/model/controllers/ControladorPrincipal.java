@@ -3,8 +3,10 @@ package model.controllers;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import model.impl.Carga;
 import model.impl.Cliente;
 import model.impl.Cobro;
 import model.impl.CompaniaSeguro;
@@ -15,11 +17,13 @@ import model.impl.Empresa;
 import model.impl.EstrategiaMantenimiento;
 import model.impl.ItemProducto;
 import model.impl.Pago;
+import model.impl.ParadaIntermedia;
 import model.impl.Particular;
 import model.impl.Producto;
 import model.impl.Proveedor;
 import model.impl.Sucursal;
 import model.impl.Ubicacion;
+import model.impl.Viaje;
 import model.views.CargaView;
 import model.views.ItemProductoView;
 
@@ -41,6 +45,7 @@ public class ControladorPrincipal {
 	private List<EstrategiaMantenimiento> mantenimientos;
 	private List<Producto> productos;
 	private List<DistanciaEntreSucursales> distancias;
+	private List<Viaje> viajes;
 
 	private ControladorPrincipal() {
 
@@ -53,6 +58,7 @@ public class ControladorPrincipal {
 		cobros = new ArrayList<Cobro>();
 		mantenimientos = new ArrayList<EstrategiaMantenimiento>();
 		productos = new ArrayList<Producto>();
+		viajes = new ArrayList<Viaje>();
 	}
 
 
@@ -176,9 +182,10 @@ public class ControladorPrincipal {
 			Cliente cliente = obtenerCliente(carga.getCliente());
 			if (cliente != null){
 				if (!sucursal.getDeposito().existeCarga(carga.getCodigo())){
-					sucursal.getDeposito().almacenarCarga(carga.getCodigo(), carga.getTipo(), carga.getFechaMaximaEntrega(),
+					Carga cg = new Carga(carga.getCodigo(), carga.getTipo(), carga.getFechaMaximaEntrega(),
 							carga.getFechaProbableEntrega(), cliente, carga.getManifiesto(), carga.getOrigen(),
 							carga.getDestino(), carga.getEstadoCarga());
+					sucursal.getDeposito().almacenarCarga();
 					for (ItemProductoView ipv : carga.getProductos()){
 						Producto producto = obtenerProducto(ipv.getProducto());
 						if(producto != null){
@@ -196,6 +203,32 @@ public class ControladorPrincipal {
 		}
 		else{
 			throw new Exception("Sucursal de codigo " + codigoSucursal + " inexistente.");
+		}
+	}
+	
+	public void actualizarViaje(Viaje viaje, Sucursal sucursal) {
+		for (Iterator<Carga> iterator = viaje.getEnvios().iterator(); iterator.hasNext();) {
+			Carga carga = iterator.next();
+			if (false/*TODO chequear si hay un viaje mejor parando en esta sucursal ahora*/) {
+				sucursal.getDeposito().almacenarCarga(carga);
+				iterator.remove();
+			}
+		}
+		for (ParadaIntermedia parada : viaje.getParadasIntermedias()) {
+			if (parada.getUbicacion().equals(sucursal.getUbicacion())) {
+				parada.setChecked(true);
+				break;
+			}
+		}
+	}
+
+	public void altaViaje(int codigo, List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida,
+			List<CondicionEspecial> condicionesEspeciales, Vector<ParadaIntermedia> paradasIntermedias) throws Exception{
+		if (obtenerViaje(codigo) == null){
+			viajes.add(new Viaje(codigo, cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, paradasIntermedias));
+		}
+		else{
+			throw new Exception("Ya existe un viaje con el codigo: " + codigo);
 		}
 	}
 
@@ -224,6 +257,16 @@ public class ControladorPrincipal {
 				return p;
 		return null;
 	}
+
+	public Viaje obtenerViaje(Integer codigoViaje) {
+		for (Viaje viaje : viajes) {
+			if (viaje.getCodigo().equals(codigoViaje)) {
+				return viaje;
+			}
+		}
+		return null;
+	}
+
 
 	private Sucursal obtenerSucursalCercana(Ubicacion ubicacion) {
 		Sucursal cercana = null;
@@ -323,5 +366,14 @@ public class ControladorPrincipal {
 
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
-	}	
+	}
+
+
+	public List<Viaje> getViajes() {
+		return viajes;
+	}
+
+	public void setViajes(List<Viaje> viajes) {
+		this.viajes = viajes;
+	}
 }

@@ -3,7 +3,6 @@ package model.impl;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 public class Viaje implements Serializable {
 	/**
@@ -11,27 +10,38 @@ public class Viaje implements Serializable {
 	 */
 	private static final long serialVersionUID = 5092108929260301459L;
 
-	private Integer codigo;
-	private List<Carga> envios;
+	private int codigo;
+	private List<Carga> cargas;
 	private Seguro seguro;
 	private Vehiculo vehiculo;
 	private Date fechaSalida;
 	private Date fechaLlegada;
 	private List<CondicionEspecial> condicionesEspeciales;
 	private boolean estaAtrasado;
-	private Vector<ParadaIntermedia> paradasIntermedias;
+	private List<ParadaIntermedia> paradasIntermedias;
+
+	public Viaje(int codigo, List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida,
+			List<CondicionEspecial> condicionesEspeciales, Vector<ParadaIntermedia> paradasIntermedias) {
+		this.codigo = codigo;
+		this.cargas = cargas;
+		this.seguro = seguro;
+		this.vehiculo = vehiculo;
+		this.fechaSalida = fechaSalida;
+		this.condicionesEspeciales = condicionesEspeciales;
+		this.paradasIntermedias = paradasIntermedias;
+	}
 
 	public void agregarCarga(Carga carga) {
 
 		if (carga.calcularPesoTotal() <= calcularPesoDisponible()
 				&& carga.calcularVolumenTotal() <= calcularVolumenDisponible())
-			envios.add(carga);
+			cargas.add(carga);
 	}
 
 	public float calcularPesoDisponible() {
 
 		float peso = 0;
-		for (Carga c : envios)
+		for (Carga c : cargas)
 			peso += c.calcularPesoTotal();
 		return vehiculo.getPeso() - peso;
 	}
@@ -39,14 +49,14 @@ public class Viaje implements Serializable {
 	public float calcularVolumenDisponible() {
 
 		float volumen = 0;
-		for (Carga c : envios)
+		for (Carga c : cargas)
 			volumen += c.calcularVolumenTotal();
 		return vehiculo.getTamano().calcularVolumen() - volumen;
 	}
 
 	public int cantidadParadasIntemedias(){
 		
-		return paradasIntermedias.capacity();
+		return paradasIntermedias.size();
 	}
 
 	public void generarRemito(){
@@ -61,10 +71,6 @@ public class Viaje implements Serializable {
 		return condicionesEspeciales;
 	}
 
-	public List<Carga> getEnvios() {
-		return envios;
-	}
-
 	public Date getFechaLlegada() {
 		return fechaLlegada;
 	}
@@ -73,7 +79,7 @@ public class Viaje implements Serializable {
 		return fechaSalida;
 	}
 
-	public Vector<ParadaIntermedia> getParadasIntermedias() {
+	public List<ParadaIntermedia> getParadasIntermedias() {
 		return paradasIntermedias;
 	}
 
@@ -98,10 +104,6 @@ public class Viaje implements Serializable {
 		this.condicionesEspeciales = condicionesEspeciales;
 	}
 
-	public void setEnvios(List<Carga> envios) {
-		this.envios = envios;
-	}
-
 	public void setEstaAtrasado(boolean estaAtrasado) {
 		this.estaAtrasado = estaAtrasado;
 	}
@@ -115,7 +117,7 @@ public class Viaje implements Serializable {
 	}
 
 	public void setParadasIntermedias(
-			Vector<ParadaIntermedia> paradasIntermedias) {
+			List<ParadaIntermedia> paradasIntermedias) {
 		this.paradasIntermedias = paradasIntermedias;
 	}
 	
@@ -127,4 +129,15 @@ public class Viaje implements Serializable {
 		this.vehiculo = vehiculo;
 	}
 
+	public List<Carga> getCargas() {
+		return cargas;
+	}
+
+	public void setCargas(List<Carga> cargas) {
+		this.cargas = cargas;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
 }

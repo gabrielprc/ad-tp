@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import model.views.UbicacionView;
+
 public class Carga implements Serializable {
 	/**
 	 * 

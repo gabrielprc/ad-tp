@@ -38,11 +38,8 @@ public class Deposito implements Serializable {
 		this.codigo = codigo;
 	}
 	
-	public void almacenarCarga(int codigoCarga, TipoCarga tipoCarga, Date fechaMaximaEntrega, Date fechaProbableEntrega, 
-			Cliente cliente, String manifiesto, UbicacionView origen, UbicacionView destino, EstadoCarga estadoCarga){
-		cargas.add(new Carga(codigoCarga, tipoCarga, fechaMaximaEntrega, fechaProbableEntrega,
-				cliente, manifiesto, new Ubicacion(origen), new Ubicacion(destino), estadoCarga));
-		
+	public void almacenarCarga(Carga carga){
+		cargas.add(carga);
 	}
 	
 	public void retirarCarga(Carga carga) {

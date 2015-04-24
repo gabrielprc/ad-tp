@@ -4,6 +4,11 @@ public class ItemProductoView {
 	public int producto;
 	public float cantidad;
 	
+	public ItemProductoView(int producto, float cantidad){
+		this.producto = producto;
+		this.cantidad = cantidad;
+	}
+	
 	public int getProducto() {
 		return producto;
 	}

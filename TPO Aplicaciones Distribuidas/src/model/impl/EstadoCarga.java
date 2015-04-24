@@ -11,4 +11,7 @@ public enum EstadoCarga {
 		this.estado = estado;
 	}
 
+	public String getEstado() {
+		return estado;
+	}	
 }

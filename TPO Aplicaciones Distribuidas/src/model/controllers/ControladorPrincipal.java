@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
+import model.impl.Carga;
 import model.impl.Cliente;
 import model.impl.Cobro;
 import model.impl.CompaniaSeguro;
+import model.impl.CondicionEspecial;
 import model.impl.CuentaCorriente;
 import model.impl.DistanciaEntreSucursales;
 import model.impl.Empleado;
@@ -15,11 +18,15 @@ import model.impl.Empresa;
 import model.impl.EstrategiaMantenimiento;
 import model.impl.ItemProducto;
 import model.impl.Pago;
+import model.impl.ParadaIntermedia;
 import model.impl.Particular;
 import model.impl.Producto;
 import model.impl.Proveedor;
+import model.impl.Seguro;
 import model.impl.Sucursal;
 import model.impl.Ubicacion;
+import model.impl.Vehiculo;
+import model.impl.Viaje;
 import model.views.CargaView;
 import model.views.ItemProductoView;
 
@@ -30,6 +37,7 @@ public class ControladorPrincipal {
 			instance = new ControladorPrincipal();
 		return instance;
 	}
+	
 	private static ControladorPrincipal instance;
 	private List<Sucursal> sucursales;
 	private List<Cliente> clientes;
@@ -41,9 +49,9 @@ public class ControladorPrincipal {
 	private List<EstrategiaMantenimiento> mantenimientos;
 	private List<Producto> productos;
 	private List<DistanciaEntreSucursales> distancias;
+	private List<Viaje> viajes;
 
 	private ControladorPrincipal() {
-
 		clientes = new ArrayList<Cliente>();
 		sucursales = new ArrayList<Sucursal>();
 		companiasSeguros = new ArrayList<CompaniaSeguro>();
@@ -53,8 +61,8 @@ public class ControladorPrincipal {
 		cobros = new ArrayList<Cobro>();
 		mantenimientos = new ArrayList<EstrategiaMantenimiento>();
 		productos = new ArrayList<Producto>();
+		viajes = new ArrayList<Viaje>();
 	}
-
 
 	//ABM CLIENTES
 
@@ -152,9 +160,9 @@ public class ControladorPrincipal {
 
 		return cal.getTime();
 	}
-	
+
 	public float calcularCostoViaje(Integer sucursalA, Integer sucursalB){
-		
+
 		for(DistanciaEntreSucursales d : distancias)
 			if(d.getSucursalA().getNumero() == sucursalA || d.getSucursalB().getNumero() == sucursalB)
 				if(d.getSucursalB().getNumero() == sucursalB || d.getSucursalB().getNumero() == sucursalA)
@@ -199,6 +207,16 @@ public class ControladorPrincipal {
 		}
 	}
 
+	public void altaViaje(int codigo, List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida,
+			List<CondicionEspecial> condicionesEspeciales, Vector<ParadaIntermedia> paradasIntermedias) throws Exception{
+		if (obtenerViaje(codigo) == null){
+			viajes.add(new Viaje(codigo, cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, paradasIntermedias));
+		}
+		else{
+			throw new Exception("Ya existe un viaje con el codigo: " + codigo);
+		}
+	}
+
 	//OBTENER COSAS
 
 	public Empleado obtenerEmpleado(String cuit) {
@@ -224,6 +242,16 @@ public class ControladorPrincipal {
 				return p;
 		return null;
 	}
+
+	public Viaje obtenerViaje(Integer codigoViaje) {
+		for (Viaje viaje : viajes) {
+			if (viaje.getCodigo().equals(codigoViaje)) {
+				return viaje;
+			}
+		}
+		return null;
+	}
+
 
 	private Sucursal obtenerSucursalCercana(Ubicacion ubicacion) {
 		Sucursal cercana = null;
@@ -323,5 +351,14 @@ public class ControladorPrincipal {
 
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
-	}	
+	}
+
+
+	public List<Viaje> getViajes() {
+		return viajes;
+	}
+
+	public void setViajes(List<Viaje> viajes) {
+		this.viajes = viajes;
+	}
 }

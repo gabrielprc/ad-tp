@@ -2,6 +2,10 @@ package model.impl;
 
 public class PlanMantenimientoKilometrajeRelativo extends PlanMantenimiento {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9027189985164803874L;
 	private float puntoControl;
 	
 	public PlanMantenimientoKilometrajeRelativo(float puntoControl, EstrategiaMantenimiento estrategia) {

@@ -15,7 +15,6 @@ public class Sucursal implements Serializable {
 	private Deposito deposito;
 	private List<Empleado> empleados;
 	private List<Vehiculo> vehiculos;
-	private List<Viaje> viajes;
 
 	public Sucursal(int numero, String nombre) {
 		this.numero = numero;
@@ -71,14 +70,6 @@ public class Sucursal implements Serializable {
 		this.vehiculos = vehiculos;
 	}
 
-	public List<Viaje> getViajes() {
-		return viajes;
-	}
-
-	public void setViajes(List<Viaje> viajes) {
-		this.viajes = viajes;
-	}
-
 	public Carga retirarCarga(Integer codigoCarga) {
 
 		for (Carga carga : deposito.getCargas()) {
@@ -108,22 +99,7 @@ public class Sucursal implements Serializable {
 		return null;
 	}
 
-	public Viaje obtenerViaje(Integer codigoViaje) {
-		for (Viaje viaje : viajes) {
-			if (viaje.getCodigo().equals(codigoViaje)) {
-				return viaje;
-			}
-		}
-		return null;
-	}
-
 	public void crearViaje() {
-
-	}
-
-	public void agregarCargaAViaje(Integer codigoViaje, Carga carga) {
-
-		obtenerViaje(codigoViaje).agregarCarga(carga);
 
 	}
 

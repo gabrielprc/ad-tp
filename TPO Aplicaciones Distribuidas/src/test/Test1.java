@@ -7,11 +7,13 @@ import java.util.List;
 import model.controllers.ControladorPrincipal;
 import model.impl.Carga;
 import model.impl.Cliente;
+import model.impl.CondicionEspecial;
 import model.impl.EstadoCarga;
 import model.impl.ItemProducto;
 import model.impl.Producto;
 import model.impl.Sucursal;
 import model.impl.TipoCarga;
+import model.impl.Viaje;
 import model.views.CargaView;
 import model.views.CoordenadaView;
 import model.views.ItemProductoView;
@@ -71,13 +73,13 @@ public class Test1 {
 			productos.add(new ItemProductoView(3, 5000));
 			carga.setProductos(productos);
 
-			con.asignarCargaASucursal(2, carga);
+			con.asignarCargaASucursal(1, carga);
 
 			System.out.println();
 			System.out.println("/* CARGASSS */");
 			System.out.println();
 
-			for (Carga c : con.obtenerSucursal(2).getDeposito().getCargas()){
+			for (Carga c : con.obtenerSucursal(1).getDeposito().getCargas()){
 				System.out.println(
 						"codigo:" + c.getCodigo() + "\n" +
 								"pais:" + c.getDestino().getPais() + "\n");
@@ -87,12 +89,31 @@ public class Test1 {
 									"cantidad:" + ip.getCantidad() + "\n");
 				}
 			}
+			
+			System.out.println();
+			System.out.println("/* VIAJES */");
+			System.out.println();
 
+			//creo un viaje
+			List<CondicionEspecial> condicionesEspeciales = new ArrayList<CondicionEspecial>();
+			condicionesEspeciales.add(CondicionEspecial.SEGURIDAD);
+			condicionesEspeciales.add(CondicionEspecial.TEMPERATURA);
+			con.altaViaje(1, con.obtenerSucursal(1).getDeposito().getCargas(), null, null, 
+					new Date(), condicionesEspeciales, null);
+
+			for (Viaje v : con.getViajes()){
+				System.out.println(
+						"codigoViaje:" + v.getCodigo() + "\n" +
+						"condicion especial 0:" + v.getCondicionesEspeciales().get(0));
+				for (Carga c : v.getCargas()){
+					System.out.println(
+							"codigo:" + c.getCodigo() + "\n" +
+									"pais:" + c.getDestino().getPais() + "\n");
+				}
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
-
 	}
-
 }

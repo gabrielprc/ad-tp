@@ -12,4 +12,8 @@ public enum TipoPuesto {
 	private TipoPuesto(String puesto) {
 		this.puesto = puesto;
 	}
+
+	public String getPuesto() {
+		return puesto;
+	}
 }

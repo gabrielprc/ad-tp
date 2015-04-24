@@ -2,11 +2,8 @@ package model.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-
-import model.views.UbicacionView;
 
 public class Deposito implements Serializable {
 	/**

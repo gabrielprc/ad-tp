@@ -1,14 +1,13 @@
 package model.impl;
 
-import model.views.CoordenadaView;
 
 public class Coordenada {
-	private Float latitud;
-	private Float longitud;
+	private float latitud;
+	private float longitud;
 	
-	public Coordenada(CoordenadaView coordenadaDestino) {
-		this.latitud = coordenadaDestino.getLatitud();
-		this.longitud = coordenadaDestino.getLongitud();
+	public Coordenada(float latitud, float longitud) {
+		this.latitud = latitud;
+		this.longitud = longitud;
 	}
 	public Float getLatitud() {
 		return latitud;

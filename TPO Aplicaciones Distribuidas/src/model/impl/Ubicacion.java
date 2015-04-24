@@ -2,14 +2,13 @@ package model.impl;
 
 import java.io.Serializable;
 
-import model.views.UbicacionView;
-
 public class Ubicacion implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3638263239943127552L;
-	
+
+	private int codigo;
 	private String pais;
 	private String provincia;
 	private String ciudad;
@@ -18,16 +17,18 @@ public class Ubicacion implements Serializable {
 	private String piso;
 	private String departamento;
 	private Coordenada coordenadaDestino;
-	
-	public Ubicacion(UbicacionView ubicacion) {
-		this.pais = ubicacion.getPais();
-		this.provincia = ubicacion.getProvincia();
-		this.ciudad = ubicacion.getCiudad();
-		this.calle = ubicacion.getCalle();
-		this.altura = ubicacion.getAltura();
-		this.piso = ubicacion.getPiso();
-		this.departamento = ubicacion.getDepartamento();
-		this.coordenadaDestino = new Coordenada(ubicacion.getCoordenadaDestino());
+
+	public Ubicacion(int codigo, String pais, String provincia, String ciudad, String calle,
+			String altura, String piso, String departamento, Coordenada coordenadaDestino) {
+		this.codigo = codigo;
+		this.pais = pais;
+		this.provincia = provincia;
+		this.ciudad = ciudad;
+		this.calle = calle;
+		this.altura = altura;
+		this.piso = piso;
+		this.departamento = departamento;
+		this.coordenadaDestino = coordenadaDestino;
 	}
 	public String getPais() {
 		return pais;
@@ -77,9 +78,15 @@ public class Ubicacion implements Serializable {
 	public void setCoordenadaDestino(Coordenada coordenadaDestino) {
 		this.coordenadaDestino = coordenadaDestino;
 	}
-	
+
 	public float calcularDistanciaEnKilometros(Ubicacion ubicacion) {
 		return this.coordenadaDestino.calcularDistanciaEnKilometros(ubicacion.getCoordenadaDestino());
 	}
-	
+
+	public int getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
 }

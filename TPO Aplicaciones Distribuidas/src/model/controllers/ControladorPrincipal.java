@@ -28,9 +28,6 @@ import model.impl.Sucursal;
 import model.impl.Ubicacion;
 import model.impl.Vehiculo;
 import model.impl.Viaje;
-import model.views.CargaView;
-import model.views.ItemProductoView;
-import model.views.UbicacionView;
 
 public class ControladorPrincipal {
 
@@ -39,7 +36,7 @@ public class ControladorPrincipal {
 			instance = new ControladorPrincipal();
 		return instance;
 	}
-	
+
 	private static ControladorPrincipal instance;
 	private List<Sucursal> sucursales;
 	private List<Cliente> clientes;
@@ -171,16 +168,16 @@ public class ControladorPrincipal {
 					return d.getCosto();
 		return 0;	
 	}
-	
+
 	public void determinarCostoViaje(Viaje viaje){
-		
+
 		Viaje v = obtenerViaje(viaje.getCodigo());
 		if(v == null)
 			return;
 		if(v.getParadasIntermedias().size() == 0);
-			//v.setFechaLlegada(fechaLlegada);	
+		//v.setFechaLlegada(fechaLlegada);	
 	}
-	
+
 
 	public Cliente obtenerCliente(String codigoUnico) {
 
@@ -190,26 +187,13 @@ public class ControladorPrincipal {
 		return null;
 	}
 
-	public void asignarCargaASucursal(int codigoSucursal, CargaView carga) throws Exception{
+	public void asignarCargaASucursal(int codigoSucursal, Carga carga) throws Exception{
 		Sucursal sucursal = obtenerSucursal(codigoSucursal);
 		if (sucursal != null){
-			Cliente cliente = obtenerCliente(carga.getCliente());
+			Cliente cliente = carga.getCliente();
 			if (cliente != null){
-				if (!sucursal.getDeposito().existeCarga(carga.getCodigo())){
-					Ubicacion origen = obtenerUbicacion(carga.getOrigen());
-					Ubicacion destino = obtenerUbicacion(carga.getDestino());
-					
-					Carga cg = new Carga(carga.getCodigo(), carga.getTipo(), carga.getFechaMaximaEntrega(),
-							carga.getFechaProbableEntrega(), cliente, carga.getManifiesto(), origen,
-							destino, carga.getEstadoCarga());
-					
-					sucursal.getDeposito().almacenarCarga(cg);
-					for (ItemProductoView ipv : carga.getProductos()){
-						Producto producto = obtenerProducto(ipv.getProducto());
-						if(producto != null){
-							sucursal.getDeposito().obtenerCarga(carga.getCodigo()).agregarItemProducto(producto, ipv.getCantidad());	
-						}
-					}
+				if (!sucursal.getDeposito().existeCarga(carga.getCodigo())){					
+					sucursal.getDeposito().almacenarCarga(carga);
 				}
 				else{
 					throw new Exception("Esta sucursal ya tiene una carga de codigo: " + carga.getCodigo() + ".");
@@ -223,7 +207,7 @@ public class ControladorPrincipal {
 			throw new Exception("Sucursal de codigo " + codigoSucursal + " inexistente.");
 		}
 	}
-	
+
 	public void actualizarViaje(Viaje viaje, Sucursal sucursal) {
 		for (Iterator<Carga> iterator = viaje.getCargas().iterator(); iterator.hasNext();) {
 			Carga carga = iterator.next();
@@ -300,17 +284,14 @@ public class ControladorPrincipal {
 
 		return cercana;
 	}
-	
-	private Ubicacion obtenerUbicacion(UbicacionView view) {
-		Ubicacion u = new Ubicacion(view);
-		
+
+	private Ubicacion obtenerUbicacion(int codigoUbicacion) {
 		for (Sucursal sucursal : sucursales) {
-			if (sucursal.getUbicacion().equals(u)) {
+			if (sucursal.getUbicacion().getCodigo() == codigoUbicacion) {
 				return sucursal.getUbicacion();
 			}
 		}
-		
-		return u;
+		return null;
 	}
 
 	/*******************************/

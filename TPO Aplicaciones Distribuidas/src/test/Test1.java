@@ -8,16 +8,14 @@ import model.controllers.ControladorPrincipal;
 import model.impl.Carga;
 import model.impl.Cliente;
 import model.impl.CondicionEspecial;
+import model.impl.Coordenada;
 import model.impl.EstadoCarga;
 import model.impl.ItemProducto;
 import model.impl.Producto;
 import model.impl.Sucursal;
 import model.impl.TipoCarga;
+import model.impl.Ubicacion;
 import model.impl.Viaje;
-import model.views.CargaView;
-import model.views.CoordenadaView;
-import model.views.ItemProductoView;
-import model.views.UbicacionView;
 
 public class Test1 {
 
@@ -64,17 +62,23 @@ public class Test1 {
 			con.setProductos(productosControlador);
 
 			//intento agregar una carga
-			UbicacionView origen =  new UbicacionView ("a","a","a","a","a","a","a",new CoordenadaView(1,1));
-			UbicacionView destino = new UbicacionView ("a","a","a","a","a","a","a",new CoordenadaView(1,1));
-			CargaView carga = new CargaView(1, TipoCarga.BARRIL, new Date(), new Date(), "codigoempresa1", "ayylmao", origen, destino, EstadoCarga.ENTREGADA);
+			Ubicacion origen =  new Ubicacion (1,"a","a","a","a","a","a","a",new Coordenada(1,1));
+			Ubicacion destino = new Ubicacion (2,"a","a","a","a","a","a","a",new Coordenada(1,1));
+			/*CargaView carga = new CargaView(1, TipoCarga.BARRIL, new Date(), new Date(), "codigoempresa1", "ayylmao", origen, destino, EstadoCarga.ENTREGADA);
 			List<ItemProductoView> productos = new ArrayList<ItemProductoView>();
 			productos.add(new ItemProductoView(1, 10));
 			productos.add(new ItemProductoView(2, 40));
 			productos.add(new ItemProductoView(3, 5000));
-			carga.setProductos(productos);
+			carga.setProductos(productos);*/
 
-			con.asignarCargaASucursal(1, carga);
-
+			//con.asignarCargaASucursal(1, carga);
+			
+			Carga carga1 = new Carga(1, TipoCarga.BARRIL, new Date(),
+			new Date(), con.obtenerCliente("codigoempresa1"), "a",
+			origen, destino, EstadoCarga.EN_DEPOSITO);
+			
+			con.asignarCargaASucursal(1, carga1);
+			
 			System.out.println();
 			System.out.println("/* CARGASSS */");
 			System.out.println();
@@ -111,6 +115,12 @@ public class Test1 {
 									"pais:" + c.getDestino().getPais() + "\n");
 				}
 			}
+			
+			/*
+			Carga cg = new Carga(carga.getCodigo(), carga.getTipo(), carga.getFechaMaximaEntrega(),
+			carga.getFechaProbableEntrega(), cliente, carga.getManifiesto(), origen,
+			destino, carga.getEstadoCarga());
+			 */
 		}
 		catch(Exception e){
 			e.printStackTrace();

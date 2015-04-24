@@ -169,15 +169,6 @@ public class ControladorPrincipal {
 		return 0;	
 	}
 
-	public void determinarCostoViaje(Viaje viaje){
-
-		Viaje v = obtenerViaje(viaje.getCodigo());
-		if(v == null)
-			return;
-		if(v.getParadasIntermedias().size() == 0);
-		//v.setFechaLlegada(fechaLlegada);	
-	}
-
 
 	public Cliente obtenerCliente(String codigoUnico) {
 
@@ -237,6 +228,85 @@ public class ControladorPrincipal {
 		else{
 			throw new Exception("Ya existe un viaje con el codigo: " + codigo);
 		}
+	}
+	
+	public float calcularCostoSucursales(Sucursal sucursalA, Sucursal sucursalB) {
+
+		for (DistanciaEntreSucursales d : distancias)
+			if (d.getSucursalA().getNumero() == sucursalA.getNumero()
+					|| d.getSucursalB().getNumero() == sucursalB.getNumero())
+				if (d.getSucursalB().getNumero() == sucursalB.getNumero()
+						|| d.getSucursalB().getNumero() == sucursalA
+								.getNumero())
+					return d.getCosto();
+		return 0;
+	}
+
+	public void determinarCostoViaje(Viaje viaje) {
+
+		Viaje v = obtenerViaje(viaje.getCodigo());
+		Date llegada = new Date();
+
+		if (v == null)
+			return;
+		if (v.getParadasIntermedias().size() == 0) {
+
+			Sucursal sucursalA = null, sucursalB = null;
+
+			for (Sucursal s : sucursales) {
+				if (viaje.getOrigen().equals(s.getUbicacion()))
+					sucursalA = s;
+				if (viaje.getOrigen().equals(s.getUbicacion()))
+					sucursalB = s;
+			}
+			if (sucursalA == null || sucursalB == null)
+				return;
+			float costo = calcularCostoSucursales(sucursalA, sucursalB);
+			int horas = (int) costo;
+			int minutos = (int) (60 * (costo - horas));
+
+			llegada.setHours(llegada.getHours() + horas);
+			llegada.setMinutes(llegada.getMinutes() + minutos);
+			v.setFechaLlegada(llegada);
+		}
+		if (v.getParadasIntermedias().size() > 0) {
+
+			float costo = calcularCostoSucursales(
+					obtenerUbicacion(v.getOrigen()), obtenerUbicacion(v
+							.getParadasIntermedias().firstElement()
+							.getUbicacion()));
+
+			int horas = (int) costo;
+			int minutos = (int) (60 * (costo - horas));
+
+			v.getParadasIntermedias().firstElement()
+					.setLlegada(v.getFechaSalida());
+			v.getParadasIntermedias().firstElement().getLlegada()
+					.setHours(horas);
+			;
+
+			v.getParadasIntermedias().firstElement().setChecked(true);
+
+			for (int i = 0; i < v.getParadasIntermedias().size(); i++) {
+
+				if (!v.getParadasIntermedias().get(i).isChecked()) {
+
+					
+				}
+
+			}
+
+		}
+
+	}
+
+	public Sucursal obtenerUbicacion(Ubicacion u) {
+
+		for (Sucursal s : sucursales)
+			if (s.getUbicacion().equals(u))
+				return s;
+		return null;
+
 	}
 
 	//OBTENER COSAS

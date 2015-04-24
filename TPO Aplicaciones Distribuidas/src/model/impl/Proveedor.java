@@ -11,6 +11,14 @@ public class Proveedor implements Serializable {
 	private String cuit;
 	private String nombre;
 	
+	public Proveedor(String cuit, String nombre){
+		
+		this.cuit = cuit;
+		this.nombre = nombre;
+		
+	}
+	
+	
 	public String getCuit() {
 		return cuit;
 	}

@@ -163,7 +163,7 @@ public class ControladorPrincipal {
 		return cal.getTime();
 	}
 
-	public float calcularCostoViaje(Integer sucursalA, Integer sucursalB){
+	public float calcularCostoSucursales(Integer sucursalA, Integer sucursalB){
 
 		for(DistanciaEntreSucursales d : distancias)
 			if(d.getSucursalA().getNumero() == sucursalA || d.getSucursalB().getNumero() == sucursalB)
@@ -171,6 +171,16 @@ public class ControladorPrincipal {
 					return d.getCosto();
 		return 0;	
 	}
+	
+	public void determinarCostoViaje(Viaje viaje){
+		
+		Viaje v = obtenerViaje(viaje.getCodigo());
+		if(v == null)
+			return;
+		if(v.getParadasIntermedias().size() == 0);
+			//v.setFechaLlegada(fechaLlegada);	
+	}
+	
 
 	public Cliente obtenerCliente(String codigoUnico) {
 

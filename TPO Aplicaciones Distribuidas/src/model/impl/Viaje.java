@@ -15,6 +15,8 @@ public class Viaje implements Serializable {
 	private List<Carga> cargas;
 	private Seguro seguro;
 	private Vehiculo vehiculo;
+	private Ubicacion origen;
+	private Ubicacion destino;
 	private Date fechaSalida;
 	private Date fechaLlegada;
 	private List<CondicionEspecial> condicionesEspeciales;
@@ -30,6 +32,7 @@ public class Viaje implements Serializable {
 		this.fechaSalida = fechaSalida;
 		this.condicionesEspeciales = condicionesEspeciales;
 		this.paradasIntermedias = paradasIntermedias;
+		paradasIntermedias = new Vector<ParadaIntermedia>();
 	}
 
 	public void agregarCarga(Carga carga) {
@@ -141,4 +144,21 @@ public class Viaje implements Serializable {
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
+
+	public Ubicacion getOrigen() {
+		return origen;
+	}
+
+	public void setOrigen(Ubicacion origen) {
+		this.origen = origen;
+	}
+
+	public Ubicacion getDestino() {
+		return destino;
+	}
+
+	public void setDestino(Ubicacion destino) {
+		this.destino = destino;
+	}
+	
 }

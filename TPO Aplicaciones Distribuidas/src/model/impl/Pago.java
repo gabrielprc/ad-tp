@@ -45,8 +45,5 @@ public class Pago implements Serializable {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
-	public void pagarAProveedor(){
-		setEstado(true);
-	}
 	
 }

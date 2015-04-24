@@ -2,8 +2,11 @@ package model.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+import model.views.UbicacionView;
 
 public class Deposito implements Serializable {
 	/**
@@ -11,8 +14,13 @@ public class Deposito implements Serializable {
 	 */
 	private static final long serialVersionUID = -7943859772129611103L;
 	
-	private Integer codigo;
+	private int codigo;
 	private List<Carga> cargas;
+	
+	public Deposito(int codigo){
+		this.codigo = codigo;
+		cargas = new ArrayList<Carga>();
+	}
 
 	public List<Carga> getCargas() {
 		return cargas;
@@ -30,11 +38,11 @@ public class Deposito implements Serializable {
 		this.codigo = codigo;
 	}
 	
-	public void almacenarCarga(Carga carga) {
-		if (cargas == null) {
-			cargas = new ArrayList<Carga>();
-		}
-		cargas.add(carga);
+	public void almacenarCarga(int codigoCarga, TipoCarga tipoCarga, Date fechaMaximaEntrega, Date fechaProbableEntrega, 
+			Cliente cliente, String manifiesto, UbicacionView origen, UbicacionView destino, EstadoCarga estadoCarga){
+		cargas.add(new Carga(codigoCarga, tipoCarga, fechaMaximaEntrega, fechaProbableEntrega,
+				cliente, manifiesto, new Ubicacion(origen), new Ubicacion(destino), estadoCarga));
+		
 	}
 	
 	public void retirarCarga(Carga carga) {
@@ -45,5 +53,19 @@ public class Deposito implements Serializable {
 				}
 			}
 		}
+	}
+
+	public Carga obtenerCarga(int codigoCarga) {
+		for (Carga c : cargas)
+			if (c.getCodigo() == codigoCarga)
+				return c;
+		return null;
+	}
+	
+	public boolean existeCarga(int codigoCarga){
+		for (Carga c : cargas)
+			if (c.getCodigo() == codigoCarga)
+				return true;
+		return false;
 	}
 }

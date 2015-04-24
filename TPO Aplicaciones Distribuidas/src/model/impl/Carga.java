@@ -1,9 +1,9 @@
 package model.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Vector;
 
 public class Carga implements Serializable {
 	/**
@@ -21,6 +21,21 @@ public class Carga implements Serializable {
 	private Ubicacion origen;
 	private Ubicacion destino;
 	private EstadoCarga estadoCarga;
+
+	public Carga(int codigo, TipoCarga tipoCarga, Date fechaMaximaEntrega,
+			Date fechaProbableEntrega, Cliente cliente, String manifiesto,
+			Ubicacion origen, Ubicacion destino, EstadoCarga estadoCarga) {
+		this.codigo = codigo;
+		this.tipo = tipoCarga;
+		this.fechaMaximaEntrega = fechaMaximaEntrega;
+		this.fechaProbableEntrega = fechaProbableEntrega;
+		this.cliente = cliente;
+		this.manifiesto = manifiesto;
+		this.origen = origen;
+		this.destino = destino;
+		this.estadoCarga = estadoCarga;
+		this.productos = new ArrayList<ItemProducto>();
+	}
 
 	public Integer getCodigo() {
 		return codigo;
@@ -124,6 +139,10 @@ public class Carga implements Serializable {
 
 	public void setEstadoCarga(EstadoCarga estadoCarga) {
 		this.estadoCarga = estadoCarga;
+	}
+
+	public void agregarItemProducto(Producto producto, float cantidad) {
+		productos.add(new ItemProducto(producto, cantidad));		
 	}
 
 }

@@ -10,4 +10,6 @@ public enum TipoTratamiento {
 	private TipoTratamiento(String tipo) {
 		this.tipo = tipo;
 	}
+	
+	
 }

@@ -16,12 +16,15 @@ import model.impl.EstrategiaMantenimiento;
 import model.impl.ItemProducto;
 import model.impl.Pago;
 import model.impl.Particular;
+import model.impl.Producto;
 import model.impl.Proveedor;
 import model.impl.Sucursal;
 import model.impl.Ubicacion;
+import model.views.CargaView;
+import model.views.ItemProductoView;
 
 public class ControladorPrincipal {
-	
+
 	public static ControladorPrincipal getInstance() {
 		if (instance == null) 
 			instance = new ControladorPrincipal();
@@ -36,6 +39,7 @@ public class ControladorPrincipal {
 	private List<Pago> pagos;
 	private List<Cobro> cobros;
 	private List<EstrategiaMantenimiento> mantenimientos;
+	private List<Producto> productos;
 
 	private List<DistanciaEntreSucursales> distancias;
 
@@ -49,9 +53,12 @@ public class ControladorPrincipal {
 		pagos = new ArrayList<Pago>();
 		cobros = new ArrayList<Cobro>();
 		mantenimientos = new ArrayList<EstrategiaMantenimiento>();
-
+		productos = new ArrayList<Producto>();
 	}
-	
+
+
+	//ABM CLIENTES
+
 	public void altaClienteEmpresa(String codigoUnico, String nombre) throws Exception {
 
 		if (obtenerCliente(codigoUnico) == null)
@@ -68,11 +75,24 @@ public class ControladorPrincipal {
 		else
 			throw new Exception("Cliente con codigo "+codigoUnico+" ya existe");
 	}
-	
-	public void altaSucursal(Integer numero, String nombre){
-		
+
+	public void bajaCliente(String codigoUnico){
+		for (Cliente c : clientes){
+			if (c.getCodigoUnico().equals(codigoUnico)){
+				clientes.remove(c);
+				return;
+			}
+		}
+	}
+
+	//ABM SUCURSALES
+
+	public void altaSucursal(Integer numero, String nombre){		
 		sucursales.add(new Sucursal(numero, nombre));
 	}
+
+
+	//ABM EMPLEADOS
 
 	public void altaEmpleado(String cuit, String dni, String nombre,
 			String apellido, Date fechaNacimiento, Integer numeroSucursal) throws Exception {
@@ -84,11 +104,13 @@ public class ControladorPrincipal {
 			throw new Exception("Empleado con cuit "+cuit+" ya existe");
 
 	}
-	
+
+	//OTROS
+
 	public void asignarCuentaCorriente(String codigoUnico, Float montoActual, Float montoAutorizado) throws Exception{
-		
+
 		if(esClienteEmpresa(codigoUnico)){
-			
+
 			Empresa c = (Empresa) obtenerCliente(codigoUnico);
 			c.setCuentaCorriente(new CuentaCorriente(montoActual, montoAutorizado));		
 		}
@@ -97,7 +119,7 @@ public class ControladorPrincipal {
 	}
 
 	public boolean esClienteEmpresa(String codigoUnico){
-		
+
 		for(Cliente c : clientes)
 			if(c.getCodigoUnico().equals(codigoUnico) && c.getClass().equals(Empresa.class))
 				return true;
@@ -140,6 +162,35 @@ public class ControladorPrincipal {
 		return null;
 	}
 
+	public void asignarCargaASucursal(int codigoSucursal, CargaView carga) throws Exception{
+		Sucursal sucursal = obtenerSucursal(codigoSucursal);
+		if (sucursal != null){
+			Cliente cliente = obtenerCliente(carga.getCliente());
+			if (cliente != null){
+				if (!sucursal.getDeposito().existeCarga(carga.getCodigo())){
+					sucursal.getDeposito().almacenarCarga(carga.getCodigo(), carga.getTipo(), carga.getFechaMaximaEntrega(),
+							carga.getFechaProbableEntrega(), cliente, carga.getManifiesto(), carga.getOrigen(),
+							carga.getDestino(), carga.getEstadoCarga());
+					for (ItemProductoView ipv : carga.getProductos()){
+						Producto producto = obtenerProducto(ipv.getProducto());
+						sucursal.getDeposito().obtenerCarga(carga.getCodigo()).agregarItemProducto(producto, ipv.getCantidad());					
+					}
+				}
+				else{
+					throw new Exception("Esta sucursal ya tiene una carga de codigo: " + carga.getCodigo() + ".");
+				}
+			}
+			else{
+				throw new Exception("Cliente de codigo " + carga.getCliente() + " inexistente.");
+			}
+		}
+		else{
+			throw new Exception("Sucursal de codigo " + codigoSucursal + " inexistente.");
+		}
+	}
+
+	//OBTENER COSAS
+
 	public Empleado obtenerEmpleado(String cuit) {
 
 		for (Sucursal s : sucursales)
@@ -156,7 +207,14 @@ public class ControladorPrincipal {
 				return s;
 		return null;
 	}
-	
+
+	private Producto obtenerProducto(int codigoProducto) {
+		for (Producto p : productos)
+			if (p.getCodigoProducto() == codigoProducto)
+				return p;
+		return null;
+	}
+
 	private Sucursal obtenerSucursalCercana(Ubicacion ubicacion) {
 		Sucursal cercana = null;
 
@@ -172,4 +230,80 @@ public class ControladorPrincipal {
 		return cercana;
 	}
 
+	/*******************************/
+	/****** metodos de prueba ******/
+	/*******************************/
+
+	public List<Sucursal> getSucursales() {
+		return sucursales;
+	}
+
+	public void setSucursales(List<Sucursal> sucursales) {
+		this.sucursales = sucursales;
+	}
+
+	public List<Cliente> getClientes() {
+		return clientes;
+	}
+
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
+	}
+
+	public List<CompaniaSeguro> getCompaniasSeguros() {
+		return companiasSeguros;
+	}
+
+	public void setCompaniasSeguros(List<CompaniaSeguro> companiasSeguros) {
+		this.companiasSeguros = companiasSeguros;
+	}
+
+	public List<String> getMaterialesNoTransportables() {
+		return materialesNoTransportables;
+	}
+
+	public void setMaterialesNoTransportables(
+			List<String> materialesNoTransportables) {
+		this.materialesNoTransportables = materialesNoTransportables;
+	}
+
+	public List<Proveedor> getProveedores() {
+		return proveedores;
+	}
+
+	public void setProveedores(List<Proveedor> proveedores) {
+		this.proveedores = proveedores;
+	}
+
+	public List<Pago> getPagos() {
+		return pagos;
+	}
+
+	public void setPagos(List<Pago> pagos) {
+		this.pagos = pagos;
+	}
+
+	public List<Cobro> getCobros() {
+		return cobros;
+	}
+
+	public void setCobros(List<Cobro> cobros) {
+		this.cobros = cobros;
+	}
+
+	public List<EstrategiaMantenimiento> getMantenimientos() {
+		return mantenimientos;
+	}
+
+	public void setMantenimientos(List<EstrategiaMantenimiento> mantenimientos) {
+		this.mantenimientos = mantenimientos;
+	}
+
+	public List<DistanciaEntreSucursales> getDistancias() {
+		return distancias;
+	}
+
+	public void setDistancias(List<DistanciaEntreSucursales> distancias) {
+		this.distancias = distancias;
+	}
 }

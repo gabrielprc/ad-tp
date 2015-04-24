@@ -1,7 +1,6 @@
 package model.impl;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 public class Sucursal implements Serializable {
@@ -19,9 +18,9 @@ public class Sucursal implements Serializable {
 	private List<Viaje> viajes;
 
 	public Sucursal(int numero, String nombre) {
-
 		this.numero = numero;
 		this.nombre = nombre;
+		deposito = new Deposito(1); //arreglar esto
 	}
 
 	public Deposito getDeposito() {
@@ -116,11 +115,6 @@ public class Sucursal implements Serializable {
 			}
 		}
 		return null;
-	}
-
-	public void almacenarCarga(Carga carga) {
-
-		this.deposito.almacenarCarga(carga);
 	}
 
 	public void crearViaje() {

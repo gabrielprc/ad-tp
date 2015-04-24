@@ -9,6 +9,7 @@ public class Producto implements Serializable {
 	 */
 	private static final long serialVersionUID = 2506118120974790841L;
 	
+	private int codigoProducto;
 	private String nombre;
 	private Float peso;
 	private Tamano tamano;
@@ -87,6 +88,12 @@ public class Producto implements Serializable {
 	}
 	public void setRefrigerada(boolean refrigerada) {
 		this.refrigerada = refrigerada;
+	}
+	public int getCodigoProducto() {
+		return codigoProducto;
+	}
+	public void setCodigoProducto(int codigoProducto) {
+		this.codigoProducto = codigoProducto;
 	}
 	
 	

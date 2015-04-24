@@ -3,12 +3,11 @@ package model.impl;
 public class ItemProducto {
 
 	private Producto producto;
-	private int cantidad;
+	private float cantidad;
 
-	public ItemProducto(Producto producto, int cantidad) {
-
-		this.setProducto(producto);
-		this.setCantidad(cantidad);
+	public ItemProducto(Producto producto, float cantidad) {
+		this.producto = producto;
+		this.cantidad = cantidad;
 	}
 
 	public Producto getProducto() {
@@ -19,11 +18,11 @@ public class ItemProducto {
 		this.producto = producto;
 	}
 
-	public int getCantidad() {
+	public float getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(int cantidad) {
+	public void setCantidad(float cantidad) {
 		this.cantidad = cantidad;
 	}
 

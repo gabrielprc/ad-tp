@@ -2,6 +2,8 @@ package model.impl;
 
 import java.io.Serializable;
 
+import model.views.UbicacionView;
+
 public class Ubicacion implements Serializable {
 	/**
 	 * 
@@ -17,6 +19,16 @@ public class Ubicacion implements Serializable {
 	private String departamento;
 	private Coordenada coordenadaDestino;
 	
+	public Ubicacion(UbicacionView ubicacion) {
+		this.pais = ubicacion.getPais();
+		this.provincia = ubicacion.getProvincia();
+		this.ciudad = ubicacion.getCiudad();
+		this.calle = ubicacion.getCalle();
+		this.altura = ubicacion.getAltura();
+		this.piso = ubicacion.getPiso();
+		this.departamento = ubicacion.getDepartamento();
+		this.coordenadaDestino = new Coordenada(ubicacion.getCoordenadaDestino());
+	}
 	public String getPais() {
 		return pais;
 	}

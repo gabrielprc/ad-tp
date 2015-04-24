@@ -15,7 +15,14 @@ public abstract class Vehiculo implements Serializable {
 	protected Float peso;
 	protected Float tara;
 	protected Float tarifa;
+	protected TipoVehiculo tipo;
 	
+	public TipoVehiculo getTipo() {
+		return tipo;
+	}
+	public void setTipo(TipoVehiculo tipo) {
+		this.tipo = tipo;
+	}
 	public String getPatente() {
 		return patente;
 	}

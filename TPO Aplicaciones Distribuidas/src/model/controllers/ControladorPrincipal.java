@@ -40,7 +40,6 @@ public class ControladorPrincipal {
 	private List<Cobro> cobros;
 	private List<EstrategiaMantenimiento> mantenimientos;
 	private List<Producto> productos;
-
 	private List<DistanciaEntreSucursales> distancias;
 
 	private ControladorPrincipal() {
@@ -152,6 +151,15 @@ public class ControladorPrincipal {
 		cal.add(Calendar.MINUTE, minutos);
 
 		return cal.getTime();
+	}
+	
+	public float calcularCostoViaje(Integer sucursalA, Integer sucursalB){
+		
+		for(DistanciaEntreSucursales d : distancias)
+			if(d.getSucursalA().getNumero() == sucursalA || d.getSucursalB().getNumero() == sucursalB)
+				if(d.getSucursalB().getNumero() == sucursalB || d.getSucursalB().getNumero() == sucursalA)
+					return d.getCosto();
+		return 0;	
 	}
 
 	public Cliente obtenerCliente(String codigoUnico) {

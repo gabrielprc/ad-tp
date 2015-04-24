@@ -173,7 +173,9 @@ public class ControladorPrincipal {
 							carga.getDestino(), carga.getEstadoCarga());
 					for (ItemProductoView ipv : carga.getProductos()){
 						Producto producto = obtenerProducto(ipv.getProducto());
-						sucursal.getDeposito().obtenerCarga(carga.getCodigo()).agregarItemProducto(producto, ipv.getCantidad());					
+						if(producto != null){
+							sucursal.getDeposito().obtenerCarga(carga.getCodigo()).agregarItemProducto(producto, ipv.getCantidad());	
+						}
 					}
 				}
 				else{
@@ -306,4 +308,12 @@ public class ControladorPrincipal {
 	public void setDistancias(List<DistanciaEntreSucursales> distancias) {
 		this.distancias = distancias;
 	}
+
+	public List<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}	
 }

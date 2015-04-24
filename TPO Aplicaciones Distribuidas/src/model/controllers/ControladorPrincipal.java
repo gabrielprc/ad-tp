@@ -238,7 +238,7 @@ public class ControladorPrincipal {
 				if (d.getSucursalB().getNumero() == sucursalB.getNumero()
 						|| d.getSucursalB().getNumero() == sucursalA
 								.getNumero())
-					return d.getCosto();
+					return d.getDuracionEnHoras();
 		return 0;
 	}
 

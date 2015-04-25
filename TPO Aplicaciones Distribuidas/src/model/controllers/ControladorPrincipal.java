@@ -121,7 +121,7 @@ public class ControladorPrincipal {
 			throw new Exception("Ya existe un viaje con el codigo: " + codigo);
 		}
 	}
-	
+
 	public void actualizarViaje(Viaje viaje, Sucursal sucursal) {
 		for (Iterator<Carga> iterator = viaje.getCargas().iterator(); iterator.hasNext();) {
 			Carga carga = iterator.next();
@@ -137,7 +137,7 @@ public class ControladorPrincipal {
 			}
 		}
 	}
-	
+
 	/* OTROS */
 
 	public void asignarCuentaCorriente(String codigoUnico, Float montoActual, Float montoAutorizado) throws Exception{
@@ -187,15 +187,6 @@ public class ControladorPrincipal {
 		return cal.getTime();
 	}
 
-	public float calcularCostoSucursales(Integer sucursalA, Integer sucursalB){
-
-		for(DistanciaEntreSucursales d : distancias)
-			if(d.getSucursalA().getNumero() == sucursalA || d.getSucursalB().getNumero() == sucursalB)
-				if(d.getSucursalB().getNumero() == sucursalB || d.getSucursalB().getNumero() == sucursalA)
-					return d.getCosto();
-		return 0;	
-	}
-
 	public void asignarCargaASucursal(int codigoSucursal, Carga carga) throws Exception{
 		Sucursal sucursal = obtenerSucursal(codigoSucursal);
 		if (sucursal != null){
@@ -239,79 +230,87 @@ public class ControladorPrincipal {
 		}
 		return false;
 	}
-	
-	public float calcularCostoSucursales(Sucursal sucursalA, Sucursal sucursalB) {
+
+	public float calcularHorasEntreSucursales(Sucursal sucursalA, Sucursal sucursalB) {
 
 		for (DistanciaEntreSucursales d : distancias)
 			if (d.getSucursalA().getNumero() == sucursalA.getNumero()
-					|| d.getSucursalB().getNumero() == sucursalB.getNumero())
+			|| d.getSucursalB().getNumero() == sucursalB.getNumero())
 				if (d.getSucursalB().getNumero() == sucursalB.getNumero()
-						|| d.getSucursalB().getNumero() == sucursalA
-								.getNumero())
+				|| d.getSucursalB().getNumero() == sucursalA
+				.getNumero())
 					return d.getDuracionEnHoras();
 		return 0;
 	}
 
-	public void determinarCostoViaje(Viaje viaje) {
-
-		Viaje v = obtenerViaje(viaje.getCodigo());
-		Date llegada = new Date();
-
+	public void determinarCostoViaje(Viaje v) {
 		if (v == null)
 			return;
+		
+		Calendar cal;
+		
 		if (v.getParadasIntermedias().size() == 0) {
-
+			cal = Calendar.getInstance();
 			Sucursal sucursalA = null, sucursalB = null;
 
 			for (Sucursal s : sucursales) {
-				if (viaje.getOrigen().equals(s.getUbicacion()))
+				if (v.getOrigen().equals(s.getUbicacion()))
 					sucursalA = s;
-				if (viaje.getOrigen().equals(s.getUbicacion()))
+				else if (v.getDestino().equals(s.getUbicacion()))
 					sucursalB = s;
 			}
 			if (sucursalA == null || sucursalB == null)
 				return;
-			float costo = calcularCostoSucursales(sucursalA, sucursalB);
+			float costo = calcularHorasEntreSucursales(sucursalA, sucursalB);
 			int horas = (int) costo;
 			int minutos = (int) (60 * (costo - horas));
 
-			llegada.setHours(llegada.getHours() + horas);
-			llegada.setMinutes(llegada.getMinutes() + minutos);
-			v.setFechaLlegada(llegada);
-		}
-		if (v.getParadasIntermedias().size() > 0) {
+			cal.add(Calendar.HOUR, horas);
+			cal.add(Calendar.MINUTE, minutos);
+			v.setFechaLlegada(cal.getTime());
+		} else if (v.getParadasIntermedias().size() > 0) {
+			float horasDistancia = calcularHorasEntreSucursales(obtenerSucursalPorUbicacion(v.getOrigen()), obtenerSucursalPorUbicacion(v.getParadasIntermedias().firstElement().getUbicacion()));
+			int horas = (int) horasDistancia;
+			int minutos = (int) (60 * (horasDistancia - horas));
+			
+			cal = Calendar.getInstance();
+			cal.add(Calendar.HOUR, horas);
+			cal.add(Calendar.MINUTE, minutos);
 
-			float costo = calcularCostoSucursales(
-					obtenerSucursalPorUbicacion(v.getOrigen()), obtenerSucursalPorUbicacion(v
-							.getParadasIntermedias().firstElement()
-							.getUbicacion()));
+			v.getParadasIntermedias().firstElement().setLlegada(cal.getTime());
 
-			int horas = (int) costo;
-			int minutos = (int) (60 * (costo - horas));
-
-			v.getParadasIntermedias().firstElement()
-					.setLlegada(v.getFechaSalida());
-			v.getParadasIntermedias().firstElement().getLlegada()
-					.setHours(horas);
-			;
-
-			v.getParadasIntermedias().firstElement().setChecked(true);
-
-			for (int i = 0; i < v.getParadasIntermedias().size(); i++) {
-
-				if (!v.getParadasIntermedias().get(i).isChecked()) {
-
+			if (v.getParadasIntermedias().size() > 1) {
+				for (int i = 1; i < v.getParadasIntermedias().size() - 1; i++) {
+					Sucursal sucA = obtenerSucursalPorUbicacion(v.getParadasIntermedias().get(i - 1).getUbicacion());
+					Sucursal sucB = obtenerSucursalPorUbicacion(v.getParadasIntermedias().get(i).getUbicacion());
 					
+					horasDistancia = calcularHorasEntreSucursales(sucA, sucB);
+					horas = (int) horasDistancia;
+					minutos = (int) (60 * (horasDistancia - horas));
+					cal.add(Calendar.HOUR, horas);
+					cal.add(Calendar.MINUTE, minutos);
+					
+					v.getParadasIntermedias().get(i).setLlegada(cal.getTime());
 				}
-
 			}
-
+			
+			Sucursal sucA = obtenerSucursalPorUbicacion(v.getParadasIntermedias().get(v.getParadasIntermedias().size() - 1).getUbicacion());
+			Sucursal sucB = obtenerSucursalPorUbicacion(v.getDestino());
+			
+			horasDistancia = calcularHorasEntreSucursales(sucA, sucB);
+			horas = (int) horasDistancia;
+			minutos = (int) (60 * (horasDistancia - horas));
+			
+			cal.add(Calendar.HOUR, horas);
+			cal.add(Calendar.MINUTE, minutos);
+			
+			v.setFechaLlegada(cal.getTime());
 		}
 
 	}
 
 	/* OBTENER */
-	
+
 	public Cliente obtenerCliente(String codigoUnico) {
 
 		for (Cliente c : clientes)
@@ -383,7 +382,11 @@ public class ControladorPrincipal {
 				return s;
 		return null;
 	}
-	
+
+	public boolean dinero(){
+		return dinero();
+	}
+
 	/* GETTERS Y SETTERS PARA TESTEAR */
 
 	public List<Sucursal> getSucursales() {

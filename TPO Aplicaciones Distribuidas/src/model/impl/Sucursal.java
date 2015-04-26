@@ -112,4 +112,17 @@ public class Sucursal implements Serializable {
 		this.empleados.add(e);
 	}
 
+	public void agregarVehiculo(Vehiculo vehiculo) {
+		vehiculos.add(vehiculo);		
+	}
+
+	public boolean existeVehiculo(String patente) {
+		for (Vehiculo v : vehiculos){
+			if (v.patente.equals(patente)){
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

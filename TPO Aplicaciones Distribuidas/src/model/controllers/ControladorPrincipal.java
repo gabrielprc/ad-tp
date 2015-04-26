@@ -21,12 +21,17 @@ import model.impl.ItemProducto;
 import model.impl.Pago;
 import model.impl.ParadaIntermedia;
 import model.impl.Particular;
+import model.impl.PlanMantenimiento;
 import model.impl.Producto;
 import model.impl.Proveedor;
 import model.impl.Seguro;
 import model.impl.Sucursal;
+import model.impl.Tamano;
+import model.impl.TipoVehiculo;
 import model.impl.Ubicacion;
 import model.impl.Vehiculo;
+import model.impl.VehiculoExterno;
+import model.impl.VehiculoLocal;
 import model.impl.Viaje;
 
 public class ControladorPrincipal {
@@ -134,6 +139,29 @@ public class ControladorPrincipal {
 			if (parada.getUbicacion().equals(sucursal.getUbicacion())) {
 				parada.setChecked(true);
 				break;
+			}
+		}
+	}
+
+	/* ABM VEHICULOS */
+
+	public void altaVehiculoLocal(Integer idSucursal, String patente, Tamano tamano, Float peso, Float tara, Float tarifa, TipoVehiculo tipo,
+			PlanMantenimiento planMantenimiento, Date vencimientoGarantia){
+		Sucursal s = obtenerSucursal(idSucursal);
+		if (s != null){
+			if (s.existeVehiculo(patente)){
+				s.agregarVehiculo(new VehiculoLocal(patente, tamano, peso, tara, tarifa, tipo, planMantenimiento, vencimientoGarantia));
+			}
+		}
+	}
+	
+	public void altaVehiculoExterno(Integer idSucursal, String patente, Tamano tamano, Float peso, Float tara, Float tarifa, TipoVehiculo tipo,
+			String cuit){
+		Sucursal s = obtenerSucursal(idSucursal);
+		Proveedor p = obtenerProveedor(cuit);
+		if (s != null && p != null){
+			if (s.existeVehiculo(patente)){
+				s.agregarVehiculo(new VehiculoExterno(patente, tamano, peso, tara, tarifa, tipo, p));
 			}
 		}
 	}
@@ -246,9 +274,9 @@ public class ControladorPrincipal {
 	public void determinarCostoViaje(Viaje v) {
 		if (v == null)
 			return;
-		
+
 		Calendar cal;
-		
+
 		if (v.getParadasIntermedias().size() == 0) {
 			cal = Calendar.getInstance();
 			Sucursal sucursalA = null, sucursalB = null;
@@ -272,7 +300,7 @@ public class ControladorPrincipal {
 			float horasDistancia = calcularHorasEntreSucursales(obtenerSucursalPorUbicacion(v.getOrigen()), obtenerSucursalPorUbicacion(v.getParadasIntermedias().firstElement().getUbicacion()));
 			int horas = (int) horasDistancia;
 			int minutos = (int) (60 * (horasDistancia - horas));
-			
+
 			cal = Calendar.getInstance();
 			cal.add(Calendar.HOUR, horas);
 			cal.add(Calendar.MINUTE, minutos);
@@ -283,27 +311,27 @@ public class ControladorPrincipal {
 				for (int i = 1; i < v.getParadasIntermedias().size() - 1; i++) {
 					Sucursal sucA = obtenerSucursalPorUbicacion(v.getParadasIntermedias().get(i - 1).getUbicacion());
 					Sucursal sucB = obtenerSucursalPorUbicacion(v.getParadasIntermedias().get(i).getUbicacion());
-					
+
 					horasDistancia = calcularHorasEntreSucursales(sucA, sucB);
 					horas = (int) horasDistancia;
 					minutos = (int) (60 * (horasDistancia - horas));
 					cal.add(Calendar.HOUR, horas);
 					cal.add(Calendar.MINUTE, minutos);
-					
+
 					v.getParadasIntermedias().get(i).setLlegada(cal.getTime());
 				}
 			}
-			
+
 			Sucursal sucA = obtenerSucursalPorUbicacion(v.getParadasIntermedias().get(v.getParadasIntermedias().size() - 1).getUbicacion());
 			Sucursal sucB = obtenerSucursalPorUbicacion(v.getDestino());
-			
+
 			horasDistancia = calcularHorasEntreSucursales(sucA, sucB);
 			horas = (int) horasDistancia;
 			minutos = (int) (60 * (horasDistancia - horas));
-			
+
 			cal.add(Calendar.HOUR, horas);
 			cal.add(Calendar.MINUTE, minutos);
-			
+
 			v.setFechaLlegada(cal.getTime());
 		}
 
@@ -380,6 +408,15 @@ public class ControladorPrincipal {
 		for (Sucursal s : sucursales)
 			if (s.getUbicacion().equals(u))
 				return s;
+		return null;
+	}
+	
+	public Proveedor obtenerProveedor(String cuit){
+		for (Proveedor p : proveedores){
+			if (p.getCuit().equals(cuit)){
+				return p;
+			}
+		}
 		return null;
 	}
 

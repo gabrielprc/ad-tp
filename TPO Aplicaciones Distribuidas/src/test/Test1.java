@@ -56,7 +56,7 @@ public class Test1 {
 			Producto producto1 = new Producto();
 			producto1.setCodigoProducto(1);
 			productosControlador.add(producto1);
-			//producto1.setMaterial("Bombas");
+			producto1.setMaterial("Ayy lmao");
 			Producto producto2 = new Producto();
 			producto2.setCodigoProducto(2);
 			productosControlador.add(producto2);

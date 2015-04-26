@@ -12,6 +12,18 @@ public class VehiculoLocal extends Vehiculo {
 	private PlanMantenimiento planMantenimiento;
 	private Date vencimientoGarantia;
 	
+	public VehiculoLocal(String patente, Tamano tamano, Float peso, Float tara,
+			Float tarifa, TipoVehiculo tipo,
+			PlanMantenimiento planMantenimiento, Date vencimientoGarantia) {
+		this.patente = patente;
+		this.tamano = tamano;
+		this.peso = peso;
+		this.tara = tara;
+		this.tarifa = tarifa;
+		this.planMantenimiento = planMantenimiento;
+		this.vencimientoGarantia = vencimientoGarantia;
+	}
+	
 	public PlanMantenimiento getPlanMantenimiento() {
 		return planMantenimiento;
 	}

@@ -16,6 +16,8 @@ import model.impl.misc.Ubicacion;
 import model.impl.productos.CondicionEspecial;
 import model.impl.productos.ItemProducto;
 import model.impl.productos.Producto;
+import model.impl.productos.TipoFragilidad;
+import model.impl.productos.TipoTratamiento;
 import model.impl.sucursales.Sucursal;
 import model.impl.vehiculos.PlanMantenimientoKilometraje;
 import model.impl.vehiculos.Tarea;
@@ -64,9 +66,11 @@ public class Test1 {
 			producto1.setCodigoProducto(1);
 			productosControlador.add(producto1);
 			producto1.setMaterial("Ayy lmao");
+			producto1.setTamano(new Tamano(3f,3f,3f));
 			Producto producto2 = new Producto();
 			producto2.setCodigoProducto(2);
 			productosControlador.add(producto2);
+			producto2.setTamano(new Tamano(2f,2f,2f));
 			con.setProductos(productosControlador);
 
 			//intento agregar una carga
@@ -132,7 +136,7 @@ public class Test1 {
 			c.setTime(new Date()); // Now use today date.
 			c.add(Calendar.DATE, -1); //arranca con garantia vencida
 			
-			con.altaVehiculoLocal(1, "vehiculo1", new Tamano(), 1f, 1f, 1f, TipoVehiculo.CAMION_CON_TANQUE, new PlanMantenimientoKilometraje(100), c.getTime());
+			con.altaVehiculoLocal(1, "vehiculo1", new Tamano(10f,10f,10f), 1f, 1f, 1f, TipoVehiculo.CAMION_CON_TANQUE, new PlanMantenimientoKilometraje(100), c.getTime());
 			
 			for (Vehiculo v : con.obtenerSucursal(1).getVehiculos()){
 				System.out.println(v.getPatente());
@@ -154,6 +158,13 @@ public class Test1 {
 			carga.getFechaProbableEntrega(), cliente, carga.getManifiesto(), origen,
 			destino, carga.getEstadoCarga());
 			 */
+			
+			producto1.setTratamiento(TipoTratamiento.EXTREMADAMENTE_PELIGROSO);
+			producto1.setFragilidad(TipoFragilidad.EXTREMADAMENTE_FRAGIL);
+			System.out.println(producto1.calcularFactorProducto());
+			System.out.println(producto2.calcularFactorProducto());
+			
+			System.out.println(carga1.calcularCosto());
 		}
 		catch(Exception e){
 			e.printStackTrace();

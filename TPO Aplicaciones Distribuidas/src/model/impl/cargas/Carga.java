@@ -114,10 +114,6 @@ public class Carga implements Serializable {
 		this.productos = productos;
 	}
 
-	public float calcularCosto() {
-		return 0;
-	}
-
 	public float calcularVolumenTotal() {
 
 		float volumen = 0;
@@ -148,6 +144,25 @@ public class Carga implements Serializable {
 
 	public void agregarItemProducto(Producto producto, float cantidad) {
 		productos.add(new ItemProducto(producto, cantidad));		
+	}
+	
+	public Float calcularCosto(){
+		Float costo = 50f;
+		costo *= calcularFactorProductos();
+		costo *= calcularFactorDistancia();
+		return costo;
+	}
+	
+	private Float calcularFactorProductos(){
+		Float total = 1f;
+		for (ItemProducto ip : productos){
+			total += ip.getProducto().calcularFactorProducto() * ip.getCantidad();
+		}
+		return total;
+	}
+
+	private Float calcularFactorDistancia(){
+		return 1f + origen.calcularDistanciaEnKilometros(destino) / 50f;				
 	}
 
 }

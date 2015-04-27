@@ -1,6 +1,7 @@
 package model.impl.productos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.impl.misc.Tamano;
@@ -23,6 +24,10 @@ public class Producto implements Serializable {
 	private String consideraciones;
 	private List<CondicionEspecial> condicionesEspeciales;
 	private boolean refrigerada;
+	
+	public Producto(){
+		condicionesEspeciales = new ArrayList<CondicionEspecial>();
+	}
 	
 	public String getNombre() {
 		return nombre;
@@ -98,5 +103,21 @@ public class Producto implements Serializable {
 		this.codigoProducto = codigoProducto;
 	}
 	
+	public Float calcularFactorProducto(){
+		Float factorBase = 0f;
+		factorBase += tamano.calcularVolumen()/200;
+		if (fragilidad != null) factorBase += fragilidad.getFactorFragilidad();
+		if (tratamiento != null) factorBase += tratamiento.getFactorTratamiento();
+		factorBase += calcularFactorCondicionesEspeciales();
+		if (refrigerada) factorBase += 0.005f;
+		return factorBase;
+	}
 	
+	private Float calcularFactorCondicionesEspeciales(){
+		Float total = 0f;
+		for (CondicionEspecial ce : condicionesEspeciales){
+			total += ce.getFactorCondicion();
+		}
+		return total;
+	}
 }

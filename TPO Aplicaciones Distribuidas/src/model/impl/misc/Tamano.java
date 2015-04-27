@@ -11,6 +11,12 @@ public class Tamano implements Serializable {
 	private Float alto;
 	private Float ancho;
 
+	public Tamano(Float i, Float j, Float k) {
+		profundidad = i;
+		alto = j;
+		ancho = k;
+	}
+
 	public Float getProfundidad() {
 		return profundidad;
 	}

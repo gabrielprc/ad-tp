@@ -34,8 +34,8 @@ public class TestCostoCarga {
 		Ubicacion d1 = new Ubicacion(2, "", "", "", "", "", "", "", new Coordenada(17.5f, 15));
 		Carga c1 = new Carga(1, TipoCarga.BARRIL, null, new Date(), null, "", o1, d1, EstadoCarga.EN_VIAJE);
 		
-		c1.agregarItemProducto(p1, 5);
-		c1.agregarItemProducto(p2, 10);
+		c1.agregarItemProducto(p1, 1);
+		c1.agregarItemProducto(p2, 3);
 		
 		System.out.println("factor p1: " + p1.calcularFactorProducto());
 		System.out.println("factor p2: " +p2.calcularFactorProducto());

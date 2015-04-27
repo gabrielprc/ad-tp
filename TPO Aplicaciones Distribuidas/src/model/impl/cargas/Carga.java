@@ -147,10 +147,8 @@ public class Carga implements Serializable {
 	}
 	
 	public Float calcularCosto(){
-		Float costo = 60f;
-		costo *= calcularFactorProductos();
-		costo *= calcularFactorDistancia();
-		return costo;
+		//uso $60 como costo base
+		return 60f * calcularFactorProductos() * calcularFactorDistancia();
 	}
 	
 	public Float calcularFactorProductos(){ //public para testear

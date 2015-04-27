@@ -1,30 +1,5 @@
 package test;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import model.controllers.ControladorPrincipal;
-import model.impl.cargas.Carga;
-import model.impl.cargas.EstadoCarga;
-import model.impl.cargas.TipoCarga;
-import model.impl.clientes.Cliente;
-import model.impl.misc.Coordenada;
-import model.impl.misc.Tamano;
-import model.impl.misc.Ubicacion;
-import model.impl.productos.CondicionEspecial;
-import model.impl.productos.ItemProducto;
-import model.impl.productos.Producto;
-import model.impl.productos.TipoFragilidad;
-import model.impl.productos.TipoTratamiento;
-import model.impl.sucursales.Sucursal;
-import model.impl.vehiculos.PlanMantenimientoKilometraje;
-import model.impl.vehiculos.Tarea;
-import model.impl.vehiculos.TipoVehiculo;
-import model.impl.vehiculos.Vehiculo;
-import model.impl.vehiculos.VehiculoLocal;
-import model.impl.viajes.Viaje;
 
 public class Test1 {
 

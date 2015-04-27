@@ -1,7 +1,6 @@
 package model.impl.productos;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import model.impl.misc.Tamano;

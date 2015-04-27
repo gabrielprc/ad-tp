@@ -1,10 +1,8 @@
 package model.impl.vehiculos;
 
 import java.io.Serializable;
-import java.util.List;
 
 import model.impl.misc.Tamano;
-import model.impl.viajes.Viaje;
 
 public abstract class Vehiculo implements Serializable {
 	/**

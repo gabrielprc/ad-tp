@@ -3,7 +3,6 @@ package model.impl.vehiculos;
 import java.util.Date;
 
 import model.impl.misc.Tamano;
-import model.impl.viajes.Viaje;
 
 
 public class VehiculoLocal extends Vehiculo {

@@ -7,6 +7,7 @@ import java.util.List;
 import model.impl.cargas.Carga;
 import model.impl.misc.Ubicacion;
 import model.impl.personal.Empleado;
+import model.impl.vehiculos.Vehiculo;
 import model.impl.vehiculos.VehiculoLocal;
 import model.impl.viajes.Seguro;
 import model.impl.viajes.Viaje;
@@ -132,6 +133,12 @@ public class Sucursal implements Serializable {
 			}
 		}
 		return false;
+	}
+	
+	public Vehiculo obtenerMejorVehiculo(Carga carga) {
+		for (Vehiculo vehiculo : vehiculos) {
+			
+		}
 	}
 
 }

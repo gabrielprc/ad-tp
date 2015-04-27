@@ -17,7 +17,7 @@ public class Viaje implements Serializable {
 	 */
 	private static final long serialVersionUID = 5092108929260301459L;
 
-	private int codigo;
+	private Integer codigo;
 	private List<Carga> cargas;
 	private Seguro seguro;
 	private Vehiculo vehiculo;
@@ -29,9 +29,8 @@ public class Viaje implements Serializable {
 	private boolean estaAtrasado;
 	private Vector<ParadaIntermedia> paradasIntermedias;
 
-	public Viaje(int codigo, List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida,
+	public Viaje(List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida,
 			List<CondicionEspecial> condicionesEspeciales, Vector<ParadaIntermedia> paradasIntermedias) {
-		this.codigo = codigo;
 		this.cargas = cargas;
 		this.seguro = seguro;
 		this.vehiculo = vehiculo;
@@ -202,5 +201,14 @@ public class Viaje implements Serializable {
 		}
 		return null;
 	}
-	
+
+	@Override
+	public boolean equals(Object v) {
+		if (v instanceof Viaje) {
+			if (this.codigo == ((Viaje) v).getCodigo()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

@@ -1,7 +1,9 @@
 package model.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -70,6 +72,33 @@ public class ControladorPrincipal {
 		viajesExternos = new ArrayList<Viaje>();
 	}
 
+	
+	/* ABM CARGAS */
+	public void altaCarga(Carga carga, Sucursal sucursal) {
+		sucursal.getDeposito().almacenarCarga(carga);
+		
+		Viaje mejorViaje = obtenerMejorViaje(carga);
+		
+		if (mejorViaje != null) {
+			mejorViaje.agregarCarga(carga);
+		} else {
+			//TODO implementar correctamente la lógica de asignación de vehículo y viaje
+			Vehiculo vehiculo = null;
+			
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.HOUR, 6);
+			Date salida = cal.getTime();
+			Date llegada = estimarLlegada(carga.getProductos(), sucursal, obtenerSucursalCercana(carga.getDestino()));
+			
+			for (Vehiculo v : sucursal.getVehiculos()) {
+				if (estaDisponibleVehiculo(v, salida, llegada)) {
+					vehiculo = v;
+				}
+			}
+			altaViaje(Arrays.asList(carga), null, vehiculo, salida, null, null);
+		}
+	}
+	
 	/* ABM CLIENTES */
 
 	public void altaClienteEmpresa(String codigoUnico, String nombre) throws Exception {
@@ -119,14 +148,9 @@ public class ControladorPrincipal {
 
 	/* ABM VIAJES */
 
-	public void altaViaje(int codigo, List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida,
-			List<CondicionEspecial> condicionesEspeciales, Vector<ParadaIntermedia> paradasIntermedias) throws Exception{
-		if (obtenerViaje(codigo) == null){
-			viajes.add(new Viaje(codigo, cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, paradasIntermedias));
-		}
-		else{
-			throw new Exception("Ya existe un viaje con el codigo: " + codigo);
-		}
+	private void altaViaje(List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida,
+			List<CondicionEspecial> condicionesEspeciales, Vector<ParadaIntermedia> paradasIntermedias) {
+		viajes.add(new Viaje(cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, paradasIntermedias));
 	}
 
 	public void actualizarViaje(Viaje viaje, Sucursal sucursal) {
@@ -179,7 +203,7 @@ public class ControladorPrincipal {
 		return mejorViaje;
 	}
 	
-	public void altaViajeExterno(int codigo, List<Carga> cargas, Seguro seguro, Date fechaSalida, Date fechaLLegada, 
+	public void altaViajeExterno(List<Carga> cargas, Seguro seguro, Date fechaSalida, Date fechaLLegada, 
 
 		Proveedor proveedor, TipoVehiculo tipoVehiculo, List<CondicionEspecial> condicionesEspeciales){
 		
@@ -188,7 +212,7 @@ public class ControladorPrincipal {
 			if(v.getTipo().equals(tipoVehiculo))
 				vehiculo = v;
 
-		viajesExternos.add(new Viaje(codigo, cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, null));
+		viajesExternos.add(new Viaje(cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, null));
 		
 	}
 	
@@ -239,6 +263,19 @@ public class ControladorPrincipal {
 	}
 
 	/* OTROS */
+	
+	public boolean estaDisponibleVehiculo(Vehiculo vehiculo, Date fechaDesde, Date fechaHasta) {
+		for (Viaje viaje : viajes) {
+			if (viaje.getVehiculo().equals(vehiculo)) {
+				if ((viaje.getFechaSalida().after(fechaDesde) && viaje.getFechaLlegada().before(fechaDesde))
+					|| (viaje.getFechaSalida().before(fechaDesde) && viaje.getFechaLlegada().after(fechaHasta))
+					|| (viaje.getFechaSalida().before(fechaDesde) && viaje.getFechaLlegada().before(fechaHasta))) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 
 	public void asignarCuentaCorriente(String codigoUnico, Float montoActual, Float montoAutorizado) throws Exception{
 
@@ -259,7 +296,7 @@ public class ControladorPrincipal {
 		return false;
 	}
 
-	public Date estimarLlegada(List<ItemProducto> productos, Sucursal origen,
+	public Date estimarLlegada(Collection<ItemProducto> productos, Sucursal origen,
 			Sucursal destino) {
 		Date partida = new Date();
 
@@ -370,7 +407,7 @@ public class ControladorPrincipal {
 			cal.add(Calendar.MINUTE, minutos);
 			v.setFechaLlegada(cal.getTime());
 		} else if (v.getParadasIntermedias().size() > 0) {
-			float horasDistancia = calcularHorasEntreSucursales(obtenerSucursalPorUbicacion(v.getOrigen()), obtenerSucursalPorUbicacion(v.getParadasIntermedias().firstElement().getUbicacion()));
+			float horasDistancia = calcularHorasEntreSucursales(obtenerSucursalCercana(v.getOrigen()), obtenerSucursalCercana(v.getParadasIntermedias().firstElement().getUbicacion()));
 			int horas = (int) horasDistancia;
 			int minutos = (int) (60 * (horasDistancia - horas));
 
@@ -382,8 +419,8 @@ public class ControladorPrincipal {
 
 			if (v.getParadasIntermedias().size() > 1) {
 				for (int i = 1; i < v.getParadasIntermedias().size() - 1; i++) {
-					Sucursal sucA = obtenerSucursalPorUbicacion(v.getParadasIntermedias().get(i - 1).getUbicacion());
-					Sucursal sucB = obtenerSucursalPorUbicacion(v.getParadasIntermedias().get(i).getUbicacion());
+					Sucursal sucA = obtenerSucursalCercana(v.getParadasIntermedias().get(i - 1).getUbicacion());
+					Sucursal sucB = obtenerSucursalCercana(v.getParadasIntermedias().get(i).getUbicacion());
 
 					horasDistancia = calcularHorasEntreSucursales(sucA, sucB);
 					horas = (int) horasDistancia;
@@ -395,8 +432,8 @@ public class ControladorPrincipal {
 				}
 			}
 
-			Sucursal sucA = obtenerSucursalPorUbicacion(v.getParadasIntermedias().get(v.getParadasIntermedias().size() - 1).getUbicacion());
-			Sucursal sucB = obtenerSucursalPorUbicacion(v.getDestino());
+			Sucursal sucA = obtenerSucursalCercana(v.getParadasIntermedias().get(v.getParadasIntermedias().size() - 1).getUbicacion());
+			Sucursal sucB = obtenerSucursalCercana(v.getDestino());
 
 			horasDistancia = calcularHorasEntreSucursales(sucA, sucB);
 			horas = (int) horasDistancia;
@@ -477,12 +514,13 @@ public class ControladorPrincipal {
 		return null;
 	}
 
-	public Sucursal obtenerSucursalPorUbicacion(Ubicacion u) {
-		for (Sucursal s : sucursales)
-			if (s.getUbicacion().equals(u))
-				return s;
-		return null;
-	}
+//	Emplear obtenerSucursalCercana, que puede recibir por parámetro una ubicación no necesariamente de sucursal
+//	public Sucursal obtenerSucursalPorUbicacion(Ubicacion u) {
+//		for (Sucursal s : sucursales)
+//			if (s.getUbicacion().equals(u))
+//				return s;
+//		return null;
+//	}
 	
 	public Proveedor obtenerProveedor(String cuit){
 		for (Proveedor p : proveedores){

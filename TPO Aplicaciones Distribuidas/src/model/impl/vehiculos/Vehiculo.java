@@ -13,7 +13,6 @@ public abstract class Vehiculo implements Serializable {
 	protected static final long serialVersionUID = 8056700348323209606L;
 	
 	protected String patente;
-	protected List<Viaje> viajes;
 	protected Tamano tamano;
 	protected Float peso;
 	protected Float tara;
@@ -31,12 +30,6 @@ public abstract class Vehiculo implements Serializable {
 	}
 	public void setPatente(String patente) {
 		this.patente = patente;
-	}
-	public List<Viaje> getViajes() {
-		return viajes;
-	}
-	public void setViajes(List<Viaje> viajes) {
-		this.viajes = viajes;
 	}
 	public Tamano getTamano() {
 		return tamano;
@@ -61,5 +54,15 @@ public abstract class Vehiculo implements Serializable {
 	}
 	public void setTarifa(Float tarifa) {
 		this.tarifa = tarifa;
+	}
+	
+	@Override
+	public boolean equals(Object v) {
+		if (v instanceof Vehiculo) {
+			if (this.patente.equals(((Vehiculo) v).getPatente())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

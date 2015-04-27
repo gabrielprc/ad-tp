@@ -42,13 +42,7 @@ public class VehiculoLocal extends Vehiculo {
 	
 	public boolean estaDisponible() {
 		Date ahora = new Date();
-		
-		for (Viaje viaje : viajes) {
-			if (viaje.getFechaLlegada().after(ahora) && viaje.getFechaSalida().before(ahora)) {
-				return false;
-			}
-		}
-		
+
 		for (Tarea tarea : planMantenimiento.getTareas()) {
 			if (tarea.getFechaDevolucion().after(ahora) && tarea.getFechaEntrega().before(ahora)) {
 				return false;

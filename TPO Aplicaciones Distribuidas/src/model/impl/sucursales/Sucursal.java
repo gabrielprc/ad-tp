@@ -134,11 +134,5 @@ public class Sucursal implements Serializable {
 		}
 		return false;
 	}
-	
-	public Vehiculo obtenerMejorVehiculo(Carga carga) {
-		for (Vehiculo vehiculo : vehiculos) {
-			
-		}
-	}
 
 }

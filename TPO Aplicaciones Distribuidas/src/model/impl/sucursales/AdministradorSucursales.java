@@ -30,8 +30,8 @@ public class AdministradorSucursales {
 		this.distancias = new ArrayList<DistanciaEntreSucursales>();
 	}
 	
-	public void altaSucursal(Integer numero, String nombre){		
-		sucursales.add(new Sucursal(numero, nombre));
+	public void altaSucursal(Integer numero, String nombre, Ubicacion ubicacion){		
+		sucursales.add(new Sucursal(numero, nombre,ubicacion));
 	}
 	
 	public void altaEmpleado(String cuit, String dni, String nombre,

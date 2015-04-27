@@ -24,10 +24,11 @@ public class Sucursal implements Serializable {
 	private List<Empleado> empleados;
 	private List<VehiculoLocal> vehiculos;
 
-	public Sucursal(int numero, String nombre) {
+	public Sucursal(int numero, String nombre, Ubicacion ubicacion) {
 		this.numero = numero;
 		this.nombre = nombre;
 		deposito = new Deposito(1); //arreglar esto
+		this.ubicacion = ubicacion;
 		vehiculos = new ArrayList<VehiculoLocal>();
 	}
 

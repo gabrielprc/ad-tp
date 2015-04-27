@@ -31,6 +31,23 @@ public class ControladorPrincipal {
 		administradorClientes = AdministradorClientes.getInstance();
 	}
 
+	
+	// GETTERS PARA TESTEAR
+	public AdministradorViajes getAdministradorViajes() {
+		return administradorViajes;
+	}
+	public AdministradorSucursales getAdministradorSucursales() {
+		return administradorSucursales;
+	}
+	public AdministradorCargas getAdministradorCargas() {
+		return administradorCargas;
+	}
+	public AdministradorVehiculos getAdministradorVehiculos() {
+		return administradorVehiculos;
+	}
+	public AdministradorClientes getAdministradorClientes() {
+		return administradorClientes;
+	}	
 }
 
 	

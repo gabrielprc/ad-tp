@@ -21,7 +21,7 @@ public class TestCostoCarga {
 		//defino productos
 		List<CondicionEspecial> l1 = new ArrayList<CondicionEspecial>();
 		l1.add(CondicionEspecial.SEGURIDAD);
-		Producto p1 = new Producto(1, "p1", 100f, new Tamano(3f,3f,3f), TipoFragilidad.EXTREMADAMENTE_FRAGIL, 5,
+		Producto p1 = new Producto(1, "p1", 100f, new Tamano(3f,8f,6f), TipoFragilidad.EXTREMADAMENTE_FRAGIL, 5,
 				"", "", TipoTratamiento.PELIGROSO, "", l1);
 		
 		List<CondicionEspecial> l2 = new ArrayList<CondicionEspecial>();
@@ -31,7 +31,7 @@ public class TestCostoCarga {
 				"", "", TipoTratamiento.EXTREMADAMENTE_PELIGROSO, "", l2);
 		
 		Ubicacion o1 = new Ubicacion(1, "", "", "", "", "", "", "", new Coordenada(10, 10));
-		Ubicacion d1 = new Ubicacion(2, "", "", "", "", "", "", "", new Coordenada(17.5f, 15));
+		Ubicacion d1 = new Ubicacion(2, "", "", "", "", "", "", "", new Coordenada(17.5f, 898));
 		Carga c1 = new Carga(1, TipoCarga.BARRIL, null, new Date(), null, "", o1, d1, EstadoCarga.EN_VIAJE);
 		
 		c1.agregarItemProducto(p1, 1);

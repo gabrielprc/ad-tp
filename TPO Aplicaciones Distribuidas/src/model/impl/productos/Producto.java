@@ -117,10 +117,10 @@ public class Producto implements Serializable {
 	
 	public Float calcularFactorProducto(){
 		Float factorBase = 0f;
-		factorBase += tamano.calcularVolumen() / 1000f; //cada 10m cubicos aumenta 1%
+		factorBase += tamano.calcularVolumen() * 0.001f; //cada 10m cubicos aumenta 1%
 		if (fragilidad != null) factorBase += fragilidad.getFactorFragilidad();
 		if (tratamiento != null) factorBase += tratamiento.getFactorTratamiento();
-		factorBase += peso / 2500f; //cada 100 kilos aumenta 4%
+		factorBase += peso * 0.0004f; //cada 100 kilos aumenta 4%
 		factorBase += calcularFactorCondicionesEspeciales();
 		if (refrigerada) factorBase += 0.005f;
 		return factorBase;

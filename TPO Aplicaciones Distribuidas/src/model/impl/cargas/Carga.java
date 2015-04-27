@@ -147,7 +147,7 @@ public class Carga implements Serializable {
 	}
 	
 	public Float calcularCosto(){
-		Float costo = 50f;
+		Float costo = 60f;
 		costo *= calcularFactorProductos();
 		costo *= calcularFactorDistancia();
 		return costo;
@@ -162,7 +162,6 @@ public class Carga implements Serializable {
 	}
 
 	public Float calcularFactorDistancia(){ //public para testear
-		return 1f + origen.calcularDistanciaEnKilometros(destino) / 1000f; //costo aumenta 100% cada 1000km	
+		return 1f + origen.calcularDistanciaEnKilometros(destino) * 0.001f; //costo aumenta 100% cada 1000km	
 	}
-
 }

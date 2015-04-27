@@ -7,7 +7,6 @@ import java.util.List;
 import model.impl.cargas.Carga;
 import model.impl.cargas.EstadoCarga;
 import model.impl.cargas.TipoCarga;
-import model.impl.clientes.Empresa;
 import model.impl.misc.Coordenada;
 import model.impl.misc.Tamano;
 import model.impl.misc.Ubicacion;
@@ -44,5 +43,4 @@ public class TestCostoCarga {
 		System.out.println("factor distancia: " +c1.calcularFactorDistancia());
 		System.out.println("costo: $" + c1.calcularCosto());
 	}
-
 }

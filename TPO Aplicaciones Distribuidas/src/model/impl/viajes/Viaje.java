@@ -166,4 +166,12 @@ public class Viaje implements Serializable {
 		this.destino = destino;
 	}
 	
+	public Date existeLLegadaUbicacion(Ubicacion ubicacion) {
+
+		for (ParadaIntermedia p : paradasIntermedias)
+			if (p.getUbicacion().equals(ubicacion))
+				return p.getLlegada();
+		return null;
+	}
+	
 }

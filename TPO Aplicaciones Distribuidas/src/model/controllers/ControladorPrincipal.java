@@ -195,22 +195,24 @@ public class ControladorPrincipal {
 		return false;
 	}
 
-	public Date estimarLlegada(List<ItemProducto> productos, Ubicacion origen,
-			Ubicacion destino) {
+	public Date estimarLlegada(List<ItemProducto> productos, Sucursal origen,
+			Sucursal destino) {
 		Date partida = new Date();
-
-		Sucursal cercana = obtenerSucursalCercana(destino);
 
 		DistanciaEntreSucursales distancia = null;
 
-		for (DistanciaEntreSucursales dist : distancias) {
-			if (dist.getSucursalA().getUbicacion().equals(origen)
-					&& dist.getSucursalB().getUbicacion().equals(destino)
-					|| dist.getSucursalA().getUbicacion().equals(destino)
-					&& dist.getSucursalB().getUbicacion().equals(origen)) {
-				distancia = dist;
-			}
+		for (Viaje v : viajes) {
+			if (v.getOrigen().equals(origen.getUbicacion()))
+				if (v.getDestino().equals(destino.getUbicacion())) 
+					return v.getFechaLlegada();
+				else {
+					Date llegada = v.existeLLegadaUbicacion(destino.getUbicacion());
+					if (llegada != null)
+						return llegada;
+				}
 		}
+
+		calcularHorasEntreSucursales(origen, destino);
 
 		int minutos = (int) (distancia.getDuracionEnHoras() % 1) * 60;
 		int horas = (int) (distancia.getDuracionEnHoras() - distancia

@@ -130,7 +130,7 @@ public class ControladorPrincipal {
 	public void actualizarViaje(Viaje viaje, Sucursal sucursal) {
 		for (Iterator<Carga> iterator = viaje.getCargas().iterator(); iterator.hasNext();) {
 			Carga carga = iterator.next();
-			if (false/*TODO chequear si hay un viaje mejor parando en esta sucursal ahora*/) {
+			if (obtenerMejorViaje(carga) != null) {
 				sucursal.getDeposito().almacenarCarga(carga);
 				iterator.remove();
 			}
@@ -141,6 +141,40 @@ public class ControladorPrincipal {
 				break;
 			}
 		}
+		for (Iterator<Carga> iterator = sucursal.getDeposito().getCargas().iterator(); iterator.hasNext();) {
+			Carga carga = iterator.next();
+			Viaje mejorViaje = obtenerMejorViaje(carga);
+			if (mejorViaje != null && mejorViaje.equals(viaje) && viaje.puedeTransportar(carga)) {
+				viaje.agregarCarga(carga);
+				iterator.remove();
+			}
+		}
+	}
+	
+	public Viaje obtenerMejorViaje(Carga carga) {
+		Sucursal sucursal = null;
+		
+		for (Sucursal suc : sucursales) {
+			if (sucursal.getDeposito().existeCarga(carga.getCodigo())) {
+				sucursal = suc;
+				break;
+			}
+		}
+		
+		Viaje mejorViaje = null;
+		
+		for (Viaje viaje : viajes) {
+			if (viaje.pasaPorSucursal(sucursal) && viaje.puedeTransportar(carga)) {
+				if (mejorViaje == null
+					|| (
+						viaje.puedeTransportar(carga)
+						&& viaje.obtenerLlegadaAParada(sucursal).before(mejorViaje.obtenerLlegadaAParada(sucursal))
+					)) {
+					mejorViaje = viaje;
+				}
+			}
+		}
+		return mejorViaje;
 	}
 
 	/* ABM VEHICULOS */

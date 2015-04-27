@@ -8,6 +8,7 @@ import java.util.Vector;
 import model.impl.cargas.Carga;
 import model.impl.misc.Ubicacion;
 import model.impl.productos.CondicionEspecial;
+import model.impl.sucursales.Sucursal;
 import model.impl.vehiculos.Vehiculo;
 
 public class Viaje implements Serializable {
@@ -42,8 +43,7 @@ public class Viaje implements Serializable {
 
 	public void agregarCarga(Carga carga) {
 
-		if (carga.calcularPesoTotal() <= calcularPesoDisponible()
-				&& carga.calcularVolumenTotal() <= calcularVolumenDisponible())
+		if (puedeTransportar(carga))
 			cargas.add(carga);
 	}
 
@@ -171,6 +171,35 @@ public class Viaje implements Serializable {
 		for (ParadaIntermedia p : paradasIntermedias)
 			if (p.getUbicacion().equals(ubicacion))
 				return p.getLlegada();
+		return null;
+	}
+	
+	public boolean pasaPorSucursal(Sucursal sucursal) {
+		if (origen.equals(sucursal.getUbicacion()) || destino.equals(sucursal.getUbicacion()))
+			return true;
+		for (ParadaIntermedia parada : paradasIntermedias) {
+			if (!parada.isChecked() && parada.getUbicacion().equals(sucursal.getUbicacion()))
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean puedeTransportar(Carga carga) {
+		return carga.calcularPesoTotal() <= calcularPesoDisponible()
+				&& carga.calcularVolumenTotal() <= calcularVolumenDisponible();
+	}
+	
+	public Date obtenerLlegadaAParada(Sucursal sucursal) {
+		if (pasaPorSucursal(sucursal)) {
+			if (destino.equals(sucursal.getUbicacion())) {
+				return fechaLlegada;
+			}
+			for (ParadaIntermedia parada : paradasIntermedias) {
+				if (parada.getUbicacion().equals(sucursal.getUbicacion())) {
+					return parada.getLlegada();
+				}
+			}
+		}
 		return null;
 	}
 	

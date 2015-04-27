@@ -14,7 +14,7 @@ public abstract class PlanMantenimiento implements Serializable {
 	protected Date fechaFabricacion;
 	protected List<Tarea> tareas;
 
-	public PlanMantenimiento(EstrategiaMantenimiento estrategia) {
+	public PlanMantenimiento() {
 		this.tareas = new ArrayList<Tarea>();
 		this.fechaFabricacion = new Date();
 	}

@@ -1,6 +1,8 @@
 package model.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Proveedor implements Serializable {
 	/**
@@ -10,12 +12,13 @@ public class Proveedor implements Serializable {
 
 	private String cuit;
 	private String nombre;
+	private List<VehiculoExterno> vehiculos;
 	
 	public Proveedor(String cuit, String nombre){
 		
 		this.cuit = cuit;
 		this.nombre = nombre;
-		
+		vehiculos = new ArrayList<VehiculoExterno>();
 	}
 	
 	
@@ -30,5 +33,35 @@ public class Proveedor implements Serializable {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	public List<VehiculoExterno> getVehiculos() {
+		return vehiculos;
+	}
+	public void setVehiculos(List<VehiculoExterno> vehiculos) {
+		this.vehiculos = vehiculos;
+	}
+
+
+	public boolean existeVehiculo(String patente) {
+		for (VehiculoExterno v : vehiculos){
+			if (v.patente.equals(patente)){
+				return true;
+			}
+		}
+		return false;
 	}	
+	
+	public VehiculoExterno obtenerVehiculo(String patente) {
+		for (VehiculoExterno vehiculo : vehiculos) {
+			if (vehiculo.getPatente().equals(patente)) {
+				return vehiculo;
+			}
+		}
+		return null;
+	}	
+	
+	public void agregarVehiculo(VehiculoExterno vehiculo) {
+		vehiculos.add(vehiculo);		
+	}
+	
 }

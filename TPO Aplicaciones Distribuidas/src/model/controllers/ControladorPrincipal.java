@@ -149,19 +149,27 @@ public class ControladorPrincipal {
 			PlanMantenimiento planMantenimiento, Date vencimientoGarantia){
 		Sucursal s = obtenerSucursal(idSucursal);
 		if (s != null){
-			if (s.existeVehiculo(patente)){
+			if (!s.existeVehiculo(patente)){
 				s.agregarVehiculo(new VehiculoLocal(patente, tamano, peso, tara, tarifa, tipo, planMantenimiento, vencimientoGarantia));
 			}
 		}
 	}
 	
-	public void altaVehiculoExterno(Integer idSucursal, String patente, Tamano tamano, Float peso, Float tara, Float tarifa, TipoVehiculo tipo,
-			String cuit){
+	public void altaVehiculoExterno(String cuitProveedor, String patente, Tamano tamano, Float peso, Float tara, Float tarifa, TipoVehiculo tipo){
+		Proveedor p = obtenerProveedor(cuitProveedor);
+		if (p != null){
+			if (p.existeVehiculo(patente)){
+				p.agregarVehiculo(new VehiculoExterno(patente, tamano, peso, tara, tarifa, tipo));
+			}
+		}
+	}
+	
+	public void realizarMantenimientoVehiculo(Integer idSucursal, String patente, boolean esEspecifico){
 		Sucursal s = obtenerSucursal(idSucursal);
-		Proveedor p = obtenerProveedor(cuit);
-		if (s != null && p != null){
-			if (s.existeVehiculo(patente)){
-				s.agregarVehiculo(new VehiculoExterno(patente, tamano, peso, tara, tarifa, tipo, p));
+		if (s != null){
+			VehiculoLocal v = s.obtenerVehiculo(patente);
+			if (v != null){
+				v.realizarMantenimiento(esEspecifico);
 			}
 		}
 	}

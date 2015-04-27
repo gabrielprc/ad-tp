@@ -6,8 +6,7 @@ public class MantenimientoGeneral extends EstrategiaMantenimiento {
 
 	@Override
 	protected void mantener() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Se hizo un mantenimiento general.");			
 	}
 
 }

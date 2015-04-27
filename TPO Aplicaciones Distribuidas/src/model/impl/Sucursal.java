@@ -1,6 +1,7 @@
 package model.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sucursal implements Serializable {
@@ -14,12 +15,13 @@ public class Sucursal implements Serializable {
 	private Ubicacion ubicacion;
 	private Deposito deposito;
 	private List<Empleado> empleados;
-	private List<Vehiculo> vehiculos;
+	private List<VehiculoLocal> vehiculos;
 
 	public Sucursal(int numero, String nombre) {
 		this.numero = numero;
 		this.nombre = nombre;
 		deposito = new Deposito(1); //arreglar esto
+		vehiculos = new ArrayList<VehiculoLocal>();
 	}
 
 	public Deposito getDeposito() {
@@ -62,11 +64,11 @@ public class Sucursal implements Serializable {
 		this.empleados = empleados;
 	}
 
-	public List<Vehiculo> getVehiculos() {
+	public List<VehiculoLocal> getVehiculos() {
 		return vehiculos;
 	}
 
-	public void setVehiculos(List<Vehiculo> vehiculos) {
+	public void setVehiculos(List<VehiculoLocal> vehiculos) {
 		this.vehiculos = vehiculos;
 	}
 
@@ -81,8 +83,8 @@ public class Sucursal implements Serializable {
 		return null;
 	}
 
-	public Vehiculo obtenerVehiculo(String patente) {
-		for (Vehiculo vehiculo : vehiculos) {
+	public VehiculoLocal obtenerVehiculo(String patente) {
+		for (VehiculoLocal vehiculo : vehiculos) {
 			if (vehiculo.getPatente().equals(patente)) {
 				return vehiculo;
 			}
@@ -112,12 +114,12 @@ public class Sucursal implements Serializable {
 		this.empleados.add(e);
 	}
 
-	public void agregarVehiculo(Vehiculo vehiculo) {
+	public void agregarVehiculo(VehiculoLocal vehiculo) {
 		vehiculos.add(vehiculo);		
 	}
 
 	public boolean existeVehiculo(String patente) {
-		for (Vehiculo v : vehiculos){
+		for (VehiculoLocal v : vehiculos){
 			if (v.patente.equals(patente)){
 				return true;
 			}

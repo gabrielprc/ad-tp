@@ -55,8 +55,20 @@ public class VehiculoLocal extends Vehiculo {
 		return true;
 	}
 	
-	public void realizarMantenimiento(EstrategiaMantenimiento estrategiaMantenimiento) {
-		planMantenimiento.realizarMantenimiento(estrategiaMantenimiento);
+	public void realizarMantenimiento(boolean esEspecifico) {
+		planMantenimiento.realizarMantenimiento(establecerEstrategiaMantenimiento(esEspecifico));
+	}
+
+	private EstrategiaMantenimiento establecerEstrategiaMantenimiento(boolean esEspecifico) {
+		if (vencimientoGarantia.after(new Date())){
+			return new MantenimientoGarantia();
+		}
+		else if (esEspecifico){
+			return new MantenimientoEspecifico();
+		}
+		else{
+			return new MantenimientoGeneral();
+		}
 	}
 	
 }

@@ -11,8 +11,7 @@ public class PlanMantenimientoTemporal extends PlanMantenimiento {
 	
 	private int intervaloMantenimiento;
 	
-	public PlanMantenimientoTemporal(int intervaloMantenimiento, EstrategiaMantenimiento estrategia) {
-		super(estrategia);
+	public PlanMantenimientoTemporal(int intervaloMantenimiento) {
 		this.intervaloMantenimiento = intervaloMantenimiento;
 	}
 	

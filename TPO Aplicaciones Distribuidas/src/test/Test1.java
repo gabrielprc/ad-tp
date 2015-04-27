@@ -1,6 +1,7 @@
 package test;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -11,10 +12,16 @@ import model.impl.CondicionEspecial;
 import model.impl.Coordenada;
 import model.impl.EstadoCarga;
 import model.impl.ItemProducto;
+import model.impl.PlanMantenimientoKilometraje;
 import model.impl.Producto;
 import model.impl.Sucursal;
+import model.impl.Tamano;
+import model.impl.Tarea;
 import model.impl.TipoCarga;
+import model.impl.TipoVehiculo;
 import model.impl.Ubicacion;
+import model.impl.Vehiculo;
+import model.impl.VehiculoLocal;
 import model.impl.Viaje;
 
 public class Test1 {
@@ -115,6 +122,31 @@ public class Test1 {
 							"codigo:" + c.getCodigo() + "\n" +
 									"pais:" + c.getDestino().getPais() + "\n");
 				}
+			}
+			
+			System.out.println();
+			System.out.println("/* VEHICULOS */");
+			System.out.println();
+			
+			Calendar c = Calendar.getInstance();
+			c.setTime(new Date()); // Now use today date.
+			c.add(Calendar.DATE, -1); //arranca con garantia vencida
+			
+			con.altaVehiculoLocal(1, "vehiculo1", new Tamano(), 1f, 1f, 1f, TipoVehiculo.CAMION_CON_TANQUE, new PlanMantenimientoKilometraje(100), c.getTime());
+			
+			for (Vehiculo v : con.obtenerSucursal(1).getVehiculos()){
+				System.out.println(v.getPatente());
+			}
+			
+			con.realizarMantenimientoVehiculo(1, "vehiculo1", true); //mantenimiento especifico
+			con.realizarMantenimientoVehiculo(1, "vehiculo1", false); //mantenimiento general
+			c.add(Calendar.DATE, 5);((VehiculoLocal)con.obtenerSucursal(1).obtenerVehiculo("vehiculo1")).setVencimientoGarantia(c.getTime()); //hago que este en garantia
+			con.realizarMantenimientoVehiculo(1, "vehiculo1", true); //lo hace en garantia en ambos casos
+			con.realizarMantenimientoVehiculo(1, "vehiculo1", false);
+			
+			for (Tarea t : ((VehiculoLocal)con.obtenerSucursal(1).obtenerVehiculo("vehiculo1")).getPlanMantenimiento().getTareas()){
+				System.out.println("fecha entrega: " + t.getFechaEntrega());
+				System.out.println("fecha devolucion: " + t.getFechaDevolucion());
 			}
 			
 			/*

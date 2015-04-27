@@ -153,7 +153,7 @@ public class Carga implements Serializable {
 		return costo;
 	}
 	
-	private Float calcularFactorProductos(){
+	public Float calcularFactorProductos(){ //public para testear
 		Float total = 1f;
 		for (ItemProducto ip : productos){
 			total += ip.getProducto().calcularFactorProducto() * ip.getCantidad();
@@ -161,8 +161,8 @@ public class Carga implements Serializable {
 		return total;
 	}
 
-	private Float calcularFactorDistancia(){
-		return 1f + origen.calcularDistanciaEnKilometros(destino) / 50f;				
+	public Float calcularFactorDistancia(){ //public para testear
+		return 1f + origen.calcularDistanciaEnKilometros(destino) / 1000f; //costo aumenta 100% cada 1000km	
 	}
 
 }

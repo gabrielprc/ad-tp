@@ -12,7 +12,7 @@ public class Producto implements Serializable {
 	 */
 	private static final long serialVersionUID = 2506118120974790841L;
 	
-	private int codigoProducto;
+	private Integer codigoProducto;
 	private String nombre;
 	private Float peso;
 	private Tamano tamano;
@@ -25,8 +25,20 @@ public class Producto implements Serializable {
 	private List<CondicionEspecial> condicionesEspeciales;
 	private boolean refrigerada;
 	
-	public Producto(){
-		condicionesEspeciales = new ArrayList<CondicionEspecial>();
+	public Producto(Integer codigoProducto, String nombre, Float peso, Tamano tamano, TipoFragilidad fragilidad,
+			Integer apilable, String manipulacion, String material, TipoTratamiento tratamiento, String consideraciones,
+			List<CondicionEspecial> condicionesEspeciales){
+		this.codigoProducto = codigoProducto;
+		this.nombre = nombre;
+		this.peso = peso;
+		this.tamano = tamano;
+		this.fragilidad = fragilidad;
+		this.apilable = apilable;
+		this.manipulacion = manipulacion;
+		this.material = material;
+		this.tratamiento = tratamiento;
+		this.consideraciones = consideraciones;
+		this.condicionesEspeciales = condicionesEspeciales;
 	}
 	
 	public String getNombre() {
@@ -105,9 +117,10 @@ public class Producto implements Serializable {
 	
 	public Float calcularFactorProducto(){
 		Float factorBase = 0f;
-		factorBase += tamano.calcularVolumen()/200;
+		factorBase += tamano.calcularVolumen() / 1000f; //cada 10m cubicos aumenta 1%
 		if (fragilidad != null) factorBase += fragilidad.getFactorFragilidad();
 		if (tratamiento != null) factorBase += tratamiento.getFactorTratamiento();
+		factorBase += peso / 2500f; //cada 100 kilos aumenta 4%
 		factorBase += calcularFactorCondicionesEspeciales();
 		if (refrigerada) factorBase += 0.005f;
 		return factorBase;

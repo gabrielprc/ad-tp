@@ -1,8 +1,8 @@
 package model.impl.productos;
 
 public enum TipoTratamiento {
-	EXTREMADAMENTE_PELIGROSO("Extremadamente peligroso", 0.05f),
-	PELIGROSO("Peligroso", 0.025f),
+	EXTREMADAMENTE_PELIGROSO("Extremadamente peligroso", 0.03f),
+	PELIGROSO("Peligroso", 0.015f),
 	INOCUO("Inocuo", 0.0f);
 	
 	private String tipo;

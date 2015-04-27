@@ -82,7 +82,7 @@ public class ControladorPrincipal {
 		if (mejorViaje != null) {
 			mejorViaje.agregarCarga(carga);
 		} else {
-			//TODO implementar correctamente la lógica de asignación de vehículo y viaje
+			//TODO implementar correctamente la lógica de asignación de vehú€ulo y viaje
 			Vehiculo vehiculo = null;
 			
 			Calendar cal = Calendar.getInstance();
@@ -181,7 +181,7 @@ public class ControladorPrincipal {
 		Sucursal sucursal = null;
 		
 		for (Sucursal suc : sucursales) {
-			if (sucursal.getDeposito().existeCarga(carga.getCodigo())) {
+			if (suc.getDeposito().existeCarga(carga.getCodigo())) { //cambie sucursal suc
 				sucursal = suc;
 				break;
 			}
@@ -529,10 +529,6 @@ public class ControladorPrincipal {
 			}
 		}
 		return null;
-	}
-
-	public boolean dinero(){
-		return dinero();
 	}
 
 	/* GETTERS Y SETTERS PARA TESTEAR */

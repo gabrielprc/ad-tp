@@ -199,7 +199,7 @@ public class ControladorPrincipal {
 			Sucursal destino) {
 		Date partida = new Date();
 
-		DistanciaEntreSucursales distancia = null;
+		Float distancia = null;
 
 		for (Viaje v : viajes) {
 			if (v.getOrigen().equals(origen.getUbicacion()))
@@ -212,11 +212,10 @@ public class ControladorPrincipal {
 				}
 		}
 
-		calcularHorasEntreSucursales(origen, destino);
+		distancia = calcularHorasEntreSucursales(origen, destino);
 
-		int minutos = (int) (distancia.getDuracionEnHoras() % 1) * 60;
-		int horas = (int) (distancia.getDuracionEnHoras() - distancia
-				.getDuracionEnHoras() % 1);
+		int minutos = (int) (distancia % 1) * 60;
+		int horas = (int) (distancia - distancia % 1);
 
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.HOUR, horas);

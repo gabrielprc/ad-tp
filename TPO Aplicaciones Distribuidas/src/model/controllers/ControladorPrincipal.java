@@ -54,6 +54,7 @@ public class ControladorPrincipal {
 	private List<Producto> productos;
 	private List<DistanciaEntreSucursales> distancias;
 	private List<Viaje> viajes;
+	private List<Viaje> viajesExternos;
 
 	private ControladorPrincipal() {
 		clientes = new ArrayList<Cliente>();
@@ -66,6 +67,7 @@ public class ControladorPrincipal {
 		mantenimientos = new ArrayList<EstrategiaMantenimiento>();
 		productos = new ArrayList<Producto>();
 		viajes = new ArrayList<Viaje>();
+		viajesExternos = new ArrayList<Viaje>();
 	}
 
 	/* ABM CLIENTES */
@@ -175,6 +177,34 @@ public class ControladorPrincipal {
 			}
 		}
 		return mejorViaje;
+	}
+	
+	public void altaViajeExterno(int codigo, List<Carga> cargas, Seguro seguro, Date fechaSalida, Date fechaLLegada, 
+
+		Proveedor proveedor, TipoVehiculo tipoVehiculo, List<CondicionEspecial> condicionesEspeciales){
+		
+		Vehiculo vehiculo = null;
+		for(Vehiculo v : proveedor.getVehiculos())
+			if(v.getTipo().equals(tipoVehiculo))
+				vehiculo = v;
+
+		viajesExternos.add(new Viaje(codigo, cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, null));
+		
+	}
+	
+	public List<Proveedor> obtenerViajesDeProveedores(Date fechaSalida, Date fechaLLegada, TipoVehiculo tipoVehiculo){
+		
+		List<Proveedor> proveedores = new ArrayList<Proveedor>();
+		
+		for(Proveedor p : proveedores){
+			for(VehiculoExterno ve : p.getVehiculos())
+				if(ve.getTipo().equals(tipoVehiculo)){
+					proveedores.add(p);
+					break;
+				}				
+		}
+		
+		return proveedores;
 	}
 
 	/* ABM VEHICULOS */

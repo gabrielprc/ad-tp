@@ -130,7 +130,7 @@ public class AdministradorViajes {
 	public void actualizarViaje(Viaje viaje, Sucursal sucursal) {
 		for (Iterator<Carga> iterator = viaje.getCargas().iterator(); iterator.hasNext();) {
 			Carga carga = iterator.next();
-			if (obtenerMejorViaje(carga) != null) {
+			if (obtenerMejorViaje(sucursal, carga) != null) {
 				sucursal.getDeposito().almacenarCarga(carga);
 				iterator.remove();
 			}
@@ -143,7 +143,7 @@ public class AdministradorViajes {
 		}
 		for (Iterator<Carga> iterator = sucursal.getDeposito().getCargas().iterator(); iterator.hasNext();) {
 			Carga carga = iterator.next();
-			Viaje mejorViaje = obtenerMejorViaje(carga);
+			Viaje mejorViaje = obtenerMejorViaje(sucursal, carga);
 			if (mejorViaje != null && mejorViaje.equals(viaje) && viaje.puedeTransportar(carga)) {
 				viaje.agregarCarga(carga);
 				iterator.remove();
@@ -151,16 +151,7 @@ public class AdministradorViajes {
 		}
 	}
 	
-	public Viaje obtenerMejorViaje(Carga carga) {
-		Sucursal sucursal = null;
-
-		for (Sucursal suc : AdministradorSucursales.getInstance().getSucursales()) {
-			if (suc.getDeposito().existeCarga(carga.getCodigo())) { //cambie sucursal suc
-				sucursal = suc;
-				break;
-			}
-		}
-
+	public Viaje obtenerMejorViaje(Sucursal sucursal, Carga carga) {
 		Viaje mejorViaje = null;
 
 		for (Viaje viaje : viajes) {

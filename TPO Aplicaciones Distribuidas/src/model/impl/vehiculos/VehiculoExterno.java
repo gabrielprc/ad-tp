@@ -17,4 +17,8 @@ public class VehiculoExterno extends Vehiculo {
 		this.tara = tara;
 		this.tarifa = tarifa;
 	}
+	
+	public boolean estaDisponible(){
+		return true;
+	}
 }

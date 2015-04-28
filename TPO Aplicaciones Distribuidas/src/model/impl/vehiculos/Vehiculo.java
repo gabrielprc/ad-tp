@@ -54,6 +54,8 @@ public abstract class Vehiculo implements Serializable {
 		this.tarifa = tarifa;
 	}
 	
+	public abstract boolean estaDisponible();
+	
 	@Override
 	public boolean equals(Object v) {
 		if (v instanceof Vehiculo) {

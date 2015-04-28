@@ -59,7 +59,8 @@ public class AdministradorVehiculos {
 			if (viaje.getVehiculo().equals(vehiculo)) {
 				if ((viaje.getFechaSalida().after(fechaDesde) && viaje.getFechaLlegada().before(fechaDesde))
 						|| (viaje.getFechaSalida().before(fechaDesde) && viaje.getFechaLlegada().after(fechaHasta))
-						|| (viaje.getFechaSalida().before(fechaDesde) && viaje.getFechaLlegada().before(fechaHasta))) {
+						|| (viaje.getFechaSalida().before(fechaDesde) && viaje.getFechaLlegada().before(fechaHasta))
+						|| (!vehiculo.estaDisponible())) {
 					return false;
 				}
 			}

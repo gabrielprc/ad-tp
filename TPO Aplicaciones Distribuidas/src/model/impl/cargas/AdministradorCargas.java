@@ -35,33 +35,61 @@ public class AdministradorCargas {
 		AdministradorViajes admVi = AdministradorViajes.getInstance();
 		AdministradorVehiculos admVeh = AdministradorVehiculos.getInstance();
 		
-		sucursal.getDeposito().almacenarCarga(carga);
-
 		Date fechaEstimadaLlegada = admSuc.estimarLlegada(sucursal, admSuc.obtenerSucursalCercana(carga.getDestino()));
-		Viaje mejorViaje = admVi.obtenerMejorViaje(carga);
+		Viaje mejorViaje = admVi.obtenerMejorViaje(sucursal, carga);
 
 		if(mejorViaje != null){
 			for(ParadaIntermedia pi : mejorViaje.getParadasIntermedias()){
 				if(pi.getUbicacion().equals(sucursal.getUbicacion())){
-					if (pi.getLlegada().before(fechaEstimadaLlegada)){
+					if (pi.getLlegada().before(carga.getFechaMaximaEntrega())){
 						mejorViaje.agregarCarga(carga);
 						return;
 					}
 				}
 			}
 		}
-
+	
 		Vehiculo vehiculo = null;
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.HOUR, 6);
 		Date salida = cal.getTime();			
 		for (Vehiculo v : sucursal.getVehiculos()) {
-			if (admVeh.estaDisponibleVehiculo(v, salida, fechaEstimadaLlegada)) {
+			if (admVeh.estaDisponibleVehiculo(v, salida, fechaEstimadaLlegada)){
 				vehiculo = v;
 			}
 		}
 
+		
+		
 		admVi.altaViaje(Arrays.asList(carga), null, vehiculo, salida, null, null);
+	}
+	
+	public Date fechaMaximaDeSalida(Viaje viaje) {
+		Date salidaMaxima = null;
+		
+		for (Carga carga : viaje.getCargas()) {
+			Date salidaCarga = fechaMaximaDeSalida(carga);
+			if (salidaMaxima == null || salidaMaxima.after(salidaCarga)) {
+				salidaMaxima = salidaCarga;
+			}
+		}
+		
+		return salidaMaxima;
+	}
+	
+	public Date fechaMaximaDeSalida(Carga carga) {
+		Calendar cal = Calendar.getInstance();
+		
+		AdministradorSucursales admSuc = AdministradorSucursales.getInstance();
+		Sucursal origen = admSuc.obtenerSucursalCercana(carga.getOrigen());
+		Sucursal destino = admSuc.obtenerSucursalCercana(carga.getDestino());
+		
+		float distancia = admSuc.calcularHorasEntreSucursales(origen, destino);
+		
+		cal.add(Calendar.HOUR, -((int) distancia));
+		cal.add(Calendar.MINUTE, -((int) ((distancia - (int) distancia) * 60)));
+		
+		return cal.getTime();
 	}
 	
 	public boolean tieneMaterialesProhibidos(Carga carga){

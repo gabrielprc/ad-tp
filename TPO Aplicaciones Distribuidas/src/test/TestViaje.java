@@ -16,9 +16,7 @@ import model.impl.productos.Producto;
 import model.impl.productos.TipoFragilidad;
 import model.impl.productos.TipoTratamiento;
 import model.impl.sucursales.DistanciaEntreSucursales;
-import model.impl.sucursales.Sucursal;
 import model.impl.vehiculos.TipoVehiculo;
-import model.impl.vehiculos.Vehiculo;
 import model.impl.vehiculos.VehiculoLocal;
 import model.impl.viajes.Viaje;
 

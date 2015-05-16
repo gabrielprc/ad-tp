@@ -1,9 +1,9 @@
 package model.impl.sucursales;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.impl.PersistentObject;
 import model.impl.cargas.Carga;
 import model.impl.misc.Ubicacion;
 import model.impl.personal.Empleado;
@@ -11,7 +11,7 @@ import model.impl.vehiculos.VehiculoLocal;
 import model.impl.viajes.Seguro;
 import model.impl.viajes.Viaje;
 
-public class Sucursal implements Serializable {
+public class Sucursal extends PersistentObject {
 	/**
 	 * 
 	 */
@@ -83,7 +83,7 @@ public class Sucursal implements Serializable {
 	public Carga retirarCarga(Integer codigoCarga) {
 
 		for (Carga carga : deposito.getCargas()) {
-			if (carga.getCodigo().equals(codigoCarga)) {
+			if (carga.getId().equals(codigoCarga)) {
 				return carga;
 			}
 		}

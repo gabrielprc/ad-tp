@@ -1,9 +1,10 @@
 package model.impl.vehiculos;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Tarea implements Serializable {
+import model.impl.PersistentObject;
+
+public class Tarea extends PersistentObject {
 	/**
 	 * 
 	 */

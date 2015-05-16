@@ -1,12 +1,12 @@
 package model.impl.viajes;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.impl.PersistentObject;
 import model.impl.vehiculos.VehiculoExterno;
 
-public class Proveedor implements Serializable {
+public class Proveedor extends PersistentObject {
 	/**
 	 * 
 	 */

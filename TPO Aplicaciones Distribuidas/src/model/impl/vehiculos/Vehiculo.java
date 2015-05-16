@@ -1,10 +1,9 @@
 package model.impl.vehiculos;
 
-import java.io.Serializable;
-
+import model.impl.PersistentObject;
 import model.impl.misc.Tamano;
 
-public abstract class Vehiculo implements Serializable {
+public abstract class Vehiculo extends PersistentObject {
 	/**
 	 * 
 	 */

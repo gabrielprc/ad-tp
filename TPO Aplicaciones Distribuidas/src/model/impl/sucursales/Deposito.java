@@ -44,7 +44,7 @@ public class Deposito implements Serializable {
 	public void retirarCarga(Carga carga) {
 		if (cargas != null) {
 			for (Iterator<Carga> iterator = cargas.listIterator(); iterator.hasNext();) {
-				if (iterator.next().getCodigo().equals(carga.getCodigo())) {
+				if (iterator.next().getId().equals(carga.getId())) {
 					iterator.remove();
 				}
 			}
@@ -53,14 +53,14 @@ public class Deposito implements Serializable {
 
 	public Carga obtenerCarga(int codigoCarga) {
 		for (Carga c : cargas)
-			if (c.getCodigo() == codigoCarga)
+			if (c.getId() == codigoCarga)
 				return c;
 		return null;
 	}
 	
 	public boolean existeCarga(int codigoCarga){
 		for (Carga c : cargas)
-			if (c.getCodigo() == codigoCarga)
+			if (c.getId() == codigoCarga)
 				return true;
 		return false;
 	}

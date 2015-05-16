@@ -76,16 +76,16 @@ public class AdministradorSucursales {
 		if (sucursal != null){
 			Cliente cliente = carga.getCliente();
 			if (cliente != null){
-				if (!sucursal.getDeposito().existeCarga(carga.getCodigo())){
+				if (!sucursal.getDeposito().existeCarga(carga.getId())){
 					if (!AdministradorCargas.getInstance().tieneMaterialesProhibidos(carga)){
 						sucursal.getDeposito().almacenarCarga(carga);
 					}
 					else{
-						throw new Exception("La carga de codigo " + carga.getCodigo() + " tiene materiales prohibidos.");
+						throw new Exception("La carga de codigo " + carga.getId() + " tiene materiales prohibidos.");
 					}
 				}
 				else{
-					throw new Exception("Esta sucursal ya tiene una carga de codigo: " + carga.getCodigo() + ".");
+					throw new Exception("Esta sucursal ya tiene una carga de codigo: " + carga.getId() + ".");
 				}
 			}
 			else{
@@ -134,7 +134,7 @@ public class AdministradorSucursales {
 	
 	public Ubicacion obtenerUbicacion(int codigoUbicacion) {
 		for (Sucursal sucursal : sucursales) {
-			if (sucursal.getUbicacion().getCodigo() == codigoUbicacion) {
+			if (sucursal.getUbicacion().getId() == codigoUbicacion) {
 				return sucursal.getUbicacion();
 			}
 		}

@@ -1,14 +1,8 @@
 package model.impl.misc;
 
-import java.io.Serializable;
+import model.impl.PersistentObject;
 
-public class Ubicacion implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3638263239943127552L;
-
-	private Integer codigo;
+public class Ubicacion extends PersistentObject {
 	private String pais;
 	private String provincia;
 	private String ciudad;
@@ -18,9 +12,8 @@ public class Ubicacion implements Serializable {
 	private String departamento;
 	private Coordenada coordenadaDestino;
 
-	public Ubicacion(int codigo, String pais, String provincia, String ciudad, String calle,
+	public Ubicacion(String pais, String provincia, String ciudad, String calle,
 			String altura, String piso, String departamento, Coordenada coordenadaDestino) {
-		this.codigo = codigo;
 		this.pais = pais;
 		this.provincia = provincia;
 		this.ciudad = ciudad;
@@ -81,22 +74,5 @@ public class Ubicacion implements Serializable {
 
 	public float calcularDistanciaEnKilometros(Ubicacion ubicacion) {
 		return this.coordenadaDestino.calcularDistanciaEnKilometros(ubicacion.getCoordenadaDestino());
-	}
-
-	public int getCodigo() {
-		return codigo;
-	}
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
-
-	@Override
-	public boolean equals (Object ubicacionB){
-		if (ubicacionB instanceof Ubicacion){
-			if (this.codigo.equals(((Ubicacion) ubicacionB).getCodigo())){
-				return true;
-			}
-		}
-		return false;
 	}
 }

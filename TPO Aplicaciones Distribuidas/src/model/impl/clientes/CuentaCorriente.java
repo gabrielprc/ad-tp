@@ -1,8 +1,8 @@
 package model.impl.clientes;
 
-import java.io.Serializable;
+import model.impl.PersistentObject;
 
-public class CuentaCorriente implements Serializable {
+public class CuentaCorriente extends PersistentObject {
 	/**
 	 * 
 	 */

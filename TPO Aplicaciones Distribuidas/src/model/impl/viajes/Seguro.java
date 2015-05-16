@@ -1,10 +1,9 @@
 package model.impl.viajes;
 
-import java.io.Serializable;
-
+import model.impl.PersistentObject;
 import model.impl.cargas.TipoCarga;
 
-public class Seguro implements Serializable {
+public class Seguro extends PersistentObject {
 	/**
 	 * 
 	 */

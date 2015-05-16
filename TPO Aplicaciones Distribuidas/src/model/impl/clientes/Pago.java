@@ -1,11 +1,11 @@
 package model.impl.clientes;
 
-import java.io.Serializable;
 import java.util.Date;
 
+import model.impl.PersistentObject;
 import model.impl.viajes.Proveedor;
 
-public class Pago implements Serializable {
+public class Pago extends PersistentObject {
 	/**
 	 * 
 	 */

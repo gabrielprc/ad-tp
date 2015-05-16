@@ -2,8 +2,14 @@ package model.impl.personal;
 
 import java.util.Date;
 
-public class Empleado {
+import model.impl.PersistentObject;
 
+public class Empleado extends PersistentObject {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7671252861970388806L;
 	private String cuit;
 	private String dni;
 	private String nombre;

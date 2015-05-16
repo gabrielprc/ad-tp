@@ -1,9 +1,10 @@
 package model.impl.clientes;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class CobroParcial implements Serializable {
+import model.impl.PersistentObject;
+
+public class CobroParcial extends PersistentObject {
 	/**
 	 * 
 	 */

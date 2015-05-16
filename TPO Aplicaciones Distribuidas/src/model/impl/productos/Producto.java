@@ -1,11 +1,11 @@
 package model.impl.productos;
 
-import java.io.Serializable;
 import java.util.List;
 
+import model.impl.PersistentObject;
 import model.impl.misc.Tamano;
 
-public class Producto implements Serializable {
+public class Producto extends PersistentObject {
 	/**
 	 * 
 	 */

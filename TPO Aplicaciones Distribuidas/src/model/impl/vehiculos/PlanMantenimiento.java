@@ -1,11 +1,12 @@
 package model.impl.vehiculos;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public abstract class PlanMantenimiento implements Serializable {
+import model.impl.PersistentObject;
+
+public abstract class PlanMantenimiento extends PersistentObject {
 	/**
 	 * 
 	 */

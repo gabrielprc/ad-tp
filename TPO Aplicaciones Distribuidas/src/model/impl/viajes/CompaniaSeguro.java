@@ -1,9 +1,10 @@
 package model.impl.viajes;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class CompaniaSeguro implements Serializable {
+import model.impl.PersistentObject;
+
+public class CompaniaSeguro extends PersistentObject {
 	/**
 	 * 
 	 */

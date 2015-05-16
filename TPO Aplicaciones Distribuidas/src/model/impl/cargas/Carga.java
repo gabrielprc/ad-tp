@@ -1,22 +1,21 @@
 package model.impl.cargas;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import model.impl.PersistentObject;
 import model.impl.clientes.Cliente;
 import model.impl.misc.Ubicacion;
 import model.impl.productos.ItemProducto;
 import model.impl.productos.Producto;
 
-public class Carga implements Serializable {
+public class Carga extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -875716574330563168L;
 
-	private Integer codigo;
 	private Collection<ItemProducto> productos;
 	private TipoCarga tipo;
 	private Date fechaMaximaEntrega;
@@ -27,10 +26,9 @@ public class Carga implements Serializable {
 	private Ubicacion destino;
 	private EstadoCarga estadoCarga;
 
-	public Carga(int codigo, TipoCarga tipoCarga, Date fechaMaximaEntrega,
+	public Carga(TipoCarga tipoCarga, Date fechaMaximaEntrega,
 			Date fechaProbableEntrega, Cliente cliente, String manifiesto,
 			Ubicacion origen, Ubicacion destino, EstadoCarga estadoCarga) {
-		this.codigo = codigo;
 		this.tipo = tipoCarga;
 		this.fechaMaximaEntrega = fechaMaximaEntrega;
 		this.fechaProbableEntrega = fechaProbableEntrega;
@@ -42,13 +40,6 @@ public class Carga implements Serializable {
 		this.productos = new ArrayList<ItemProducto>();
 	}
 
-	public Integer getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
-	}
 
 	public TipoCarga getTipo() {
 		return tipo;

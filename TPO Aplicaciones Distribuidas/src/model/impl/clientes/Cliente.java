@@ -1,8 +1,8 @@
 package model.impl.clientes;
 
-import java.io.Serializable;
+import model.impl.PersistentObject;
 
-public abstract class Cliente implements Serializable {
+public abstract class Cliente extends PersistentObject {
 	/**
 	 * 
 	 */

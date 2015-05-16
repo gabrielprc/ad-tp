@@ -1,11 +1,12 @@
 package model.impl.clientes;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-public class Cobro implements Serializable {
+import model.impl.PersistentObject;
+
+public class Cobro extends PersistentObject {
 	/**
 	 * 
 	 */

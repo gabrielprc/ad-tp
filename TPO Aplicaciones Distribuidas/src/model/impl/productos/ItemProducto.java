@@ -1,7 +1,13 @@
 package model.impl.productos;
 
-public class ItemProducto {
+import model.impl.PersistentObject;
 
+public class ItemProducto extends PersistentObject {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6147736562215085115L;
 	private Producto producto;
 	private float cantidad;
 

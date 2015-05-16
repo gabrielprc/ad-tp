@@ -1,9 +1,14 @@
 package model.impl.clientes;
 
+import model.impl.PersistentObject;
 import model.impl.misc.Ubicacion;
 
-public class Receptor {
+public class Receptor extends PersistentObject  {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5143126364253623009L;
 	private String dni;
 	private String nombre;
 	private String apellido;

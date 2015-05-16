@@ -1,12 +1,7 @@
 package model.impl.misc;
 
-import java.io.Serializable;
 
-public class Tamano implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1221961491892312944L;
+public class Tamano {
 	private Float profundidad;
 	private Float alto;
 	private Float ancho;

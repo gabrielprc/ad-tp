@@ -1,10 +1,9 @@
 package model.impl.clientes;
 
-import java.io.Serializable;
-
+import model.impl.PersistentObject;
 import model.impl.cargas.Carga;
 
-public class Factura implements Serializable {
+public class Factura extends PersistentObject {
 	/**
 	 * 
 	 */

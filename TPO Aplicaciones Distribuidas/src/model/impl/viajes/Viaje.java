@@ -1,17 +1,17 @@
 package model.impl.viajes;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import model.impl.PersistentObject;
 import model.impl.cargas.Carga;
 import model.impl.misc.Ubicacion;
 import model.impl.productos.CondicionEspecial;
 import model.impl.sucursales.Sucursal;
 import model.impl.vehiculos.Vehiculo;
 
-public class Viaje implements Serializable {
+public class Viaje extends PersistentObject {
 	/**
 	 * 
 	 */

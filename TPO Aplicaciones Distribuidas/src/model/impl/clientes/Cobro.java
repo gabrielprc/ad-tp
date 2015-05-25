@@ -4,15 +4,28 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import model.impl.PersistentObject;
 
+@Entity
+@Table(name = "Cobros")
 public class Cobro extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6031414221082912157L;
 
+	@ManyToOne
+	@Column(name = "idFactura")
 	private Factura factura;
+	@OneToMany
+	@JoinColumn(name = "idCobro")
 	private Vector<CobroParcial> cobrosParciales;
 
 	public Cobro(Factura factura){

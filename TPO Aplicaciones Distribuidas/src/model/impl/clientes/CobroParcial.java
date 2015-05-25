@@ -2,16 +2,25 @@ package model.impl.clientes;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import model.impl.PersistentObject;
 
+@Entity
+@Table(name = "CobrosParciales")
 public class CobroParcial extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1811141989154565682L;
 	
+	@Column(name = "fecha")
 	private Date fecha;
+	@Column(name = "monto")
 	private Float monto;
+	@Column(name = "pagado")
 	private boolean pagado;
 	
 	public CobroParcial(Date fecha, Float monto){

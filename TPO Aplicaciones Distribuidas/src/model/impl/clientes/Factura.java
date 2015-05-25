@@ -1,15 +1,26 @@
 package model.impl.clientes;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import model.impl.PersistentObject;
 import model.impl.cargas.Carga;
 
+@Entity
+@Table(name = "Facturas")
 public class Factura extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6357766629462615184L;
 	
+	@Column(name = "monto")
 	private Float monto;
+	@ManyToOne
+	@JoinColumn(name = "idCarga")
 	private Carga carga;
 	
 	public Factura(Float monto, Carga carga){

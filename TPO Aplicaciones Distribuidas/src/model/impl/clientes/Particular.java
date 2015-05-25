@@ -2,14 +2,26 @@ package model.impl.clientes;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Particular")
 public class Particular extends Cliente {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3516360528659218982L;
 
+	@OneToMany
+	@JoinColumn(name = "idParticular")
 	private List<Receptor> receptores;
+	@Column(name = "dni")
 	private String dni;
+	@Column(name = "apellido")
 	private String apellido;
 
 	public Particular(String codigoUnico, String dni, String nombre,

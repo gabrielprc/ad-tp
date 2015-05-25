@@ -1,15 +1,22 @@
 package model.impl.clientes;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
 import model.impl.PersistentObject;
 
+@Embeddable
 public class CuentaCorriente extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8724917442960945342L;
 
+	@Column(name = "depositoPrevio")
 	private boolean depositoPrevio;
+	@Column(name = "montoAutorizado")
 	private Float montoAutorizado;
+	@Column(name = "montoActual")
 	private Float montoActual;
 
 	public CuentaCorriente(Float montoActual, Float montoAutorizado) {

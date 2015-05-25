@@ -2,16 +2,30 @@ package model.impl.clientes;
 
 import java.util.Collection;
 
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 import model.impl.productos.Producto;
 
+@Entity
+@Table(name = "Empresas")
 public class Empresa extends Cliente {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3035063526042004506L;
 
+	@Column(name = "regular")
 	private boolean regular;
+	@Embedded
 	private CuentaCorriente cuentaCorriente;
+	@ManyToMany
+	@JoinTable(name = "EmpresasProductos", joinColumns = @JoinColumn(name = "idEmpresa"), inverseJoinColumns = @JoinColumn(name = "idProducto"))
 	private Collection<Producto> productos;
 
 	public Empresa(String codigoUnico, String nombre) {

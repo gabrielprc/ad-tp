@@ -2,18 +2,31 @@ package model.impl.clientes;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import model.impl.PersistentObject;
 import model.impl.viajes.Proveedor;
 
+@Entity
+@Table(name = "Pagos")
 public class Pago extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6122982765032430365L;
 	
+	@ManyToOne
+	@JoinColumn(name = "proveedor")
 	private Proveedor proveedor;
+	@Column(name = "monto")
 	private Float monto;
+	@Column(name = "fecha")
 	private Date fecha;
+	@Column(name = "estado")
 	private boolean estado;
 	
 	public Pago(Proveedor proveedor, Float monto, Date fecha){

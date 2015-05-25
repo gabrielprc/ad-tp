@@ -1,17 +1,30 @@
 package model.impl.clientes;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import model.impl.PersistentObject;
 import model.impl.misc.Ubicacion;
 
+@Entity
+@Table(name = "Receptores")
 public class Receptor extends PersistentObject  {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5143126364253623009L;
+	@Column(name = "dni")
 	private String dni;
+	@Column(name = "nombre")
 	private String nombre;
+	@Column(name = "apellido")
 	private String apellido;
+	@ManyToOne
+	@JoinColumn(name = "idUbicacion")
 	private Ubicacion ubicacion;
 	
 	public String getDni() {

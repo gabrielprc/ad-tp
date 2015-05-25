@@ -3,17 +3,29 @@ package model.impl.viajes;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import model.impl.PersistentObject;
 import model.impl.vehiculos.VehiculoExterno;
 
+@Entity
+@Table(name = "Proveedores")
 public class Proveedor extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4550038024972428465L;
 
+	@Column(name = "cuit")
 	private String cuit;
+	@Column(name = "nombre")
 	private String nombre;
+	@OneToMany
+	@JoinColumn(name = "idProveedor")
 	private List<VehiculoExterno> vehiculos;
 	
 	public Proveedor(String cuit, String nombre){

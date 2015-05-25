@@ -4,6 +4,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CollectionOfElements;
+
 import model.impl.PersistentObject;
 import model.impl.cargas.Carga;
 import model.impl.misc.Ubicacion;
@@ -11,26 +23,51 @@ import model.impl.productos.CondicionEspecial;
 import model.impl.sucursales.Sucursal;
 import model.impl.vehiculos.Vehiculo;
 
+@Entity
+@Table(name = "Viajes")
 public class Viaje extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5092108929260301459L;
 
+	@Column(name = "codigo")
 	private Integer codigo;
+	// @ManyToMany
+	// @JoinTable(name = "ViajesCargas", joinColumns = {@JoinColumn(name =
+	// "idViaje")}, inverseJoinColumns = {@JoinColumn(name = "idCarga")})
+	@OneToMany
+	@JoinColumn(name = "idViaje")
 	private List<Carga> cargas;
+	@OneToMany
+	@JoinColumn(name = "idSeguro")
 	private Seguro seguro;
+	@OneToMany
+	@JoinColumn(name = "idVehiculo")
 	private Vehiculo vehiculo;
+	@OneToMany
+	@JoinColumn(name = "origen")
 	private Ubicacion origen;
+	@OneToMany
+	@JoinColumn(name = "destino")
 	private Ubicacion destino;
+	@Column(name = "fechaSalida")
 	private Date fechaSalida;
+	@Column(name = "fechaLlegada")
 	private Date fechaLlegada;
+	@CollectionOfElements
+	@JoinTable(name = "CondicionesViajes", joinColumns = { @JoinColumn(name = "idViaje") })
+	@Enumerated(EnumType.STRING)
 	private List<CondicionEspecial> condicionesEspeciales;
+	@Column(name = "estaAtrasado")
 	private boolean estaAtrasado;
+	@OneToMany
+	@JoinColumn(name = "idViaje")
 	private Vector<ParadaIntermedia> paradasIntermedias;
 
-	public Viaje(List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida,
-			List<CondicionEspecial> condicionesEspeciales, Vector<ParadaIntermedia> paradasIntermedias) {
+	public Viaje(List<Carga> cargas, Seguro seguro, Vehiculo vehiculo,
+			Date fechaSalida, List<CondicionEspecial> condicionesEspeciales,
+			Vector<ParadaIntermedia> paradasIntermedias) {
 		this.cargas = cargas;
 		this.seguro = seguro;
 		this.vehiculo = vehiculo;
@@ -62,13 +99,13 @@ public class Viaje extends PersistentObject {
 		return vehiculo.getTamano().calcularVolumen() - volumen;
 	}
 
-	public int cantidadParadasIntemedias(){
-		
+	public int cantidadParadasIntemedias() {
+
 		return paradasIntermedias.size();
 	}
 
-	public void generarRemito(){
-		
+	public void generarRemito() {
+
 	}
 
 	public Integer getCodigo() {
@@ -128,11 +165,11 @@ public class Viaje extends PersistentObject {
 			Vector<ParadaIntermedia> paradasIntermedias) {
 		this.paradasIntermedias = paradasIntermedias;
 	}
-	
+
 	public void setSeguro(Seguro seguro) {
 		this.seguro = seguro;
 	}
-	
+
 	public void setVehiculo(Vehiculo vehiculo) {
 		this.vehiculo = vehiculo;
 	}
@@ -164,7 +201,7 @@ public class Viaje extends PersistentObject {
 	public void setDestino(Ubicacion destino) {
 		this.destino = destino;
 	}
-	
+
 	public Date existeLLegadaUbicacion(Ubicacion ubicacion) {
 
 		for (ParadaIntermedia p : paradasIntermedias)
@@ -172,22 +209,24 @@ public class Viaje extends PersistentObject {
 				return p.getLlegada();
 		return null;
 	}
-	
+
 	public boolean pasaPorSucursal(Sucursal sucursal) {
-		if (origen.equals(sucursal.getUbicacion()) || destino.equals(sucursal.getUbicacion()))
+		if (origen.equals(sucursal.getUbicacion())
+				|| destino.equals(sucursal.getUbicacion()))
 			return true;
 		for (ParadaIntermedia parada : paradasIntermedias) {
-			if (!parada.isChecked() && parada.getUbicacion().equals(sucursal.getUbicacion()))
+			if (!parada.isChecked()
+					&& parada.getUbicacion().equals(sucursal.getUbicacion()))
 				return true;
 		}
 		return false;
 	}
-	
+
 	public boolean puedeTransportar(Carga carga) {
 		return carga.calcularPesoTotal() <= calcularPesoDisponible()
 				&& carga.calcularVolumenTotal() <= calcularVolumenDisponible();
 	}
-	
+
 	public Date obtenerLlegadaAParada(Sucursal sucursal) {
 		if (pasaPorSucursal(sucursal)) {
 			if (destino.equals(sucursal.getUbicacion())) {

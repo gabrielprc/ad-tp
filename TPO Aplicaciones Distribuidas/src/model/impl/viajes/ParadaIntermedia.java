@@ -2,12 +2,24 @@ package model.impl.viajes;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import model.impl.misc.Ubicacion;
 
+@Entity
+@Table(name = "ParadasIntermedias")
 public class ParadaIntermedia {
 
+	@ManyToOne
+	@JoinColumn(name = "idUbicacion")
 	private Ubicacion ubicacion;
+	@Column(name = "llegada")
 	private Date llegada;
+	@Column(name = "checked")
 	private boolean checked;
 
 	public boolean isChecked() {

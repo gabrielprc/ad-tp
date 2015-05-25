@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.*;
+
 import model.impl.PersistentObject;
 import model.impl.clientes.Cliente;
 import model.impl.misc.Ubicacion;
@@ -16,14 +18,27 @@ public class Carga extends PersistentObject {
 	 */
 	private static final long serialVersionUID = -875716574330563168L;
 
+	@OneToMany
+	@JoinColumn (name="id_producto")
 	private Collection<ItemProducto> productos;
 	private TipoCarga tipo;
+	@Column (name="fechaMaximaEntrega")
 	private Date fechaMaximaEntrega;
+	@Column (name="fechaProbableEntrega")
 	private Date fechaProbableEntrega;
+	@ManyToOne
+	@JoinColumn (name="id_cliente")
 	private Cliente cliente;
+	@Column (name="manifiesto")
 	private String manifiesto;
+	@ManyToOne
+	@JoinColumn (name="id_ubicacion")
 	private Ubicacion origen;
+	@ManyToOne
+	@JoinColumn (name="id_ubicacion")
 	private Ubicacion destino;
+	@Column(name = "estadoCarga")
+	@Enumerated(value = EnumType.STRING)
 	private EstadoCarga estadoCarga;
 
 	public Carga(TipoCarga tipoCarga, Date fechaMaximaEntrega,

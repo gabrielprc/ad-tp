@@ -36,7 +36,7 @@ public class Sucursal extends PersistentObject {
 	@JoinColumn(name = "idUbicacion")
 	private Ubicacion ubicacion;
 	@OneToOne
-	@PrimaryKeyJoinColumn //??
+	@PrimaryKeyJoinColumn 
 	private Deposito deposito;
 	@OneToMany
 	@JoinColumn(name = "idSucursal")

@@ -3,6 +3,15 @@ package model.impl.sucursales;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
 import model.impl.PersistentObject;
 import model.impl.cargas.Carga;
 import model.impl.misc.Ubicacion;
@@ -11,17 +20,29 @@ import model.impl.vehiculos.VehiculoLocal;
 import model.impl.viajes.Seguro;
 import model.impl.viajes.Viaje;
 
+@Entity
+@Table(name = "Sucursales")
 public class Sucursal extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2534989790774285551L;
 
+	@Column(name = "numero")
 	private Integer numero;
+	@Column(name = "nombre")
 	private String nombre;
+	@ManyToOne
+	@JoinColumn(name = "idUbicacion")
 	private Ubicacion ubicacion;
+	@OneToOne
+	@PrimaryKeyJoinColumn //??
 	private Deposito deposito;
+	@OneToMany
+	@JoinColumn(name = "idSucursal")
 	private List<Empleado> empleados;
+	@OneToMany
+	@JoinColumn(name = "idSucursal")
 	private List<VehiculoLocal> vehiculos;
 
 	public Sucursal(int numero, String nombre, Ubicacion ubicacion) {

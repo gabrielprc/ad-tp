@@ -1,10 +1,26 @@
 package model.impl.sucursales;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "DistanciaEntreSucursales")
 public class DistanciaEntreSucursales {
+	
+	@ManyToOne
+	@JoinColumn(name = "idSucursalA")
 	private Sucursal sucursalA;
+	@ManyToOne
+	@JoinColumn(name = "idSucursalB")
 	private Sucursal sucursalB;
+	@Column(name = "distanciaEnKm")
 	private float distanciaEnKm;
+	@Column(name = "duracionEnHoras")
 	private float duracionEnHoras;
+	@Column(name = "costo")
 	private float costo;
 	
 	public DistanciaEntreSucursales (Sucursal sucursalA, Sucursal sucursalB, float distanciaEnKm,

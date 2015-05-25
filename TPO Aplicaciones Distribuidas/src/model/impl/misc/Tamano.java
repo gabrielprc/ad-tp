@@ -1,9 +1,15 @@
 package model.impl.misc;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
+@Embeddable
 public class Tamano {
+	@Column(name = "profundidad")
 	private Float profundidad;
+	@Column(name = "alto")
 	private Float alto;
+	@Column(name = "ancho")
 	private Float ancho;
 
 	public Tamano(Float i, Float j, Float k) {

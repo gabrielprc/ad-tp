@@ -1,15 +1,36 @@
 package model.impl.misc;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import model.impl.PersistentObject;
 
+@Entity
+@Table(name = "Ubicaciones")
 public class Ubicacion extends PersistentObject {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3927241277115332251L;
+	@Column(name = "pais")
 	private String pais;
+	@Column(name = "provincia")
 	private String provincia;
+	@Column(name = "ciudad")
 	private String ciudad;
+	@Column(name = "calle")
 	private String calle;
+	@Column(name = "altura")
 	private String altura;
+	@Column(name = "piso")
 	private String piso;
+	@Column(name = "departamento")
 	private String departamento;
+	@OneToMany
+	@JoinColumn(name = "idCoordenada")
 	private Coordenada coordenadaDestino;
 
 	public Ubicacion(String pais, String provincia, String ciudad, String calle,

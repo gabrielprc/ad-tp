@@ -2,26 +2,54 @@ package model.impl.productos;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CollectionOfElements;
+
 import model.impl.PersistentObject;
 import model.impl.misc.Tamano;
 
+@Entity
+@Table(name = "Productos")
 public class Producto extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2506118120974790841L;
 	
+	@Column(name = "codigoProducto")
 	private Integer codigoProducto;
+	@Column(name = "nombre")
 	private String nombre;
+	@Column(name = "peso")
 	private Float peso;
+	@Column(name = "tamano")
 	private Tamano tamano;
+	@Column(name = "fragilidad")
+	@Enumerated(value = EnumType.STRING)
 	private TipoFragilidad fragilidad;
+	@Column(name = "apilable")
 	private Integer apilable;
+	@Column(name = "manipulacion")
 	private String manipulacion;
+	@Column(name = "material")
 	private String material;
+	@Column(name = "tratamiento")
+	@Enumerated(value = EnumType.STRING)
 	private TipoTratamiento tratamiento;
+	@Column(name = "consideraciones")
 	private String consideraciones;
+	@CollectionOfElements
+	@JoinTable(name = "ProductosCondiciones", joinColumns = {@JoinColumn(name = "idProducto")})
+	@Enumerated(value = EnumType.STRING)
 	private List<CondicionEspecial> condicionesEspeciales;
+	@Column(name = "refrigerada")
 	private boolean refrigerada;
 	
 	public Producto(Integer codigoProducto, String nombre, Float peso, Tamano tamano, TipoFragilidad fragilidad,

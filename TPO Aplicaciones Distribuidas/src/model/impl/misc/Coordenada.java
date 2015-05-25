@@ -1,8 +1,16 @@
 package model.impl.misc;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+
+@Entity
+@Table(name = "Coordenadas")
 public class Coordenada {
+	@Column(name = "latitud")
 	private float latitud;
+	@Column(name = "longitud")
 	private float longitud;
 	
 	public Coordenada(float latitud, float longitud) {

@@ -2,19 +2,34 @@ package model.impl.personal;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+
 import model.impl.PersistentObject;
 
+@Entity
+@Table (name = "Empleados")
 public class Empleado extends PersistentObject {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7671252861970388806L;
+	@Column(name = "cuit")
 	private String cuit;
+	@Column(name = "dni")
 	private String dni;
+	@Column(name = "nombre")
 	private String nombre;
+	@Column(name = "apellido")
 	private String apellido;
+	@Column(name = "puesto")
+	@Enumerated(value = EnumType.STRING)
 	private TipoPuesto puesto;
+	@Column(name = "fechaNacimiento")
 	private Date fechaNacimiento;
 
 	public Empleado(String cuit, String dni, String nombre, String apellido,

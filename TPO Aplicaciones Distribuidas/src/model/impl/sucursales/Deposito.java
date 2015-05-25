@@ -5,15 +5,26 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import model.impl.cargas.Carga;
 
+@Entity
+@Table(name = "Depositos")
 public class Deposito implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7943859772129611103L;
 	
+	@Column(name = "codigo")
 	private int codigo;
+	@OneToMany
+	@JoinColumn(name = "idDeposito")
 	private List<Carga> cargas;
 	
 	public Deposito(int codigo){

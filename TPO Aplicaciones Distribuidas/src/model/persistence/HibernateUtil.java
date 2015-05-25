@@ -1,4 +1,4 @@
-package model.impl;
+package model.persistence;
 
 import model.impl.viajes.CompaniaSeguro;
 import model.impl.viajes.ParadaIntermedia;

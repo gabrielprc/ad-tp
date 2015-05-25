@@ -2,16 +2,24 @@ package model.impl.vehiculos;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import model.impl.misc.Tamano;
 
-
+@Entity
+@Table(name = "VehiculosLocales")
 public class VehiculoLocal extends Vehiculo {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8225795586920003275L;
 	
+	@Transient
 	private PlanMantenimiento planMantenimiento;
+	@Column(name = "vencimientoGarantia")
 	private Date vencimientoGarantia;
 	
 	public VehiculoLocal(String patente, Tamano tamano, Float peso, Float tara,

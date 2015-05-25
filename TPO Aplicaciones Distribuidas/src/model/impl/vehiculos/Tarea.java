@@ -2,16 +2,25 @@ package model.impl.vehiculos;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import model.impl.PersistentObject;
 
+@Entity
+@Table(name = "Tareas")
 public class Tarea extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1988465934755698719L;
 	
+	@Column(name = "kilometraje")
 	private Float kilometraje;
+	@Column(name = "fechaEntrega")
 	private Date fechaEntrega;
+	@Column(name = "fechaDevolucion")
 	private Date fechaDevolucion;
 	
 	public Tarea(Float kilometraje, Date fechaEntrega, Date fechaDevolucion) {

@@ -1,8 +1,12 @@
 package model.impl.vehiculos;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import model.impl.misc.Tamano;
 
-
+@Entity
+@Table(name = "VehiculosExternos")
 public class VehiculoExterno extends Vehiculo {
 	/**
 	 * 

@@ -1,3 +1,11 @@
+--use master drop database TPAD
+
+create database TPAD
+go
+
+use TPAD
+go
+
 create table MaterialesRestringidos(
 	nombre varchar(50),
 	constraint PK_MaterialesRestringidos primary key (nombre)
@@ -198,3 +206,13 @@ create table Tareas(
 	fechadevolucion datetime,
 	constraint FK_Tareas_PlanesMantenimiento foreign key (idPlanMantenimiento) references PlanesMantenimiento
 )
+
+--drop login ADUser
+create login ADuser with password = 'ADpassword'
+go
+
+create user ADuser for login ADuser
+go
+
+exec sp_addrolemember 'db_owner', 'ADuser'
+go

@@ -1,5 +1,9 @@
 package model.persistence;
 
+import model.impl.cargas.Carga;
+import model.impl.cargas.EstadoCarga;
+import model.impl.cargas.TipoCarga;
+import model.impl.clientes.Cliente;
 import model.impl.viajes.CompaniaSeguro;
 import model.impl.viajes.ParadaIntermedia;
 import model.impl.viajes.Proveedor;

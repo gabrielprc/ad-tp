@@ -3,38 +3,37 @@ package model.impl.viajes;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import model.impl.PersistentObject;
 import model.impl.vehiculos.VehiculoExterno;
 
 @Entity
 @Table(name = "Proveedores")
-public class Proveedor extends PersistentObject {
+public class Proveedor{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4550038024972428465L;
 
+	@Id
+	@Column (name="id_proveedor")
+	@GeneratedValue (strategy = GenerationType.AUTO)
+	private Integer id;
 	@Column(name = "cuit")
 	private String cuit;
 	@Column(name = "nombre")
 	private String nombre;
-	@OneToMany
-	@JoinColumn(name = "idProveedor")
-	private List<VehiculoExterno> vehiculos;
+	
+	public Proveedor(){
+		
+	}
 	
 	public Proveedor(String cuit, String nombre){
 		
 		this.cuit = cuit;
 		this.nombre = nombre;
-		vehiculos = new ArrayList<VehiculoExterno>();
 	}
-	
 	
 	public String getCuit() {
 		return cuit;
@@ -48,34 +47,27 @@ public class Proveedor extends PersistentObject {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public List<VehiculoExterno> getVehiculos() {
-		return vehiculos;
-	}
-	public void setVehiculos(List<VehiculoExterno> vehiculos) {
-		this.vehiculos = vehiculos;
-	}
 
-
-	public boolean existeVehiculo(String patente) {
-		for (VehiculoExterno v : vehiculos){
-			if (v.getPatente().equals(patente)){
-				return true;
-			}
-		}
-		return false;
-	}	
-	
-	public VehiculoExterno obtenerVehiculo(String patente) {
-		for (VehiculoExterno vehiculo : vehiculos) {
-			if (vehiculo.getPatente().equals(patente)) {
-				return vehiculo;
-			}
-		}
-		return null;
-	}	
-	
-	public void agregarVehiculo(VehiculoExterno vehiculo) {
-		vehiculos.add(vehiculo);		
-	}
+//	public boolean existeVehiculo(String patente) {
+//		for (VehiculoExterno v : vehiculos){
+//			if (v.getPatente().equals(patente)){
+//				return true;
+//			}
+//		}
+//		return false;
+//	}	
+//	
+//	public VehiculoExterno obtenerVehiculo(String patente) {
+//		for (VehiculoExterno vehiculo : vehiculos) {
+//			if (vehiculo.getPatente().equals(patente)) {
+//				return vehiculo;
+//			}
+//		}
+//		return null;
+//	}	
+//	
+//	public void agregarVehiculo(VehiculoExterno vehiculo) {
+//		vehiculos.add(vehiculo);		
+//	}
 	
 }

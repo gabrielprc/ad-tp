@@ -22,6 +22,10 @@ public class VehiculoLocal extends Vehiculo {
 	@Column(name = "vencimientoGarantia")
 	private Date vencimientoGarantia;
 	
+	public VehiculoLocal(){
+		
+	}
+	
 	public VehiculoLocal(String patente, Tamano tamano, Float peso, Float tara,
 			Float tarifa, TipoVehiculo tipo,
 			PlanMantenimiento planMantenimiento, Date vencimientoGarantia) {
@@ -30,6 +34,7 @@ public class VehiculoLocal extends Vehiculo {
 		this.peso = peso;
 		this.tara = tara;
 		this.tarifa = tarifa;
+		this.tipo = tipo;
 		this.planMantenimiento = planMantenimiento;
 		this.vencimientoGarantia = vencimientoGarantia;
 	}

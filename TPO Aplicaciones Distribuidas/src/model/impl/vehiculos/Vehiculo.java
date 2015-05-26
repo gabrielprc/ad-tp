@@ -31,8 +31,12 @@ public abstract class Vehiculo extends PersistentObject {
 	@Column(name = "tarifa")
 	protected Float tarifa;
 	@Column(name = "tipo")
-	@Enumerated(value = EnumType.STRING)
+	@Enumerated(EnumType.STRING)
 	protected TipoVehiculo tipo;
+	
+	public Vehiculo(){
+		
+	}
 	
 	public TipoVehiculo getTipo() {
 		return tipo;

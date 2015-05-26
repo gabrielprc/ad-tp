@@ -30,23 +30,15 @@ create table Productos(
 	constraint pk_productos primary key (id_producto)
 )
 
-create table Tipo_Puestos(
-
-	id_puesto int not null,
-	nombre varchar(50) not null
-	constraint pk_tipo_puesto primary key(id_puesto)
-)
-
 create table Empleados(
 
-	id_empleado int not null,
-	id_puesto int,
+	id_empleado int identity not null,
 	cuit varchar(50) not null,
 	dni varchar(20),
 	nombre varchar(50),
 	apellido varchar(50),
 	fecha_nacimiento datetime,
-	
+	puesto varchar(20),	
 
 	constraint pk_empleados primary key(id_empleado, cuit),
 	constraint fk_tipo_puesto foreign key(id_puesto) references Tipo_Puestos
@@ -62,7 +54,7 @@ create table Clientes(
 
 create table Clientes_Empresas(
 	
-	id_cliente int identity not null,
+	id_cliente int not null,
 	esRegular bit,
 
 	constraint pk_clientes_empresas primary key (id_cliente)
@@ -70,7 +62,7 @@ create table Clientes_Empresas(
 
 create table Clientes_Particules(
 
-	id_cliente int identity not null,
+	id_cliente int not null,
 	nombre varchar(50),
 	apellido varchar(50),
 	dni varchar(20),
@@ -122,44 +114,36 @@ create table Depositos(
 	id_sucursal int,
 	
 	constraint pk_depositos primary key (id_deposito),
-	constraint FK_Sucursales foreign key (id_sucursal) references Sucursales
+	constraint fk_depositos_sucursales foreign key (id_sucursal) references Sucursales
 )
 
 create table Receptores(
 
+	id_receptor int identity not null,
 	id_cliente int not null,
-	id_receptor int not null,
 	id_ubicacion int,
 	dni varchar (20),
 	nombre varchar(50),
 	apellido varchar(50),
 	
 	
-	constraint pk_receptores primary key(id_cliente, id_receptor),
-	constraint fk_ubicaciones foreign key(id_ubicacion) references Ubicaciones
+	constraint pk_receptores primary key(id_receptor),
+	constraint fk_receptores_clientes foreign key(id_cliente) references Clientes,
+	constraint fk_receptores_ubicaciones foreign key(id_ubicacion) references Ubicaciones
 )
 
 create table Proveedores(
 
-	id_proveedor int identity, 
+	id_proveedor int identity not null, 
 	cuit varchar(20) not null,
 	nombre varchar(50),
 	
 	constraint pk_proveedores primary key(id_proveedor)
 )
 
-create table Tipos_Vehiculos(
-
-	id_tipo_vehiculo int identity not null,
-	tipo_vehiculo varchar(20)
-	
-	constraint pk_tipo_vehiculo primary key(id_tipo_vehiculo) 
-)
-
 create table Vehiculos(
 	
 	id_vehiculo int identity not null,
-	id_tipo_vehiculo int,
 	patente varchar(10),
 	peso float,
 	tara float, 
@@ -167,15 +151,14 @@ create table Vehiculos(
 	ancho float,
 	alto float,
 	profundidad float,
- 
-	constraint pk_vehiculo primary key(id_vehiculo),
-	constraint fk_veh_externo_tipo_veh foreign key(id_tipo_vehiculo) references Tipos_Vehiculos
+ 	tipo varchar(20),
 	
+	constraint pk_vehiculo primary key(id_vehiculo)
 )
 
 create table Vehiculos_Externos(
 	
-	id_vehiculo int identity not null,
+	id_vehiculo int not null,
 	id_proveedor int,
 	
 	constraint pk_vehiculo_externo primary key(id_vehiculo),
@@ -184,7 +167,7 @@ create table Vehiculos_Externos(
 
 create table Vehiculos_Locales(
 
-	id_vehiculo int identity not null,
+	id_vehiculo int not null,
 	id_sucursal int,
 	vencimiento_garantia datetime,
  
@@ -222,14 +205,6 @@ create table Companias_Seguros(
 	constraint pk_compania_seguros primary key (id_compania_seguros)
 )
 
-create table Tipos_Carga(
-
-	id_tipo_carga int identity not null,
-	nombre varchar(30),
-
-	constraint pk_tipo_carga primary key(id_tipo_carga)
-)
-
 create table Seguros(
 	
 	id_seguro int identity not null,
@@ -249,11 +224,15 @@ create table Viajes(
 	id_seguro int,
 	id_vehiculo int,
 	id_sucursal int,
+	id_origen int,
+	id_destino int,
 	fecha_salida datetime,
 	fecha_llegada datetime,
 	condicion_especial varchar(50),
 
 	constraint pk_viajes primary key(id_viaje),
+	constraint fk_viajes_origen foreign key(id_origen) references Ubicaciones,
+	constraint fk_viajes_destino foreign key(id_destino) references Ubicaciones,
 	constraint fk_viajes_vehiculos foreign key(id_vehiculo) references Vehiculos,
 	constraint fk_viajes_seguros foreign key(id_seguro) references Seguros
 
@@ -345,7 +324,7 @@ create table Distancia_Sucursales(
 create table ParadasIntermedias (
 
 	id_paradaIntermedia int identity not null,
-	id_viaje int,
+	id_viaje int,	
 	id_ubicacion int,
 	llegada date,
 	checked bit,

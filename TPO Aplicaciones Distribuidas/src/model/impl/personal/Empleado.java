@@ -27,9 +27,9 @@ public class Empleado extends PersistentObject {
 	@Column(name = "apellido")
 	private String apellido;
 	@Column(name = "puesto")
-	@Enumerated(value = EnumType.STRING)
+	@Enumerated(EnumType.STRING)
 	private TipoPuesto puesto;
-	@Column(name = "fechaNacimiento")
+	@Column(name = "fecha_nacimiento")
 	private Date fechaNacimiento;
 
 	public Empleado(String cuit, String dni, String nombre, String apellido,

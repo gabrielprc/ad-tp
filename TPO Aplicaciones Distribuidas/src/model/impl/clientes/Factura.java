@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import model.impl.PersistentObject;
@@ -25,7 +26,7 @@ public class Factura extends PersistentObject {
 	@JoinColumn(name = "idCarga")
 	private Carga carga;
 	@OneToMany
-	@JoinColumn (name="")
+	@JoinColumn (name="id_factura")
 	private List<ItemFactura> itemsFactura;
 	
 	public Factura(Float monto, Carga carga){

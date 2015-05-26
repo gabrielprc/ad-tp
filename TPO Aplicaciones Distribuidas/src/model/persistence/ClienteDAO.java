@@ -1,25 +1,25 @@
 package model.persistence;
 
-import model.impl.viajes.Viaje;
+import model.impl.clientes.Cliente;
 
 import org.hibernate.Session;
 
-public class ViajeDAO extends AbstractGenericDAO<Viaje>{
+public class ClienteDAO extends AbstractGenericDAO<Cliente>{
 	
 	@Override
-	public AbstractGenericDAO<Viaje> getInstance() {
+	public AbstractGenericDAO<Cliente> getInstance() {
 		if (instance == null)
 			instance = new ViajeDAO();
 		return instance;
 	}
 
 	@Override
-	public Viaje get(Integer id) {
+	public Cliente get(Integer id) {
 		Session session = sf.openSession();
 		session.beginTransaction();
-		Viaje viaje = (Viaje) session.get(Viaje.class, id);
+		Cliente cliente = (Cliente) session.get(Cliente.class, id);
 		session.close();
-		return viaje;
+		return cliente;
 	}
 
 }

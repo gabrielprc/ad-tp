@@ -1,10 +1,11 @@
 package model.persistence;
 
+import model.impl.personal.Empleado;
 import model.impl.viajes.Viaje;
 
 import org.hibernate.Session;
 
-public class ViajeDAO extends AbstractGenericDAO<Viaje>{
+public class EmpleadoDAO extends AbstractGenericDAO<Empleado>{
 	
 	@Override
 	public AbstractGenericDAO<Viaje> getInstance() {
@@ -14,12 +15,12 @@ public class ViajeDAO extends AbstractGenericDAO<Viaje>{
 	}
 
 	@Override
-	public Viaje get(Integer id) {
+	public Empleado get(Integer id) {
 		Session session = sf.openSession();
 		session.beginTransaction();
-		Viaje viaje = (Viaje) session.get(Viaje.class, id);
+		Empleado empleado = (Empleado) session.get(Empleado.class, id);
 		session.close();
-		return viaje;
+		return empleado;
 	}
 
 }

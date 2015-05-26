@@ -1,12 +1,13 @@
 package model.persistence;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
 
 public abstract class GenericDAO<T> {
 	protected static GenericDAO instance;
 	protected SessionFactory sf;
 	
-	private GenericDAO() {
+	protected GenericDAO () {
 		this.sf = HibernateUtil.getSessionFactory();
 	}
 	
@@ -14,6 +15,12 @@ public abstract class GenericDAO<T> {
 	
 	public abstract T get(Integer id);
 	
-	public abstract void persist(Object obj);
+	public void save(Object obj) {
+		Session session = sf.openSession();
+		session.beginTransaction();
+		session.saveOrUpdate(obj);
+		session.getTransaction().commit();
+		session.close();
+	};
 	
 }

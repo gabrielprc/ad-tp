@@ -1,5 +1,7 @@
 package model.impl.clientes;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -22,6 +24,9 @@ public class Factura extends PersistentObject {
 	@ManyToOne
 	@JoinColumn(name = "idCarga")
 	private Carga carga;
+	@OneToMany
+	@JoinColumn (name="")
+	private List<ItemFactura> itemsFactura;
 	
 	public Factura(Float monto, Carga carga){
 		

@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Table;
@@ -66,6 +67,12 @@ public class Producto extends PersistentObject {
 		this.tratamiento = tratamiento;
 		this.consideraciones = consideraciones;
 		this.condicionesEspeciales = condicionesEspeciales;
+	}
+	
+	@Id
+	@Column (name="id_producto")
+	public Integer getId(){
+		return this.id;
 	}
 	
 	public String getNombre() {

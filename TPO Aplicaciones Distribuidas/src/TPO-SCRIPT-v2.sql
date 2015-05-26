@@ -312,7 +312,7 @@ create table Items_Factura(
 	pagado bit,
 
 	constraint pk_items_fact primary key(id_item_factura),
-	constraint fk_items_facturas foreign key(id_carga) references Facturas
+	constraint fk_items_facturas foreign key(id_factura) references Facturas
 
 )
 
@@ -340,6 +340,19 @@ create table Distancia_Sucursales(
 	constraint pk_dist_sucur primary key(id_distancia_sucursales),
 	constraint fk_sucursal_a foreign key(id_sucursal_a) references Sucursales,
 	constraint fk_sucursal_b foreign key(id_sucursal_b) references Sucursales,
+)
+
+create table ParadasIntermedias (
+
+	id_paradaIntermedia int identity not null,
+	id_viaje int,
+	id_ubicacion int,
+	llegada date,
+	checked bit,
+
+	constraint pk_paradasInter primary key(id_paradaIntermedia),
+	constraint fk_paradas_viajes foreign key(id_viaje) references Viajes,
+	constraint fk_paradas_ubicacion foreign key(id_ubicacion) references Ubicaciones
 )
 
 create table Cargas_Productos(

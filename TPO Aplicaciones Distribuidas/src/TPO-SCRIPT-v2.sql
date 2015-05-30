@@ -277,6 +277,7 @@ create table Facturas(
 	id_factura int identity not null,
 	id_carga int,
 	fecha datetime,
+	monto float,
 
 	constraint pk_facturas primary key(id_factura),
 	constraint fk_items_cargas foreign key(id_carga) references Cargas

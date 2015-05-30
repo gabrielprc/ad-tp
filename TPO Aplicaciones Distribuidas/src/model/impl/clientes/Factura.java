@@ -25,7 +25,7 @@ public class Factura extends PersistentObject {
 	@Column(name = "monto")
 	private Float monto;
 	@ManyToOne
-	@JoinColumn(name = "idCarga")
+	@JoinColumn(name = "id_Carga")
 	private Carga carga;
 	@OneToMany
 	@JoinColumn (name="id_factura")

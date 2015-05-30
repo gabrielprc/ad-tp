@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import model.impl.PersistentObject;
 
 @Entity
-@Table(name = "ItemsProducto")
+@Table(name = "Cargas_Productos")
 public class ItemProducto extends PersistentObject {
 
 	/**
@@ -17,7 +17,7 @@ public class ItemProducto extends PersistentObject {
 	 */
 	private static final long serialVersionUID = 6147736562215085115L;
 	@ManyToOne
-	@JoinColumn(name = "idProducto")
+	@JoinColumn(name = "id_producto")
 	private Producto producto;
 	@Column(name = "cantidad")
 	private float cantidad;

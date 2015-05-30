@@ -10,16 +10,13 @@ import model.impl.vehiculos.VehiculoExterno;
 
 @Entity
 @Table(name = "Proveedores")
-public class Proveedor{
+@AttributeOverride (name = "id", column = @Column(name ="id_proveedor"))
+public class Proveedor extends PersistentObject{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4550038024972428465L;
 
-	@Id
-	@Column (name="id_proveedor")
-	@GeneratedValue (strategy = GenerationType.AUTO)
-	private Integer id;
 	@Column(name = "cuit")
 	private String cuit;
 	@Column(name = "nombre")

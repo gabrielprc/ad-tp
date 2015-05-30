@@ -1,17 +1,19 @@
 package model.impl.misc;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 
 
-@Entity
-@Table(name = "Coordenadas")
+@Embeddable
 public class Coordenada {
 	@Column(name = "latitud")
 	private float latitud;
 	@Column(name = "longitud")
 	private float longitud;
+	
+	public Coordenada() {
+		
+	}
 	
 	public Coordenada(float latitud, float longitud) {
 		this.latitud = latitud;

@@ -1,15 +1,16 @@
 package model.impl.misc;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import model.impl.PersistentObject;
 
 @Entity
 @Table(name = "Ubicaciones")
+@AttributeOverride(name = "id", column = @Column(name = "id_ubicacion"))
 public class Ubicacion extends PersistentObject {
 	/**
 	 * 
@@ -29,8 +30,7 @@ public class Ubicacion extends PersistentObject {
 	private String piso;
 	@Column(name = "departamento")
 	private String departamento;
-	@OneToMany
-	@JoinColumn(name = "idCoordenada")
+	@Embedded
 	private Coordenada coordenadaDestino;
 
 	public Ubicacion(String pais, String provincia, String ciudad, String calle,

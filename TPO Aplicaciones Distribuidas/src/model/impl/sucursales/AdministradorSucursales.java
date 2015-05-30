@@ -76,9 +76,9 @@ public class AdministradorSucursales {
 		if (sucursal != null){
 			Cliente cliente = carga.getCliente();
 			if (cliente != null){
-				if (!sucursal.getDeposito().existeCarga(carga.getId())){
+				if (!sucursal.existeCarga(carga.getId())){
 					if (!AdministradorCargas.getInstance().tieneMaterialesProhibidos(carga)){
-						sucursal.getDeposito().almacenarCarga(carga);
+						sucursal.getCargas().add(carga);
 					}
 					else{
 						throw new Exception("La carga de codigo " + carga.getId() + " tiene materiales prohibidos.");

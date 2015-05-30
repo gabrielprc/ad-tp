@@ -30,17 +30,22 @@ public class Sucursal extends PersistentObject {
 
 	@Column(name = "numero")
 	private Integer numero;
+	
 	@Column(name = "nombre")
 	private String nombre;
+	
 	@ManyToOne
 	@JoinColumn(name = "idUbicacion")
 	private Ubicacion ubicacion;
-	@OneToOne
-	@PrimaryKeyJoinColumn 
-	private Deposito deposito;
+	
+	@OneToMany
+	@JoinColumn (name = "id_carga")
+	private List<Carga> cargas;
+
 	@OneToMany
 	@JoinColumn(name = "idSucursal")
 	private List<Empleado> empleados;
+	
 	@OneToMany
 	@JoinColumn(name = "idSucursal")
 	private List<VehiculoLocal> vehiculos;
@@ -48,17 +53,8 @@ public class Sucursal extends PersistentObject {
 	public Sucursal(int numero, String nombre, Ubicacion ubicacion) {
 		this.numero = numero;
 		this.nombre = nombre;
-		deposito = new Deposito(1); //arreglar esto
 		this.ubicacion = ubicacion;
 		vehiculos = new ArrayList<VehiculoLocal>();
-	}
-
-	public Deposito getDeposito() {
-		return deposito;
-	}
-
-	public void setDeposito(Deposito deposito) {
-		this.deposito = deposito;
 	}
 
 	public Integer getNumero() {
@@ -103,7 +99,7 @@ public class Sucursal extends PersistentObject {
 
 	public Carga retirarCarga(Integer codigoCarga) {
 
-		for (Carga carga : deposito.getCargas()) {
+		for (Carga carga : this.cargas) {
 			if (carga.getId().equals(codigoCarga)) {
 				return carga;
 			}
@@ -156,4 +152,25 @@ public class Sucursal extends PersistentObject {
 		return false;
 	}
 
+	public Carga obtenerCarga(int codigoCarga) {
+		for (Carga c : cargas)
+			if (c.getId() == codigoCarga)
+				return c;
+		return null;
+	}
+	
+	public boolean existeCarga(int codigoCarga){
+		for (Carga c : cargas)
+			if (c.getId() == codigoCarga)
+				return true;
+		return false;
+	}
+	
+	public List<Carga> getCargas() {
+		return cargas;
+	}
+
+	public void setCargas(List<Carga> cargas) {
+		this.cargas = cargas;
+	}
 }

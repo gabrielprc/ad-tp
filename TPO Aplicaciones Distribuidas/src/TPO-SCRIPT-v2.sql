@@ -107,16 +107,6 @@ create table Sucursales(
 	constraint pk_sucursales primary key (id_sucursal)
 )
 
-
-create table Depositos(
-	
-	id_deposito int identity not null,
-	id_sucursal int,
-	
-	constraint pk_depositos primary key (id_deposito),
-	constraint fk_depositos_sucursales foreign key (id_sucursal) references Sucursales
-)
-
 create table Receptores(
 
 	id_receptor int identity not null,
@@ -245,7 +235,6 @@ create table Cargas(
 	id_viaje int,
 	id_ubicacionOrigen int,
 	id_ubicacionDestino int,
-	id_Deposito int,
 	tipoCarga varchar(50),
 	estadoCarga varchar(50),
 	fechaMaximaEntrega datetime,
@@ -258,6 +247,17 @@ create table Cargas(
 	constraint fk_cargas_ubicacionesDestino foreign key (id_ubicacionDestino) references Ubicaciones,
 	constraint fk_cargas_depositos foreign key (id_deposito) references Depositos,
 	constraint fk_cargas_viajes foreign key (id_viaje) references Viajes
+)
+
+create table Sucursal_Cargas(
+	
+	id_sucursal_carga int identity not null,
+	id_sucursal int,
+	id_carga int,
+	
+	constraint pk_suc_car primary key (id_deposito),
+	constraint fk_suc_sucursales foreign key (id_sucursal) references Sucursales,
+	constraint fk_suc_cargas foreign key (id_carga) references Cargas
 )
 
 create table Items_Cargas_Producto(

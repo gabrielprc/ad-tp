@@ -37,19 +37,19 @@ public class Viaje extends PersistentObject {
 	// @JoinTable(name = "ViajesCargas", joinColumns = {@JoinColumn(name =
 	// "idViaje")}, inverseJoinColumns = {@JoinColumn(name = "idCarga")})
 	@OneToMany
-	@JoinColumn(name = "idViaje")
+	@JoinColumn(name = "id_viaje")
 	private List<Carga> cargas;
 	@OneToMany
-	@JoinColumn(name = "idSeguro")
+	@JoinColumn(name = "id_seguro")
 	private Seguro seguro;
 	@OneToMany
-	@JoinColumn(name = "idVehiculo")
+	@JoinColumn(name = "id_vehiculo")
 	private Vehiculo vehiculo;
 	@OneToMany
-	@JoinColumn(name = "origen")
+	@JoinColumn(name = "id_origen")
 	private Ubicacion origen;
 	@OneToMany
-	@JoinColumn(name = "destino")
+	@JoinColumn(name = "id_destino")
 	private Ubicacion destino;
 	@Column(name = "fechaSalida")
 	private Date fechaSalida;

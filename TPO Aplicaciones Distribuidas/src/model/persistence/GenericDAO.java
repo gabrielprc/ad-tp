@@ -1,7 +1,7 @@
 package model.persistence;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.classic.Session;
 
 public class GenericDAO {
 	private static GenericDAO instance;

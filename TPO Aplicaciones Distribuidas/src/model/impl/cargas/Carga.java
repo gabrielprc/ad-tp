@@ -12,34 +12,47 @@ import model.impl.misc.Ubicacion;
 import model.impl.productos.ItemProducto;
 import model.impl.productos.Producto;
 
+@Entity
+@Table(name = "Cargas")
+@AttributeOverride(name = "id", column = @Column(name = "id_carga"))
 public class Carga extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -875716574330563168L;
 
-	@OneToMany
-	@JoinColumn (name="id_producto")
+	@ManyToMany
+	@JoinTable(name = "Cargas_Productos", joinColumns = @JoinColumn(name = "id_carga"), inverseJoinColumns = @JoinColumn(name = "id_producto"))
 	private Collection<ItemProducto> productos;
-	private TipoCarga tipo;
-	@Column (name="fechaMaximaEntrega")
-	private Date fechaMaximaEntrega;
-	@Column (name="fechaProbableEntrega")
-	private Date fechaProbableEntrega;
+
 	@ManyToOne
-	@JoinColumn (name="id_cliente")
+	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
-	@Column (name="manifiesto")
-	private String manifiesto;
+
 	@ManyToOne
-	@JoinColumn (name="id_ubicacion")
+	@JoinColumn(name = "id_ubicacionOrigen")
 	private Ubicacion origen;
+
 	@ManyToOne
-	@JoinColumn (name="id_ubicacion")
+	@JoinColumn(name = "id_ubicacionDestino")
 	private Ubicacion destino;
+
+	@Column(name = "tipoCarga")
+	@Enumerated(EnumType.STRING)
+	private TipoCarga tipo;
+
 	@Column(name = "estadoCarga")
-	@Enumerated(value = EnumType.STRING)
+	@Enumerated(EnumType.STRING)
 	private EstadoCarga estadoCarga;
+
+	@Column(name = "fechaMaximaEntrega")
+	private Date fechaMaximaEntrega;
+
+	@Column(name = "fechaProbableEntrega")
+	private Date fechaProbableEntrega;
+
+	@Column(name = "manifiesto")
+	private String manifiesto;
 
 	public Carga(TipoCarga tipoCarga, Date fechaMaximaEntrega,
 			Date fechaProbableEntrega, Cliente cliente, String manifiesto,
@@ -54,7 +67,6 @@ public class Carga extends PersistentObject {
 		this.estadoCarga = estadoCarga;
 		this.productos = new ArrayList<ItemProducto>();
 	}
-
 
 	public TipoCarga getTipo() {
 		return tipo;
@@ -149,24 +161,29 @@ public class Carga extends PersistentObject {
 	}
 
 	public void agregarItemProducto(Producto producto, float cantidad) {
-		productos.add(new ItemProducto(producto, cantidad));		
+		productos.add(new ItemProducto(producto, cantidad));
 	}
-	
-	public Float calcularCosto(){
-		//uso $60 como costo base
+
+	public Float calcularCosto() {
+		// uso $60 como costo base
 		return 60f * calcularFactorProductos() * calcularFactorDistancia();
 	}
-	
-	public Float calcularFactorProductos(){ //public para testear
+
+	public Float calcularFactorProductos() { // public para testear
 		Float total = 1f;
-		for (ItemProducto ip : productos){
-			total += ip.getProducto().calcularFactorProducto() * ip.getCantidad();
+		for (ItemProducto ip : productos) {
+			total += ip.getProducto().calcularFactorProducto()
+					* ip.getCantidad();
 		}
 		return total;
 	}
 
-	public Float calcularFactorDistancia(){ //public para testear
-		return 1f + origen.calcularDistanciaEnKilometros(destino) * 0.001f; //costo aumenta 100% cada 1000km	
+	public Float calcularFactorDistancia() { // public para testear
+		return 1f + origen.calcularDistanciaEnKilometros(destino) * 0.001f; // costo
+																			// aumenta
+																			// 100%
+																			// cada
+																			// 1000km
 	}
-	
+
 }

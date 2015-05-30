@@ -116,40 +116,40 @@ public class AdministradorViajes {
 		viajes.add(new Viaje(cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, paradasIntermedias));
 	}
 	
-	public void altaViajeExterno(List<Carga> cargas, Seguro seguro, Date fechaSalida, Date fechaLLegada, 
-		Proveedor proveedor, TipoVehiculo tipoVehiculo, List<CondicionEspecial> condicionesEspeciales){
+//	public void altaViajeExterno(List<Carga> cargas, Seguro seguro, Date fechaSalida, Date fechaLLegada, 
+//		Proveedor proveedor, TipoVehiculo tipoVehiculo, List<CondicionEspecial> condicionesEspeciales){
+//
+//		Vehiculo vehiculo = null;
+//		for(Vehiculo v : proveedor.getVehiculos())
+//			if(v.getTipo().equals(tipoVehiculo))
+//				vehiculo = v;
+//
+//		viajesExternos.add(new Viaje(cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, null));
+//	}
 
-		Vehiculo vehiculo = null;
-		for(Vehiculo v : proveedor.getVehiculos())
-			if(v.getTipo().equals(tipoVehiculo))
-				vehiculo = v;
-
-		viajesExternos.add(new Viaje(cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, null));
-	}
-
-	public void actualizarViaje(Viaje viaje, Sucursal sucursal) {
-		for (Iterator<Carga> iterator = viaje.getCargas().iterator(); iterator.hasNext();) {
-			Carga carga = iterator.next();
-			if (obtenerMejorViaje(sucursal, carga) != null) {
-				sucursal.getDeposito().almacenarCarga(carga);
-				iterator.remove();
-			}
-		}
-		for (ParadaIntermedia parada : viaje.getParadasIntermedias()) {
-			if (parada.getUbicacion().equals(sucursal.getUbicacion())) {
-				parada.setChecked(true);
-				break;
-			}
-		}
-		for (Iterator<Carga> iterator = sucursal.getDeposito().getCargas().iterator(); iterator.hasNext();) {
-			Carga carga = iterator.next();
-			Viaje mejorViaje = obtenerMejorViaje(sucursal, carga);
-			if (mejorViaje != null && mejorViaje.equals(viaje) && viaje.puedeTransportar(carga)) {
-				viaje.agregarCarga(carga);
-				iterator.remove();
-			}
-		}
-	}
+//	public void actualizarViaje(Viaje viaje, Sucursal sucursal) {
+//		for (Iterator<Carga> iterator = viaje.getCargas().iterator(); iterator.hasNext();) {
+//			Carga carga = iterator.next();
+//			if (obtenerMejorViaje(sucursal, carga) != null) {
+//				sucursal.getDeposito().almacenarCarga(carga);
+//				iterator.remove();
+//			}
+//		}
+//		for (ParadaIntermedia parada : viaje.getParadasIntermedias()) {
+//			if (parada.getUbicacion().equals(sucursal.getUbicacion())) {
+//				parada.setChecked(true);
+//				break;
+//			}
+//		}
+//		for (Iterator<Carga> iterator = sucursal.getDeposito().getCargas().iterator(); iterator.hasNext();) {
+//			Carga carga = iterator.next();
+//			Viaje mejorViaje = obtenerMejorViaje(sucursal, carga);
+//			if (mejorViaje != null && mejorViaje.equals(viaje) && viaje.puedeTransportar(carga)) {
+//				viaje.agregarCarga(carga);
+//				iterator.remove();
+//			}
+//		}
+//	}
 	
 	public Viaje obtenerMejorViaje(Sucursal sucursal, Carga carga) {
 		Viaje mejorViaje = null;

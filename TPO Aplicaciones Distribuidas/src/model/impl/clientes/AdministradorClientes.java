@@ -80,7 +80,7 @@ public class AdministradorClientes {
 	
 	private Producto obtenerProducto(int codigoProducto) {
 		for (Producto p : productos)
-			if (p.getCodigoProducto() == codigoProducto)
+			if (p.getId() == codigoProducto)
 				return p;
 		return null;
 	}

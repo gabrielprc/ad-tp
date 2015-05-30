@@ -35,14 +35,14 @@ public class AdministradorVehiculos {
 		}
 	}
 
-	public void altaVehiculoExterno(String cuitProveedor, String patente, Tamano tamano, Float peso, Float tara, Float tarifa, TipoVehiculo tipo){
-		Proveedor p = obtenerProveedor(cuitProveedor);
-		if (p != null){
-			if (p.existeVehiculo(patente)){
-				p.agregarVehiculo(new VehiculoExterno(patente, tamano, peso, tara, tarifa, tipo));
-			}
-		}
-	}
+//	public void altaVehiculoExterno(String cuitProveedor, String patente, Tamano tamano, Float peso, Float tara, Float tarifa, TipoVehiculo tipo){
+//		Proveedor p = obtenerProveedor(cuitProveedor);
+//		if (p != null){
+//			if (p.existeVehiculo(patente)){
+//				p.agregarVehiculo(new VehiculoExterno(patente, tamano, peso, tara, tarifa, tipo));
+//			}
+//		}
+//	}
 
 	public void realizarMantenimientoVehiculo(Integer idSucursal, String patente, boolean esEspecifico){
 		Sucursal s = AdministradorSucursales.getInstance().obtenerSucursal(idSucursal);
@@ -77,19 +77,19 @@ public class AdministradorVehiculos {
 		return null;
 	}
 	
-	public List<Proveedor> obtenerViajesDeProveedores(Date fechaSalida, Date fechaLLegada, TipoVehiculo tipoVehiculo){
-
-		List<Proveedor> proveedores = new ArrayList<Proveedor>();
-
-		for(Proveedor p : proveedores){
-			for(VehiculoExterno ve : p.getVehiculos())
-				if(ve.getTipo().equals(tipoVehiculo)){
-					proveedores.add(p);
-					break;
-				}				
-		}
-
-		return proveedores;
-	}
+//	public List<Proveedor> obtenerViajesDeProveedores(Date fechaSalida, Date fechaLLegada, TipoVehiculo tipoVehiculo){
+//
+//		List<Proveedor> proveedores = new ArrayList<Proveedor>();
+//
+//		for(Proveedor p : proveedores){
+//			for(VehiculoExterno ve : p.getVehiculos())
+//				if(ve.getTipo().equals(tipoVehiculo)){
+//					proveedores.add(p);
+//					break;
+//				}				
+//		}
+//
+//		return proveedores;
+//	}
 	
 }

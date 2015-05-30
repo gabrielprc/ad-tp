@@ -1,5 +1,6 @@
 package model.impl.viajes;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,28 +12,20 @@ import model.impl.cargas.TipoCarga;
 
 @Entity
 @Table(name = "Seguros")
+@AttributeOverride(name = "id", column = @Column(name = "id_seguro"))
 public class Seguro extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1508681287329096593L;
-	
-	@Column(name = "codigo")
-	private Integer codigo;
 	@Column(name = "nombre")
 	private String nombre;
-	@Column(name = "tipoCarga")
+	@Column(name = "tipo_carga")
 	@Enumerated(value = EnumType.STRING)
 	private TipoCarga tipoCarga;
 	@Column(name = "tarifa")
 	private Float tarifa;
 	
-	public Integer getCodigo() {
-		return codigo;
-	}
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
-	}
 	public String getNombre() {
 		return nombre;
 	}

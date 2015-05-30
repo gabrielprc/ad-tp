@@ -1,6 +1,8 @@
 package model.impl.vehiculos;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,6 +16,7 @@ import model.impl.misc.Tamano;
 @Entity
 @Table(name = "Vehiculos")
 @Inheritance(strategy = InheritanceType.JOINED)
+@AttributeOverride (name ="id", column = @Column (name ="id_vehiculo"))
 public abstract class Vehiculo extends PersistentObject {
 	/**
 	 * 
@@ -22,14 +25,19 @@ public abstract class Vehiculo extends PersistentObject {
 	
 	@Column(name = "patente")
 	protected String patente;
-	@Column(name = "tamano")
+	
+	@Embedded
 	protected Tamano tamano;
+	
 	@Column(name = "peso")
 	protected Float peso;
+	
 	@Column(name = "tara")
 	protected Float tara;
+	
 	@Column(name = "tarifa")
 	protected Float tarifa;
+	
 	@Column(name = "tipo")
 	@Enumerated(EnumType.STRING)
 	protected TipoVehiculo tipo;

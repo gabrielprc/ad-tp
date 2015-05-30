@@ -14,7 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CollectionOfElements;
 
 import model.impl.PersistentObject;
 import model.impl.cargas.Carga;
@@ -36,31 +35,42 @@ public class Viaje extends PersistentObject {
 	// @ManyToMany
 	// @JoinTable(name = "ViajesCargas", joinColumns = {@JoinColumn(name =
 	// "idViaje")}, inverseJoinColumns = {@JoinColumn(name = "idCarga")})
+	
 	@OneToMany
 	@JoinColumn(name = "id_viaje")
 	private List<Carga> cargas;
+	
 	@OneToMany
 	@JoinColumn(name = "id_seguro")
 	private Seguro seguro;
+	
 	@OneToMany
 	@JoinColumn(name = "id_vehiculo")
 	private Vehiculo vehiculo;
+	
 	@OneToMany
 	@JoinColumn(name = "id_origen")
 	private Ubicacion origen;
+	
 	@OneToMany
 	@JoinColumn(name = "id_destino")
+	
 	private Ubicacion destino;
+	
 	@Column(name = "fechaSalida")
 	private Date fechaSalida;
+
 	@Column(name = "fechaLlegada")
 	private Date fechaLlegada;
-	@CollectionOfElements
+
+	//@CollectionOfElements
 	@JoinTable(name = "CondicionesViajes", joinColumns = { @JoinColumn(name = "idViaje") })
 	@Enumerated(EnumType.STRING)
 	private List<CondicionEspecial> condicionesEspeciales;
+	
 	@Column(name = "estaAtrasado")
 	private boolean estaAtrasado;
+	
 	@OneToMany
 	@JoinColumn(name = "idViaje")
 	private Vector<ParadaIntermedia> paradasIntermedias;

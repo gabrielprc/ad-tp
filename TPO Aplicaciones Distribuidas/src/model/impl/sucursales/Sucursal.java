@@ -35,7 +35,7 @@ public class Sucursal extends PersistentObject {
 	private String nombre;
 	
 	@ManyToOne
-	@JoinColumn(name = "idUbicacion")
+	@JoinColumn(name = "id_Ubicacion")
 	private Ubicacion ubicacion;
 	
 	@OneToMany
@@ -43,11 +43,11 @@ public class Sucursal extends PersistentObject {
 	private List<Carga> cargas;
 
 	@OneToMany
-	@JoinColumn(name = "idSucursal")
+	@JoinColumn(name = "id_empleado")
 	private List<Empleado> empleados;
 	
 	@OneToMany
-	@JoinColumn(name = "idSucursal")
+	@JoinColumn(name = "id_vehiculo")
 	private List<VehiculoLocal> vehiculos;
 
 	public Sucursal(int numero, String nombre, Ubicacion ubicacion) {
@@ -55,6 +55,8 @@ public class Sucursal extends PersistentObject {
 		this.nombre = nombre;
 		this.ubicacion = ubicacion;
 		vehiculos = new ArrayList<VehiculoLocal>();
+		cargas = new ArrayList<Carga>();
+		empleados = new ArrayList<Empleado>();
 	}
 
 	public Integer getNumero() {

@@ -1,12 +1,11 @@
 package model.impl.viajes;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import model.impl.PersistentObject;
-import model.impl.vehiculos.VehiculoExterno;
 
 @Entity
 @Table(name = "Proveedores")

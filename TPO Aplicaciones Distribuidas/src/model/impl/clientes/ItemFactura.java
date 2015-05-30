@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table (name="Items_Factura")
+@AttributeOverride (name = "id", column = @Column(name ="id_item_factura"))
 public class ItemFactura extends PersistentObject{
 
 	/**

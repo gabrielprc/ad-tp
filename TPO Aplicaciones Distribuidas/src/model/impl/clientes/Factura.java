@@ -2,6 +2,7 @@ package model.impl.clientes;
 
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,6 +15,7 @@ import model.impl.cargas.Carga;
 
 @Entity
 @Table(name = "Facturas")
+@AttributeOverride (name = "id", column = @Column(name ="id_factura"))
 public class Factura extends PersistentObject {
 	/**
 	 * 

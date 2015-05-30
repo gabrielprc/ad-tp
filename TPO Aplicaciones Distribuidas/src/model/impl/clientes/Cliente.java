@@ -1,5 +1,6 @@
 package model.impl.clientes;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -10,6 +11,7 @@ import model.impl.PersistentObject;
 
 @Entity
 @Table(name = "Clientes")
+@AttributeOverride (name = "id", column = @Column(name ="id_cliente"))
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Cliente extends PersistentObject {
 	/**

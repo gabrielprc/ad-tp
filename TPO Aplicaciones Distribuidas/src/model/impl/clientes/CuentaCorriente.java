@@ -1,11 +1,16 @@
 package model.impl.clientes;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import model.impl.PersistentObject;
 
-@Embeddable
+@Entity
+@Table(name = "Clientes")
+@AttributeOverride (name = "id", column = @Column(name ="id_cuenta_corriente"))
 public class CuentaCorriente extends PersistentObject {
 	/**
 	 * 

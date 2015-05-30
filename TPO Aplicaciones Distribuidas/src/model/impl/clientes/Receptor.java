@@ -1,5 +1,6 @@
 package model.impl.clientes;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -11,6 +12,7 @@ import model.impl.misc.Ubicacion;
 
 @Entity
 @Table(name = "Receptores")
+@AttributeOverride (name = "id", column = @Column(name ="id_receptor"))
 public class Receptor extends PersistentObject  {
 	
 	/**

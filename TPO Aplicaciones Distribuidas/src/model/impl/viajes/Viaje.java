@@ -11,8 +11,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import model.impl.PersistentObject;
@@ -41,21 +41,20 @@ public class Viaje extends PersistentObject {
 	@JoinColumn(name = "id_viaje")
 	private List<Carga> cargas;
 	
-	@OneToMany
+	@OneToOne
 	@JoinColumn(name = "id_seguro")
 	private Seguro seguro;
 	
-	@OneToMany
+	@OneToOne
 	@JoinColumn(name = "id_vehiculo")
 	private Vehiculo vehiculo;
 	
-	@OneToMany
+	@OneToOne
 	@JoinColumn(name = "id_origen")
 	private Ubicacion origen;
 	
-	@OneToMany
-	@JoinColumn(name = "id_destino")
-	
+	@OneToOne
+	@JoinColumn(name = "id_destino")	
 	private Ubicacion destino;
 	
 	@Column(name = "fechaSalida")

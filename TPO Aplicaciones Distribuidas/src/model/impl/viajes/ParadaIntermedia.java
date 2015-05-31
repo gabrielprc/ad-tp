@@ -22,7 +22,7 @@ public class ParadaIntermedia extends PersistentObject {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne
-	@JoinColumn(name = "idUbicacion")
+	@JoinColumn(name = "id_ubicacion")
 	private Ubicacion ubicacion;
 	@Column(name = "llegada")
 	private Date llegada;

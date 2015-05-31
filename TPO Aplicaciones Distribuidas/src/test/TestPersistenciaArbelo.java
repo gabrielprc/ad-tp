@@ -16,7 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 public class TestPersistenciaArbelo {
-
+	
 	public static void main(String[] args) {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.openSession();
@@ -46,5 +46,18 @@ public class TestPersistenciaArbelo {
 		s.getTransaction().commit();
 		s.close();
 	}
-
+	
+/*
+	   ____       ____     __ ____     __           .---.     ,---.    ,---.   ____        ,-----.     
+	   .'  __ `.    \   \   /  /\   \   /  /          | ,_|     |    \  /    | .'  __ `.   .'  .-,  '.   
+	  /   '  \  \    \  _. /  '  \  _. /  '         ,-./  )     |  ,  \/  ,  |/   '  \  \ / ,-.|  \ _ \  
+	  |___|  /  |     _( )_ .'    _( )_ .'          \  '_ '`)   |  |\_   /|  ||___|  /  |;  \  '_ /  | : 
+	     _.-`   | ___(_ o _)' ___(_ o _)'            > (_)  )   |  _( )_/ |  |   _.-`   ||  _`,/ \ _/  | 
+	  .'   _    ||   |(_,_)' |   |(_,_)'            (  .  .-'   | (_ o _) |  |.'   _    |: (  '\_/ \   ; 
+	  |  _( )_  ||   `-'  /  |   `-'  /              `-'`-'|___ |  (_,_)  |  ||  _( )_  | \ `"/  \  ) /  
+	  \ (_ o _) / \      /    \      /                |        \|  |      |  |\ (_ o _) /  '. \_/``".'   
+	   '.(_,_).'   `-..-'      `-..-'                 `--------`'--'      '--' '.(_,_).'     '-----'     
+	                                                                                                     
+*/
+	
 }

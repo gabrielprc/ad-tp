@@ -373,6 +373,7 @@ go
 
 create procedure borrartodo as
 begin
+	set nocount on
 	declare @nombreTabla varchar(200)
 	declare cursorTablas cursor fast_forward
 	for select name as nombreTabla from sys.objects where type = 'U'

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,7 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 import model.impl.PersistentObject;
 import model.impl.cargas.Carga;
 import model.impl.misc.Ubicacion;
@@ -24,6 +24,7 @@ import model.impl.vehiculos.Vehiculo;
 
 @Entity
 @Table(name = "Viajes")
+@AttributeOverride(name = "id", column = @Column(name = "id_viaje"))
 public class Viaje extends PersistentObject {
 	/**
 	 * 

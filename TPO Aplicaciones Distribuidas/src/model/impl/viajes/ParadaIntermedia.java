@@ -2,18 +2,25 @@ package model.impl.viajes;
 
 import java.util.Date;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import model.impl.PersistentObject;
 import model.impl.misc.Ubicacion;
 
 @Entity
 @Table(name = "ParadasIntermedias")
-public class ParadaIntermedia {
-
+@AttributeOverride(name = "id", column = @Column(name = "id_parada_intermedia"))
+public class ParadaIntermedia extends PersistentObject {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@ManyToOne
 	@JoinColumn(name = "idUbicacion")
 	private Ubicacion ubicacion;

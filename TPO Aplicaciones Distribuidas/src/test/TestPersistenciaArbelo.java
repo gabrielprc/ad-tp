@@ -38,8 +38,15 @@ public class TestPersistenciaArbelo {
 	private static SessionFactory sf = HibernateUtil.getSessionFactory();
 	
 	public static void main(String[] args) {
-		crearCosas();
-		//pagarFactura(1, 1);
+		try {
+			crearCosas();
+			//System.out.println(((Sucursal)levantarAlgo(Sucursal.class, 1)).getEmpleados().get(0).getApellido());
+		} catch(Exception e) {
+			System.out.println("\nexplotó algo\n");
+			e.printStackTrace();
+		} finally {
+			System.exit(0);
+		}		
 	}
 	
 	private static void crearCosas() {
@@ -172,8 +179,6 @@ public class TestPersistenciaArbelo {
 		s.flush();
 		s.getTransaction().commit();
 		s.close();
-		
-		System.exit(0);
 	}
 	
 	private static Object levantarAlgo(Class<?> className, int id) {

@@ -98,8 +98,8 @@ create table Ubicaciones(
 	altura varchar(50),
 	piso varchar(50),
 	departamento varchar(50),
-	longitud int,
-	latitud int,
+	longitud float,
+	latitud float,
 	
 	constraint pk_ubicaciones primary key (id_ubicacion)
 )
@@ -205,7 +205,7 @@ create table Seguros(
 	
 	id_seguro int identity not null,
 	id_compania_seguros int,
-	id_tipo_carga int,
+	tipo_carga varchar(50),
 	nombre varchar(40),
 	tarifa float,
 	
@@ -351,13 +351,13 @@ create table Cargas_Productos(
 )
 
 
-if exists (select name from master.sys.server_principals where name = 'ADUser')
+if exists (select name from master.sys.server_principals where name = 'ADuser')
 begin
 	drop login ADuser
 end
 go
 
-create login ADUser with password = 'ADPassword'
+create login ADuser with password = 'ADpassword'
 go
 
 create user ADuser for login ADuser

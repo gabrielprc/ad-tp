@@ -342,11 +342,13 @@ create table ParadasIntermedias (
 
 create table Cargas_Productos(
 
+	id_carga_producto int identity not null,
 	id_carga int not null,
 	id_producto int,
 	cantidad float,
 	
-	constraint pk_cargas_productos primary key(id_carga, id_producto),
+	constraint pk_cargas_productos primary key (id_carga_producto),
+	constraint fk_productos foreign key (id_producto) references Productos,
 	constraint fk_cargas foreign key(id_carga) references Cargas
 )
 

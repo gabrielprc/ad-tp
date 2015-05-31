@@ -22,14 +22,14 @@ public class Pago extends PersistentObject {
 	private static final long serialVersionUID = -6122982765032430365L;
 	
 	@ManyToOne
-	@JoinColumn(name = "proveedor")
+	@JoinColumn(name = "id_proveedor")
 	private Proveedor proveedor;
 	@Column(name = "monto")
 	private Float monto;
 	@Column(name = "fecha")
 	private Date fecha;
-	@Column(name = "estado")
-	private boolean estado;
+	@Column(name = "pagado")
+	private boolean pagado;
 	
 	public Pago(Proveedor proveedor, Float monto, Date fecha){
 		
@@ -38,6 +38,10 @@ public class Pago extends PersistentObject {
 		this.fecha = fecha;
 	}
 	
+	public Pago() {
+		
+	}
+
 	public Proveedor getProveedor() {
 		return proveedor;
 	}
@@ -57,10 +61,10 @@ public class Pago extends PersistentObject {
 		this.fecha = fecha;
 	}
 	public boolean isEstado() {
-		return estado;
+		return pagado;
 	}
 	public void setEstado(boolean estado) {
-		this.estado = estado;
+		this.pagado = estado;
 	}
 	
 }

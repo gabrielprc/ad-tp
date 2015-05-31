@@ -8,6 +8,7 @@ import model.impl.cargas.TipoCarga;
 import model.impl.clientes.CuentaCorriente;
 import model.impl.clientes.Empresa;
 import model.impl.clientes.Factura;
+import model.impl.clientes.Pago;
 import model.impl.clientes.Particular;
 import model.impl.clientes.Receptor;
 import model.impl.misc.Coordenada;
@@ -134,6 +135,11 @@ public class TestPersistenciaArbelo {
 		sucursal.agregarCarga(carga);
 		sucursal.agregarVehiculo(vehiculoLocal);
 		sucursal.agregarEmpleado(empleado);
+		Pago pago = new Pago();
+		pago.setProveedor(proveedor);
+		pago.setFecha(new Date());
+		pago.setMonto(123f);
+		pago.setEstado(true);
 
 		s.beginTransaction();
 		s.save(u);
@@ -151,6 +157,7 @@ public class TestPersistenciaArbelo {
 		s.save(factura);
 		s.save(empleado);
 		s.save(sucursal);
+		s.save(pago);
 		s.flush();
 		s.getTransaction().commit();
 		s.close();

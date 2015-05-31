@@ -57,7 +57,6 @@ create table Clientes_Empresas(
 create table Clientes_Particulares(
 
 	id_cliente int not null,
-	nombre varchar(50),
 	apellido varchar(50),
 	dni varchar(20),
 

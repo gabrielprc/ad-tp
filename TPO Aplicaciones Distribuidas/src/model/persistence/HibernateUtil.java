@@ -6,6 +6,7 @@ import model.impl.clientes.CobroParcial;
 import model.impl.clientes.CuentaCorriente;
 import model.impl.clientes.Empresa;
 import model.impl.clientes.Factura;
+import model.impl.clientes.Pago;
 import model.impl.clientes.Particular;
 import model.impl.clientes.Receptor;
 import model.impl.misc.Coordenada;
@@ -56,6 +57,7 @@ public class HibernateUtil
         	 config.addAnnotatedClass(CobroParcial.class);
         	 config.addAnnotatedClass(Sucursal.class);
         	 config.addAnnotatedClass(Empleado.class);
+        	 config.addAnnotatedClass(Pago.class);
              sessionFactory = config.buildSessionFactory();
         }
         catch (Throwable ex)

@@ -1,5 +1,6 @@
 package model.impl.productos;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -10,15 +11,18 @@ import model.impl.PersistentObject;
 
 @Entity
 @Table(name = "Cargas_Productos")
+@AttributeOverride (name = "id", column = @Column (name ="id_carga_producto"))
 public class ItemProducto extends PersistentObject {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6147736562215085115L;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_producto")
 	private Producto producto;
+	
 	@Column(name = "cantidad")
 	private float cantidad;
 

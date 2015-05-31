@@ -3,9 +3,11 @@ package test;
 import java.util.Date;
 
 import model.impl.cargas.Carga;
+import model.impl.cargas.EstadoCarga;
 import model.impl.cargas.TipoCarga;
 import model.impl.clientes.CuentaCorriente;
 import model.impl.clientes.Empresa;
+import model.impl.clientes.Factura;
 import model.impl.clientes.Particular;
 import model.impl.clientes.Receptor;
 import model.impl.misc.Coordenada;
@@ -32,26 +34,9 @@ public class TestPersistenciaArbelo {
 	
 	public static void main(String[] args) {
 		crearCosas();
-		//levantarProducto(4);
-		//levantarEmpresa(6);
+		//pagarFactura(1, 1);
 	}
 	
-	private static void levantarEmpresa(int i) {
-		Session s = sf.openSession();
-		Empresa e = (Empresa) s.get(Empresa.class, i);
-		System.out.println(e.getCuentaCorriente().getMontoActual());
-	}
-	
-	private static void levantarProducto(int i) {
-		Session s = sf.openSession();
-		Producto p = (Producto) s.get(Producto.class, i);
-		for (CondicionEspecial ce : p.getCondicionesEspeciales()) {
-			System.out.println(ce.getCondicion());
-			System.out.println(ce.getFactorCondicion());
-		}
-		System.out.println(p.getFragilidad().getTipo());
-	}
-
 	private static void crearCosas() {
 		Session s = sf.openSession();
 		Ubicacion u = new Ubicacion("ayy", "lmao", "rio cuarto", "sobremonte", "982", "1", "A", new Coordenada(45, 55));
@@ -64,10 +49,10 @@ public class TestPersistenciaArbelo {
 		companiaSeguro.setCuil("123");
 		companiaSeguro.setNombre("compania1");		
 		companiaSeguro.agregarSeguro(seguro);
-		Carga carga = new Carga();
 		ParadaIntermedia pi = new ParadaIntermedia();
 		pi.setLlegada(new Date());
 		pi.setChecked(true);
+		pi.setUbicacion(u);
 		VehiculoLocal vehiculoLocal = new VehiculoLocal();
 		vehiculoLocal.setPatente("ABC-123");
 		vehiculoLocal.setPeso(456f);
@@ -117,7 +102,21 @@ public class TestPersistenciaArbelo {
 		particular.setDni("213123");
 		particular.setNombre("arbelo");
 		particular.agregarReceptor(receptor);
-		
+		Carga carga = new Carga();
+		carga.setCliente(empresa);
+		carga.setDestino(u);
+		carga.setEstadoCarga(EstadoCarga.EN_VIAJE);
+		carga.setFechaMaximaEntrega(new Date());
+		carga.setFechaProbableEntrega(new Date());
+		carga.setManifiesto("soy un manifiesto");
+		carga.setOrigen(u);
+		carga.setTipo(TipoCarga.GRANEL);
+		carga.agregarItemProducto(producto, 5f);
+		Factura factura = new Factura();
+		factura.setCarga(carga);
+		factura.setMonto(456f);
+		factura.agregarItemFactura(45f, new Date());
+
 		s.beginTransaction();
 		s.save(u);
 		s.save(seguro);
@@ -130,7 +129,25 @@ public class TestPersistenciaArbelo {
 		s.save(empresa);
 		s.save(receptor);
 		s.save(particular);
-		//s.save(carga);
+		s.save(carga);
+		s.save(factura);
+		s.flush();
+		s.getTransaction().commit();
+		s.close();
+	}
+	
+	private static Object levantarAlgo(Class<?> className, int id) {
+		Session s = sf.openSession();
+		Object o = (Object) s.get(className, id);
+		return o;
+	}
+	
+	private static void pagarFactura(int idFac, int idItemFac) {		
+		Session s = sf.openSession();
+		Factura f = (Factura) s.get(Factura.class, idFac);	
+		f.pagarItemFactura(idItemFac);
+		s.beginTransaction();
+		s.save(f);
 		s.flush();
 		s.getTransaction().commit();
 		s.close();

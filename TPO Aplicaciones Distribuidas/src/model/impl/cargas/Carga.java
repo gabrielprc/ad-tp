@@ -21,7 +21,7 @@ public class Carga extends PersistentObject {
 	 */
 	private static final long serialVersionUID = -875716574330563168L;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_carga")
 	private Collection<ItemProducto> productos;
 
@@ -69,7 +69,7 @@ public class Carga extends PersistentObject {
 	}
 
 	public Carga() {
-		
+
 	}
 
 	public TipoCarga getTipo() {
@@ -164,10 +164,6 @@ public class Carga extends PersistentObject {
 		this.estadoCarga = estadoCarga;
 	}
 
-	public void agregarItemProducto(Producto producto, float cantidad) {
-		productos.add(new ItemProducto(producto, cantidad));
-	}
-
 	public Float calcularCosto() {
 		// uso $60 como costo base
 		return 60f * calcularFactorProductos() * calcularFactorDistancia();
@@ -183,11 +179,14 @@ public class Carga extends PersistentObject {
 	}
 
 	public Float calcularFactorDistancia() { // public para testear
-		return 1f + origen.calcularDistanciaEnKilometros(destino) * 0.001f; // costo
-																			// aumenta
-																			// 100%
-																			// cada
-																			// 1000km
+		return 1f + origen.calcularDistanciaEnKilometros(destino) * 0.001f;
+		// costo aumenta 100% cada 1000km
+	}
+
+	public void agregarItemProducto(Producto producto, float cantidad) {
+		if (productos == null)
+			productos = new ArrayList<ItemProducto>();
+		productos.add(new ItemProducto(producto, cantidad));
 	}
 
 }

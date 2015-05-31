@@ -1,8 +1,11 @@
 package model.impl.clientes;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -27,7 +30,7 @@ public class Factura extends PersistentObject {
 	@ManyToOne
 	@JoinColumn(name = "id_Carga")
 	private Carga carga;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn (name="id_factura")
 	private List<ItemFactura> itemsFactura;
 	
@@ -37,6 +40,10 @@ public class Factura extends PersistentObject {
 		this.carga = carga;
 	}
 	
+	public Factura() {
+		
+	}
+
 	public Float getMonto() {
 		return monto;
 	}
@@ -48,5 +55,20 @@ public class Factura extends PersistentObject {
 	}
 	public void setCarga(Carga carga) {
 		this.carga = carga;
+	}
+	
+	public void agregarItemFactura(float monto, Date fechaVencimiento) {
+		if (itemsFactura == null)
+			itemsFactura = new ArrayList<ItemFactura>();
+		itemsFactura.add(new ItemFactura(monto, fechaVencimiento));
+	}
+	
+	public void pagarItemFactura(Integer id) {
+		for (ItemFactura ifac : itemsFactura) {
+			if (ifac.getId().equals(id)) {
+				ifac.setPagado(true);
+				break;
+			}
+		}
 	}
 }

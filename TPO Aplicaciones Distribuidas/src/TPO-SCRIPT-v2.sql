@@ -321,7 +321,7 @@ create table ParadasIntermedias (
 create table Cargas_Productos(
 
 	id_carga_producto int identity not null,
-	id_carga int not null,
+	id_carga int,
 	id_producto int,
 	cantidad float,
 	
@@ -366,12 +366,12 @@ create procedure seleccionartodo as
 begin
 	declare @nombreTabla varchar(200)
 	declare cursorTablas cursor fast_forward
-	for select name as nombreTabla from sys.objects where type = 'U'
+	for select name as nombreTabla from tpad.sys.objects where type = 'U'
 	open cursorTablas
 	fetch next from cursorTablas into @nombreTabla
 	while (@@FETCH_STATUS <> -1)
 	begin
-		execute ('select * from ' +  @nombretabla)
+		execute ('select ''' + @nombreTabla + ''' as nombre_tabla, * from ' +  @nombretabla)
 		fetch next from cursorTablas into @nombretabla
 	end
 	close cursorTablas

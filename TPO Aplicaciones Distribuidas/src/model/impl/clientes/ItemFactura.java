@@ -27,6 +27,12 @@ public class ItemFactura extends PersistentObject{
 
 	}
 
+	public ItemFactura(float monto, Date fechaVencimiento) {
+		this.monto = monto;
+		this.fechaVecimiento = fechaVencimiento;
+		this.pagado = false;
+	}
+
 	public Float getMonto() {
 		return monto;
 	}

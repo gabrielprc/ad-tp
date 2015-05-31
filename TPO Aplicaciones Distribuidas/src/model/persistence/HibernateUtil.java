@@ -1,13 +1,17 @@
 package model.persistence;
 
+import model.impl.cargas.Carga;
 import model.impl.clientes.Cliente;
 import model.impl.clientes.CuentaCorriente;
 import model.impl.clientes.Empresa;
+import model.impl.clientes.Factura;
+import model.impl.clientes.ItemFactura;
 import model.impl.clientes.Particular;
 import model.impl.clientes.Receptor;
 import model.impl.misc.Coordenada;
 import model.impl.misc.Tamano;
 import model.impl.misc.Ubicacion;
+import model.impl.productos.ItemProducto;
 import model.impl.productos.Producto;
 import model.impl.vehiculos.Vehiculo;
 import model.impl.vehiculos.VehiculoExterno;
@@ -44,6 +48,10 @@ public class HibernateUtil
         	 config.addAnnotatedClass(Cliente.class);
         	 config.addAnnotatedClass(Receptor.class);
         	 config.addAnnotatedClass(Particular.class);
+        	 config.addAnnotatedClass(Carga.class);
+        	 config.addAnnotatedClass(ItemProducto.class);
+        	 config.addAnnotatedClass(Factura.class);
+        	 config.addAnnotatedClass(ItemFactura.class);
              sessionFactory = config.buildSessionFactory();
         }
         catch (Throwable ex)

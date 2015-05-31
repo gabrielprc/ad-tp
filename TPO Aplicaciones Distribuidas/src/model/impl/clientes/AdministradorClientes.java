@@ -9,14 +9,12 @@ public class AdministradorClientes {
 	private static AdministradorClientes instance;
 	private List<Cliente> clientes;
 	private List<Pago> pagos;
-	private List<Cobro> cobros;
 	private List<Producto> productos;
 
 
 	private AdministradorClientes() {
 		this.clientes = new ArrayList<Cliente>();
 		this.pagos = new ArrayList<Pago>();
-		this.cobros = new ArrayList<Cobro>();
 		this.productos = new ArrayList<Producto>();
 	}
 	
@@ -101,14 +99,6 @@ public class AdministradorClientes {
 		this.pagos = pagos;
 	}
 
-	public List<Cobro> getCobros() {
-		return cobros;
-	}
-
-	public void setCobros(List<Cobro> cobros) {
-		this.cobros = cobros;
-	}
-	
 	public List<Producto> getProductos() {
 		return productos;
 	}

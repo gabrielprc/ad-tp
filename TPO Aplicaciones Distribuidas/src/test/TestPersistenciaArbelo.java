@@ -114,8 +114,10 @@ public class TestPersistenciaArbelo {
 		carga.agregarItemProducto(producto, 5f);
 		Factura factura = new Factura();
 		factura.setCarga(carga);
-		factura.setMonto(456f);
-		factura.agregarItemFactura(45f, new Date());
+		factura.setMontoTotal(456f);
+		factura.realizarCobroParcial(new Date(), 200f);
+		factura.setTipoFactura("A");
+		factura.setFechaCreacion(new Date());
 
 		s.beginTransaction();
 		s.save(u);
@@ -140,17 +142,6 @@ public class TestPersistenciaArbelo {
 		Session s = sf.openSession();
 		Object o = (Object) s.get(className, id);
 		return o;
-	}
-	
-	private static void pagarFactura(int idFac, int idItemFac) {		
-		Session s = sf.openSession();
-		Factura f = (Factura) s.get(Factura.class, idFac);	
-		f.pagarItemFactura(idItemFac);
-		s.beginTransaction();
-		s.save(f);
-		s.flush();
-		s.getTransaction().commit();
-		s.close();
 	}
 	
 /*

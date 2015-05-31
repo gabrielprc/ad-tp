@@ -2,10 +2,10 @@ package model.persistence;
 
 import model.impl.cargas.Carga;
 import model.impl.clientes.Cliente;
+import model.impl.clientes.CobroParcial;
 import model.impl.clientes.CuentaCorriente;
 import model.impl.clientes.Empresa;
 import model.impl.clientes.Factura;
-import model.impl.clientes.ItemFactura;
 import model.impl.clientes.Particular;
 import model.impl.clientes.Receptor;
 import model.impl.misc.Coordenada;
@@ -51,7 +51,7 @@ public class HibernateUtil
         	 config.addAnnotatedClass(Carga.class);
         	 config.addAnnotatedClass(ItemProducto.class);
         	 config.addAnnotatedClass(Factura.class);
-        	 config.addAnnotatedClass(ItemFactura.class);
+        	 config.addAnnotatedClass(CobroParcial.class);
              sessionFactory = config.buildSessionFactory();
         }
         catch (Throwable ex)

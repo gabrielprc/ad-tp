@@ -259,24 +259,23 @@ create table Facturas(
 
 	id_factura int identity not null,
 	id_carga int,
-	fecha datetime,
-	monto float,
+	tipo_factura varchar(50),
+	fecha_creacion datetime,
+	monto_total float,
 
 	constraint pk_facturas primary key(id_factura),
 	constraint fk_items_cargas foreign key(id_carga) references Cargas
 )
 
-create table Items_Factura(
-
-	id_item_factura int identity not null,
-	id_factura  int,
+create table CobrosParciales (
+	
+	id_cobro_parcial int identity not null,
+	id_factura int,
 	monto float,
-	fecha_vencimiento datetime,
-	pagado bit,
+	fecha datetime,
 
-	constraint pk_items_fact primary key(id_item_factura),
-	constraint fk_items_facturas foreign key(id_factura) references Facturas
-
+	constraint pk_cobros_parcials primary key (id_cobro_parcial),
+	constraint fk_cp_facturas foreign key (id_factura) references Facturas
 )
 
 create table Pagos(
@@ -346,7 +345,6 @@ create table Empresas_Productos (
 	constraint fk_ep_empresas foreign key (id_empresa) references Clientes_Empresas,
 	constraint fk_ep_productos foreign key (id_producto) references Productos
 )
-
 
 -- crear usuario
 

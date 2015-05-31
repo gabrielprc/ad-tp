@@ -4,19 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Table;
 
 import model.impl.PersistentObject;
 import model.impl.misc.Tamano;
-
-import org.hibernate.annotations.CollectionOfElements;
 
 @Entity
 @Table(name = "Productos")
@@ -56,13 +55,10 @@ public class Producto extends PersistentObject {
 	@Column(name = "consideraciones")
 	private String consideraciones;
 
-	@Enumerated(EnumType.STRING)
-	@CollectionOfElements(targetElement = CondicionEspecial.class)
-	// el @elementcollection no anda con las librerias de wc
-	@JoinTable(name = "Productos_CondicionesEspeciales", joinColumns = @JoinColumn(name = "id_producto"))
-	// @CollectionTable(name = "Productos_CondicionesEspeciales", joinColumns =
-	// @JoinColumn(name = "id_producto"))
+	@ElementCollection(targetClass = CondicionEspecial.class)
+	@CollectionTable(name = "Productos_CondicionesEspeciales", joinColumns = @JoinColumn(name = "id_producto"))
 	@Column(name = "condicion_especial")
+	@Enumerated(EnumType.STRING)
 	private List<CondicionEspecial> condicionesEspeciales;
 
 	@Column(name = "refrigerada")

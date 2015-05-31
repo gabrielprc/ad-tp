@@ -172,6 +172,8 @@ public class TestPersistenciaArbelo {
 		s.flush();
 		s.getTransaction().commit();
 		s.close();
+		
+		System.exit(0);
 	}
 	
 	private static Object levantarAlgo(Class<?> className, int id) {

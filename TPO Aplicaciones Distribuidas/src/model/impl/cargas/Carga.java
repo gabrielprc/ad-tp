@@ -21,8 +21,8 @@ public class Carga extends PersistentObject {
 	 */
 	private static final long serialVersionUID = -875716574330563168L;
 
-	@ManyToMany
-	@JoinTable(name = "Cargas_Productos", joinColumns = @JoinColumn(name = "id_carga"), inverseJoinColumns = @JoinColumn(name = "id_producto"))
+	@OneToMany
+	@JoinColumn(name = "id_carga")
 	private Collection<ItemProducto> productos;
 
 	@ManyToOne

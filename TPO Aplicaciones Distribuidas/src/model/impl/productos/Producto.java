@@ -56,14 +56,18 @@ public class Producto extends PersistentObject {
 	@Column(name = "consideraciones")
 	private String consideraciones;
 
-	@OneToMany
-	@JoinColumn(name = "id_producto")
-	private List<CondicionEspecial> condicionesEspeciales;
+//	@OneToMany
+//	@JoinColumn(name = "id_producto")
+//	private List<CondicionEspecial> condicionesEspeciales;
 
 	@Column(name = "refrigerada")
 	private boolean refrigerada;
+	
+	public Producto(){
+		
+	}
 
-	public Producto(Integer codigoProducto, String nombre, Float peso,
+	public Producto(String nombre, Float peso,
 			Tamano tamano, TipoFragilidad fragilidad, Integer apilable,
 			String manipulacion, String material, TipoTratamiento tratamiento,
 			String consideraciones,
@@ -78,13 +82,7 @@ public class Producto extends PersistentObject {
 		this.material = material;
 		this.tratamiento = tratamiento;
 		this.consideraciones = consideraciones;
-		this.condicionesEspeciales = condicionesEspeciales;
-	}
-
-	@Id
-	@Column(name = "id_producto")
-	public Integer getId() {
-		return this.id;
+		//this.condicionesEspeciales = condicionesEspeciales;
 	}
 
 	public String getNombre() {
@@ -159,14 +157,14 @@ public class Producto extends PersistentObject {
 		this.consideraciones = consideraciones;
 	}
 
-	public List<CondicionEspecial> getCondicionesEspeciales() {
-		return condicionesEspeciales;
-	}
-
-	public void setCondicionesEspeciales(
-			List<CondicionEspecial> condicionesEspeciales) {
-		this.condicionesEspeciales = condicionesEspeciales;
-	}
+//	public List<CondicionEspecial> getCondicionesEspeciales() {
+//		return condicionesEspeciales;
+//	}
+//
+//	public void setCondicionesEspeciales(
+//			List<CondicionEspecial> condicionesEspeciales) {
+//		this.condicionesEspeciales = condicionesEspeciales;
+//	}
 
 	public boolean isRefrigerada() {
 		return refrigerada;
@@ -176,26 +174,26 @@ public class Producto extends PersistentObject {
 		this.refrigerada = refrigerada;
 	}
 
-	public Float calcularFactorProducto() {
-		Float factorBase = 0f;
-		factorBase += tamano.calcularVolumen() * 0.001f; // cada 10m cubicos
-															// aumenta 1%
-		if (fragilidad != null)
-			factorBase += fragilidad.getFactorFragilidad();
-		if (tratamiento != null)
-			factorBase += tratamiento.getFactorTratamiento();
-		factorBase += peso * 0.0004f; // cada 100 kilos aumenta 4%
-		factorBase += calcularFactorCondicionesEspeciales();
-		if (refrigerada)
-			factorBase += 0.005f;
-		return factorBase;
-	}
+//	public Float calcularFactorProducto() {
+//		Float factorBase = 0f;
+//		factorBase += tamano.calcularVolumen() * 0.001f; // cada 10m cubicos
+//															// aumenta 1%
+//		if (fragilidad != null)
+//			factorBase += fragilidad.getFactorFragilidad();
+//		if (tratamiento != null)
+//			factorBase += tratamiento.getFactorTratamiento();
+//		factorBase += peso * 0.0004f; // cada 100 kilos aumenta 4%
+//		factorBase += calcularFactorCondicionesEspeciales();
+//		if (refrigerada)
+//			factorBase += 0.005f;
+//		return factorBase;
+//	}
 
-	private Float calcularFactorCondicionesEspeciales() {
-		Float total = 0f;
-		for (CondicionEspecial ce : condicionesEspeciales) {
-			total += ce.getFactorCondicion();
-		}
-		return total;
-	}
+//	private Float calcularFactorCondicionesEspeciales() {
+//		Float total = 0f;
+//		for (CondicionEspecial ce : condicionesEspeciales) {
+//			total += ce.getFactorCondicion();
+//		}
+//		return total;
+//	}
 }

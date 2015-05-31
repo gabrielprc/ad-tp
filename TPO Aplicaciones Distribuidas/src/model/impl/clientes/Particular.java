@@ -1,7 +1,9 @@
 package model.impl.clientes;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -9,7 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Particular")
+@Table(name = "Clientes_Particulares")
+@AttributeOverride(name = "id", column = @Column(name = "id_cliente"))
 public class Particular extends Cliente {
 	/**
 	 * 
@@ -17,7 +20,7 @@ public class Particular extends Cliente {
 	private static final long serialVersionUID = 3516360528659218982L;
 
 	@OneToMany
-	@JoinColumn(name = "idParticular")
+	@JoinColumn(name = "id_cliente")
 	private List<Receptor> receptores;
 	@Column(name = "dni")
 	private String dni;
@@ -26,11 +29,14 @@ public class Particular extends Cliente {
 
 	public Particular(String codigoUnico, String dni, String nombre,
 			String apellido) {
-
-		super(codigoUnico, nombre);
+		this.codigoUnico = codigoUnico;
 		this.dni = dni;
 		this.apellido = apellido;
 
+	}
+
+	public Particular() {
+		
 	}
 
 	public List<Receptor> getReceptores() {
@@ -61,6 +67,12 @@ public class Particular extends Cliente {
 	public void cobrarEnvio(Factura factura) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void agregarReceptor(Receptor receptor) {
+		if (receptores == null)
+			receptores = new ArrayList<Receptor>();
+		receptores.add(receptor);
 	}
 
 }

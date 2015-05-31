@@ -1,9 +1,13 @@
 package model.persistence;
 
+import model.impl.clientes.Cliente;
+import model.impl.clientes.CuentaCorriente;
+import model.impl.clientes.Empresa;
+import model.impl.clientes.Particular;
+import model.impl.clientes.Receptor;
 import model.impl.misc.Coordenada;
 import model.impl.misc.Tamano;
 import model.impl.misc.Ubicacion;
-import model.impl.productos.CondicionEspecial;
 import model.impl.productos.Producto;
 import model.impl.vehiculos.Vehiculo;
 import model.impl.vehiculos.VehiculoExterno;
@@ -28,12 +32,6 @@ public class HibernateUtil
         	 config.addAnnotatedClass(ParadaIntermedia.class);
         	 config.addAnnotatedClass(Proveedor.class);
         	 config.addAnnotatedClass(Seguro.class);
-//        	 config.addAnnotatedClass(Viaje.class);
-//        	 config.addAnnotatedClass(Carga.class);
-//        	 config.addAnnotatedClass(EstadoCarga.class);
-//        	 config.addAnnotatedClass(TipoCarga.class);
-//        	 config.addAnnotatedClass(Cliente.class);
-//        	 config.addAnnotatedClass(Viaje.class);
         	 config.addAnnotatedClass(Ubicacion.class);
         	 config.addAnnotatedClass(Coordenada.class);
         	 config.addAnnotatedClass(Vehiculo.class);
@@ -41,6 +39,11 @@ public class HibernateUtil
         	 config.addAnnotatedClass(VehiculoExterno.class);
         	 config.addAnnotatedClass(Tamano.class);
         	 config.addAnnotatedClass(Producto.class);
+        	 config.addAnnotatedClass(Empresa.class);
+        	 config.addAnnotatedClass(CuentaCorriente.class);
+        	 config.addAnnotatedClass(Cliente.class);
+        	 config.addAnnotatedClass(Receptor.class);
+        	 config.addAnnotatedClass(Particular.class);
              sessionFactory = config.buildSessionFactory();
         }
         catch (Throwable ex)

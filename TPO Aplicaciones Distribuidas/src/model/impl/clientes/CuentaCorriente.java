@@ -2,32 +2,34 @@ package model.impl.clientes;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import model.impl.PersistentObject;
 
 @Entity
-@Table(name = "Clientes")
-@AttributeOverride (name = "id", column = @Column(name ="id_cuenta_corriente"))
+@Table(name = "Cuentas_Corrientes")
+@AttributeOverride(name = "id", column = @Column(name = "id_cuenta_corriente"))
 public class CuentaCorriente extends PersistentObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8724917442960945342L;
 
-	@Column(name = "depositoPrevio")
+	@Column(name = "deposito_previo")
 	private boolean depositoPrevio;
-	@Column(name = "montoAutorizado")
+	@Column(name = "monto_autorizado")
 	private Float montoAutorizado;
-	@Column(name = "montoActual")
+	@Column(name = "monto_actual")
 	private Float montoActual;
 
 	public CuentaCorriente(Float montoActual, Float montoAutorizado) {
 
 		this.montoActual = montoActual;
 		this.montoAutorizado = montoAutorizado;
+	}
+
+	public CuentaCorriente() {
 	}
 
 	public boolean isDepositoPrevio() {

@@ -19,15 +19,11 @@ public abstract class Cliente extends PersistentObject {
 	 */
 	private static final long serialVersionUID = 6178101173670139637L;
 
-	@Column(name = "codigoUnico")
-	private String codigoUnico;
+	@Column(name = "codigo_unico")
+	protected String codigoUnico;
 	@Column(name = "nombre")
-	private String nombre;
+	protected String nombre;
 	
-	public Cliente(String codigoUnico, String nombre){
-		this.codigoUnico = codigoUnico;
-		this.nombre = nombre;
-	}
 
 	public String getCodigoUnico() {
 		return codigoUnico;

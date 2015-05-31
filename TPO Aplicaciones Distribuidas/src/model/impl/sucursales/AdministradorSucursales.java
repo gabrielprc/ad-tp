@@ -30,8 +30,8 @@ public class AdministradorSucursales {
 		this.distancias = new ArrayList<DistanciaEntreSucursales>();
 	}
 	
-	public void altaSucursal(Integer numero, String nombre, Ubicacion ubicacion){		
-		sucursales.add(new Sucursal(numero, nombre,ubicacion));
+	public void altaSucursal(String nombre, Ubicacion ubicacion){		
+		sucursales.add(new Sucursal(nombre,ubicacion));
 	}
 	
 	public void altaEmpleado(String cuit, String dni, String nombre,
@@ -47,11 +47,11 @@ public class AdministradorSucursales {
 	
 	public float calcularHorasEntreSucursales(Sucursal sucursalA, Sucursal sucursalB) {
 		for (DistanciaEntreSucursales d : distancias)
-			if (d.getSucursalA().getNumero() == sucursalA.getNumero()
-			|| d.getSucursalB().getNumero() == sucursalB.getNumero())
-				if (d.getSucursalB().getNumero() == sucursalB.getNumero()
-				|| d.getSucursalB().getNumero() == sucursalA
-				.getNumero())
+			if (d.getSucursalA().getId() == sucursalA.getId()
+			|| d.getSucursalB().getId() == sucursalB.getId())
+				if (d.getSucursalB().getId() == sucursalB.getId()
+				|| d.getSucursalB().getId() == sucursalA
+				.getId())
 					return d.getDuracionEnHoras();
 		return 0;
 	}
@@ -127,7 +127,7 @@ public class AdministradorSucursales {
 	
 	public Sucursal obtenerSucursal(Integer numero) {
 		for (Sucursal s : sucursales)
-			if (s.getNumero() == numero)
+			if (s.getId() == numero)
 				return s;
 		return null;
 	}

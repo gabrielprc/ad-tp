@@ -4,6 +4,10 @@ import java.util.Date;
 
 import model.impl.cargas.Carga;
 import model.impl.cargas.TipoCarga;
+import model.impl.clientes.CuentaCorriente;
+import model.impl.clientes.Empresa;
+import model.impl.clientes.Particular;
+import model.impl.clientes.Receptor;
 import model.impl.misc.Coordenada;
 import model.impl.misc.Tamano;
 import model.impl.misc.Ubicacion;
@@ -27,8 +31,8 @@ public class TestPersistenciaArbelo {
 	private static SessionFactory sf = HibernateUtil.getSessionFactory();
 	
 	public static void main(String[] args) {
-		//crearCosas();
-		levantarProducto(4);
+		crearCosas();
+		//levantarProducto(4);
 	}
 	
 	private static void levantarProducto(int i) {
@@ -85,6 +89,27 @@ public class TestPersistenciaArbelo {
 		producto.setTamano(new Tamano(2f,8f,9f));
 		producto.agregarCondicionEspecial(CondicionEspecial.SEGURIDAD);
 		producto.setNombre("queso");
+		CuentaCorriente cuentaCorriente = new CuentaCorriente();
+		cuentaCorriente.setDepositoPrevio(true);
+		cuentaCorriente.setMontoActual(45f);
+		cuentaCorriente.setMontoAutorizado(456f);
+		Empresa empresa = new Empresa();
+		empresa.setCuentaCorriente(cuentaCorriente);
+		empresa.setNombre("menem");
+		empresa.setRegular(false);
+		empresa.setCodigoUnico("ayy");
+		empresa.agregarProducto(producto);
+		Receptor receptor = new Receptor();
+		receptor.setApellido("asfdas");
+		receptor.setDni("asdas");
+		receptor.setNombre("asdasd");
+		receptor.setUbicacion(u);
+		Particular particular = new Particular();
+		particular.setApellido("calace");
+		particular.setCodigoUnico("asasd");
+		particular.setDni("213123");
+		particular.setNombre("arbelo");
+		particular.agregarReceptor(receptor);
 		
 		s.beginTransaction();
 		s.save(u);
@@ -95,6 +120,10 @@ public class TestPersistenciaArbelo {
 		s.save(vehiculoLocal);
 		s.save(vehiculoExterno);
 		s.save(producto);
+		s.save(cuentaCorriente);
+		s.save(empresa);
+		s.save(receptor);
+		s.save(particular);
 		//s.save(carga);
 		s.flush();
 		s.getTransaction().commit();

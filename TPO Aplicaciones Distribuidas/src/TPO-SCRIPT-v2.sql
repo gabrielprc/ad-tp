@@ -1,16 +1,14 @@
-use master 
+-- borrar db si ya existe y crearla despues
 
+use master 
 if exists (select name from master.dbo.sysdatabases where name = 'TPAD')
 begin
 	drop database TPAD
 end
-go
-
 create database TPAD
-go
-
 use TPAD
-go
+
+-- crear tablas
 
 create table Materiales_Restringidos(
 	nombre varchar(50),
@@ -54,6 +52,7 @@ create table Clientes(
 	
 	id_cliente int identity not null,
 	codigo_unico varchar(20),
+	nombre varchar(100),
 	
 	constraint pk_clientes primary key (id_cliente)
 )
@@ -61,12 +60,12 @@ create table Clientes(
 create table Clientes_Empresas(
 	
 	id_cliente int not null,
-	esRegular bit,
+	regular bit,
 
 	constraint pk_clientes_empresas primary key (id_cliente)
 )
 
-create table Clientes_Particules(
+create table Clientes_Particulares(
 
 	id_cliente int not null,
 	nombre varchar(50),
@@ -80,9 +79,9 @@ create table Cuentas_Corrientes(
 
 	id_cuenta_corriente int identity not null,
 	id_cliente int,
-	depositoPrevio bit,
-	montoAutorizado float,
-	montoActual float,
+	deposito_previo bit,
+	monto_autorizado float,
+	monto_actual float,
 
 	constraint pk_cuentas primary key (id_cuenta_corriente),
 	constraint fk_cuentas_clientes foreign key(id_cliente) references Clientes_Empresas
@@ -116,7 +115,7 @@ create table Sucursales(
 create table Receptores(
 
 	id_receptor int identity not null,
-	id_cliente int not null,
+	id_cliente int,
 	id_ubicacion int,
 	dni varchar (20),
 	nombre varchar(50),
@@ -348,18 +347,62 @@ create table Productos_CondicionesEspeciales (
 	constraint fk_pce_productos foreign key (id_producto) references Productos
 )	
 
+create table Empresas_Productos (
+	id_empresa int,
+	id_producto int,
+
+	constraint pk_ep primary key (id_empresa, id_producto),
+	constraint fk_ep_empresas foreign key (id_empresa) references Clientes_Empresas,
+	constraint fk_ep_productos foreign key (id_producto) references Productos
+)
+
+
+-- crear usuario
 
 if exists (select name from master.sys.server_principals where name = 'ADuser')
 begin
 	drop login ADuser
 end
-go
-
 create login ADuser with password = 'ADpassword'
-go
-
 create user ADuser for login ADuser
+exec sp_addrolemember 'db_owner', 'ADuser'
+
 go
 
-exec sp_addrolemember 'db_owner', 'ADuser'
+-- sp auxiliares
+
+create procedure borrartodo as
+begin
+	declare @nombreTabla varchar(200)
+	declare cursorTablas cursor fast_forward
+	for select name as nombreTabla from sys.objects where type = 'U'
+	open cursorTablas
+	fetch next from cursorTablas into @nombreTabla
+	while (@@FETCH_STATUS <> -1)
+	begin
+		execute ('delete from ' +  @nombretabla)
+		fetch next from cursorTablas into @nombretabla
+	end
+	close cursorTablas
+	deallocate cursorTablas
+end
+
+go
+
+create procedure seleccionartodo as
+begin
+	declare @nombreTabla varchar(200)
+	declare cursorTablas cursor fast_forward
+	for select name as nombreTabla from sys.objects where type = 'U'
+	open cursorTablas
+	fetch next from cursorTablas into @nombreTabla
+	while (@@FETCH_STATUS <> -1)
+	begin
+		execute ('select * from ' +  @nombretabla)
+		fetch next from cursorTablas into @nombretabla
+	end
+	close cursorTablas
+	deallocate cursorTablas
+end
+
 go

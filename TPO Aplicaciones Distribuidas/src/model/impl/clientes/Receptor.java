@@ -26,7 +26,7 @@ public class Receptor extends PersistentObject  {
 	@Column(name = "apellido")
 	private String apellido;
 	@ManyToOne
-	@JoinColumn(name = "idUbicacion")
+	@JoinColumn(name = "id_ubicacion")
 	private Ubicacion ubicacion;
 	
 	public String getDni() {

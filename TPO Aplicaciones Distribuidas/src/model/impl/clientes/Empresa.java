@@ -1,21 +1,20 @@
 package model.impl.clientes;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import model.impl.productos.Producto;
 
 @Entity
-@Table(name = "Empresas")
+@Table(name = "Clientes_Empresas")
 public class Empresa extends Cliente {
 	/**
 	 * 
@@ -25,14 +24,19 @@ public class Empresa extends Cliente {
 	@Column(name = "regular")
 	private boolean regular;
 	@OneToOne
-	@PrimaryKeyJoinColumn
+	@JoinColumn(name = "id_cliente")
 	private CuentaCorriente cuentaCorriente;
 	@ManyToMany
-	@JoinTable(name = "EmpresasProductos", joinColumns = @JoinColumn(name = "idEmpresa"), inverseJoinColumns = @JoinColumn(name = "idProducto"))
+	@JoinTable(name = "Empresas_Productos", joinColumns = @JoinColumn(name = "id_empresa"), inverseJoinColumns = @JoinColumn(name = "id_producto"))
 	private Collection<Producto> productos;
 
 	public Empresa(String codigoUnico, String nombre) {
-		super(codigoUnico, nombre);
+		this.codigoUnico = codigoUnico;
+		this.nombre = nombre;
+	}
+
+	public Empresa() {
+		super();
 	}
 
 	public boolean isRegular() {
@@ -65,4 +69,9 @@ public class Empresa extends Cliente {
 
 	}
 
+	public void agregarProducto(Producto producto) {
+		if (productos == null)
+			productos = new ArrayList<Producto>();
+		productos.add(producto);
+	}
 }

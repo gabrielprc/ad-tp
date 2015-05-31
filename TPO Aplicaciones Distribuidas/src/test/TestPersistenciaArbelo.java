@@ -127,7 +127,7 @@ public class TestPersistenciaArbelo {
 		//s.save(carga);
 		s.flush();
 		s.getTransaction().commit();
-		//s.close();
+		s.close();
 	}
 	
 /*

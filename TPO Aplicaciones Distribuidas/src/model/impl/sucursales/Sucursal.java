@@ -3,6 +3,7 @@ package model.impl.sucursales;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -20,6 +21,7 @@ import model.impl.viajes.Viaje;
 
 @Entity
 @Table(name = "Sucursales")
+@AttributeOverride(name = "id", column = @Column(name = "id_sucursal"))
 public class Sucursal extends PersistentObject {
 	/**
 	 * 
@@ -30,19 +32,19 @@ public class Sucursal extends PersistentObject {
 	private String nombre;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_Ubicacion")
+	@JoinColumn(name = "id_ubicacion")
 	private Ubicacion ubicacion;
 	
 	@OneToMany
-	@JoinColumn (name = "id_carga")
+	@JoinColumn (name = "id_sucursal")
 	private List<Carga> cargas;
 
 	@OneToMany
-	@JoinColumn(name = "id_empleado")
+	@JoinColumn(name = "id_sucursal")
 	private List<Empleado> empleados;
 	
 	@OneToMany
-	@JoinColumn(name = "id_vehiculo")
+	@JoinColumn(name = "id_sucursal")
 	private List<VehiculoLocal> vehiculos;
 
 	public Sucursal () {
@@ -127,11 +129,14 @@ public class Sucursal extends PersistentObject {
 	}
 
 	public void agregarEmpleado(Empleado e) {
-
+		if (empleados == null)
+			empleados = new ArrayList<Empleado>();
 		this.empleados.add(e);
 	}
 
 	public void agregarVehiculo(VehiculoLocal vehiculo) {
+		if (vehiculos == null)
+			vehiculos = new ArrayList<VehiculoLocal>();
 		vehiculos.add(vehiculo);		
 	}
 
@@ -164,5 +169,11 @@ public class Sucursal extends PersistentObject {
 
 	public void setCargas(List<Carga> cargas) {
 		this.cargas = cargas;
+	}
+
+	public void agregarCarga(Carga carga) {
+		if (cargas == null)
+			cargas = new ArrayList<Carga>();
+		cargas.add(carga);		
 	}
 }

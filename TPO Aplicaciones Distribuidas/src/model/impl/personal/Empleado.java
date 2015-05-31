@@ -50,6 +50,10 @@ public class Empleado extends PersistentObject {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
+	public Empleado() {
+		
+	}
+
 	public String getCuit() {
 		return cuit;
 	}

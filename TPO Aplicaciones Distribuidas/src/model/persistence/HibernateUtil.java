@@ -11,8 +11,10 @@ import model.impl.clientes.Receptor;
 import model.impl.misc.Coordenada;
 import model.impl.misc.Tamano;
 import model.impl.misc.Ubicacion;
+import model.impl.personal.Empleado;
 import model.impl.productos.ItemProducto;
 import model.impl.productos.Producto;
+import model.impl.sucursales.Sucursal;
 import model.impl.vehiculos.Vehiculo;
 import model.impl.vehiculos.VehiculoExterno;
 import model.impl.vehiculos.VehiculoLocal;
@@ -52,6 +54,8 @@ public class HibernateUtil
         	 config.addAnnotatedClass(ItemProducto.class);
         	 config.addAnnotatedClass(Factura.class);
         	 config.addAnnotatedClass(CobroParcial.class);
+        	 config.addAnnotatedClass(Sucursal.class);
+        	 config.addAnnotatedClass(Empleado.class);
              sessionFactory = config.buildSessionFactory();
         }
         catch (Throwable ex)

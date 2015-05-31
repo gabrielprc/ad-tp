@@ -13,10 +13,13 @@ import model.impl.clientes.Receptor;
 import model.impl.misc.Coordenada;
 import model.impl.misc.Tamano;
 import model.impl.misc.Ubicacion;
+import model.impl.personal.Empleado;
+import model.impl.personal.TipoPuesto;
 import model.impl.productos.CondicionEspecial;
 import model.impl.productos.Producto;
 import model.impl.productos.TipoFragilidad;
 import model.impl.productos.TipoTratamiento;
+import model.impl.sucursales.Sucursal;
 import model.impl.vehiculos.TipoVehiculo;
 import model.impl.vehiculos.VehiculoExterno;
 import model.impl.vehiculos.VehiculoLocal;
@@ -118,6 +121,19 @@ public class TestPersistenciaArbelo {
 		factura.realizarCobroParcial(new Date(), 200f);
 		factura.setTipoFactura("A");
 		factura.setFechaCreacion(new Date());
+		Empleado empleado = new Empleado();
+		empleado.setApellido("hola");
+		empleado.setCuit("soy");
+		empleado.setDni("german");
+		empleado.setFechaNacimiento(new Date());
+		empleado.setNombre("!");
+		empleado.setPuesto(TipoPuesto.GERENTE);
+		Sucursal sucursal = new Sucursal();
+		sucursal.setNombre("cruzeiro fc");
+		sucursal.setUbicacion(u);
+		sucursal.agregarCarga(carga);
+		sucursal.agregarVehiculo(vehiculoLocal);
+		sucursal.agregarEmpleado(empleado);
 
 		s.beginTransaction();
 		s.save(u);
@@ -133,6 +149,8 @@ public class TestPersistenciaArbelo {
 		s.save(particular);
 		s.save(carga);
 		s.save(factura);
+		s.save(empleado);
+		s.save(sucursal);
 		s.flush();
 		s.getTransaction().commit();
 		s.close();
@@ -141,6 +159,7 @@ public class TestPersistenciaArbelo {
 	private static Object levantarAlgo(Class<?> className, int id) {
 		Session s = sf.openSession();
 		Object o = (Object) s.get(className, id);
+		s.close();
 		return o;
 	}
 	

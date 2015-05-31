@@ -34,20 +34,6 @@ create table Productos(
 	constraint pk_productos primary key (id_producto)
 )
 
-create table Empleados(
-
-	id_empleado int identity not null,
-	cuit varchar(50) not null,
-	dni varchar(20),
-	nombre varchar(50),
-	apellido varchar(50),
-	fecha_nacimiento datetime,
-	puesto varchar(20),	
-
-	constraint pk_empleados primary key(id_empleado, cuit),
-	--constraint fk_tipo_puesto foreign key(puesto) references Tipo_Puestos
-)
-
 create table Clientes(
 	
 	id_cliente int identity not null,
@@ -101,6 +87,21 @@ create table Sucursales(
 	nombre varchar(50),
 	
 	constraint pk_sucursales primary key (id_sucursal)
+)
+
+create table Empleados(
+
+	id_empleado int identity not null,
+	id_sucursal int,
+	cuit varchar(50) not null,
+	dni varchar(20),
+	nombre varchar(50),
+	apellido varchar(50),
+	fecha_nacimiento datetime,
+	puesto varchar(20),	
+
+	constraint pk_empleados primary key(id_empleado),
+	constraint fk_empleados_sucursales foreign key (id_sucursal) references Sucursales
 )
 
 create table Receptores(
@@ -226,7 +227,8 @@ create table Viajes(
 
 create table Cargas(
 
-	id_carga int identity,
+	id_carga int identity not null,
+	id_sucursal int,
 	id_cliente int,
 	id_viaje int,
 	id_ubicacionOrigen int,
@@ -241,7 +243,8 @@ create table Cargas(
 	constraint fk_cargas_clientes foreign key (id_cliente) references Clientes,
 	constraint fk_cargas_ubicacionesOrigen foreign key (id_ubicacionOrigen) references Ubicaciones,
 	constraint fk_cargas_ubicacionesDestino foreign key (id_ubicacionDestino) references Ubicaciones,
-	constraint fk_cargas_viajes foreign key (id_viaje) references Viajes
+	constraint fk_cargas_viajes foreign key (id_viaje) references Viajes,
+	constraint fk_cargas_sucursales foreign key (id_sucursal) references Sucursales
 )
 
 create table Sucursal_Cargas(

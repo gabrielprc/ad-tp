@@ -317,13 +317,13 @@ create table Distancia_Sucursales(
 
 create table ParadasIntermedias (
 
-	id_paradaIntermedia int identity not null,
+	id_parada_intermedia int identity not null,
 	id_viaje int,	
 	id_ubicacion int,
 	llegada date,
 	checked bit,
 
-	constraint pk_paradasInter primary key(id_paradaIntermedia),
+	constraint pk_paradasInter primary key(id_parada_intermedia),
 	constraint fk_paradas_viajes foreign key(id_viaje) references Viajes,
 	constraint fk_paradas_ubicacion foreign key(id_ubicacion) references Ubicaciones
 )
@@ -338,7 +338,7 @@ create table Cargas_Productos(
 	constraint pk_cargas_productos primary key (id_carga_producto),
 	constraint fk_productos foreign key (id_producto) references Productos,
 	constraint fk_cargas foreign key(id_carga) references Cargas
-)
+)	
 
 
 if exists (select name from master.sys.server_principals where name = 'ADuser')

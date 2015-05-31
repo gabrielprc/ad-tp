@@ -68,6 +68,10 @@ public class Carga extends PersistentObject {
 		this.productos = new ArrayList<ItemProducto>();
 	}
 
+	public Carga() {
+		
+	}
+
 	public TipoCarga getTipo() {
 		return tipo;
 	}

@@ -1,7 +1,9 @@
 package model.impl.viajes;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -11,7 +13,8 @@ import javax.persistence.Table;
 import model.impl.PersistentObject;
 
 @Entity
-@Table(name = "CompaniasSeguro")
+@Table(name = "Companias_Seguros")
+@AttributeOverride(name = "id", column = @Column(name = "id_compania_seguros"))
 public class CompaniaSeguro extends PersistentObject {
 	/**
 	 * 
@@ -24,7 +27,7 @@ public class CompaniaSeguro extends PersistentObject {
 	@Column(name = "nombre")
 	private String nombre;
 	@OneToMany
-	@JoinColumn(name = "idCompaniaSeguros")
+	@JoinColumn(name = "id_compania_seguros")
 	private List<Seguro> seguros;
 
 	public String getCuil() {
@@ -49,6 +52,12 @@ public class CompaniaSeguro extends PersistentObject {
 
 	public void setSeguros(List<Seguro> seguros) {
 		this.seguros = seguros;
+	}
+	
+	public void agregarSeguro(Seguro seguro) {
+		if (seguros == null)
+			seguros = new ArrayList<Seguro>();
+		seguros.add(seguro);
 	}
 
 }

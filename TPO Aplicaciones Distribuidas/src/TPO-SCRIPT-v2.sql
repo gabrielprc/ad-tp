@@ -265,18 +265,6 @@ create table Sucursal_Cargas(
 	constraint fk_suc_cargas foreign key (id_carga) references Cargas
 )
 
-create table Items_Cargas_Producto(
-
-	id_item_producto int identity not null,
-	id_carga int,
-	id_producto int,
-	cantidad float,
-
-	constraint pk_item_producto primary key(id_item_producto),
-	constraint fk_items_carga foreign key(id_carga) references Cargas,
-	constraint fk_items_producto foreign key(id_producto) references Productos
-)
-
 create table Facturas(
 
 	id_factura int identity not null,

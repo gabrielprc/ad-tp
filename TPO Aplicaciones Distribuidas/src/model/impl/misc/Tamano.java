@@ -12,6 +12,10 @@ public class Tamano {
 	@Column(name = "ancho")
 	private Float ancho;
 
+	public Tamano() {
+		
+	}
+	
 	public Tamano(Float i, Float j, Float k) {
 		profundidad = i;
 		alto = j;

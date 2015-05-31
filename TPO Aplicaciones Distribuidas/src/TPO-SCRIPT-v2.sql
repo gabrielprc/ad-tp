@@ -152,7 +152,7 @@ create table Vehiculos(
 	constraint pk_vehiculo primary key(id_vehiculo)
 )
 
-create table Vehiculos_Externos(
+create table VehiculosExternos(
 	
 	id_vehiculo int not null,
 	id_proveedor int,
@@ -161,7 +161,7 @@ create table Vehiculos_Externos(
 	constraint fk_vehiculos_ext_proveedores foreign key(id_proveedor) references Proveedores
 )
 
-create table Vehiculos_Locales(
+create table VehiculosLocales(
 
 	id_vehiculo int not null,
 	id_sucursal int,
@@ -179,7 +179,7 @@ create table Planes_Mantenimiento(
 	puntoControl float,
 
 	constraint PK_PlanesMantenimiento primary key (id_plan_mantenimiento),
-	constraint FK_PlanesMantenimiento_Vehiculos foreign key (id_vehiculo) references Vehiculos_Locales
+	constraint FK_PlanesMantenimiento_Vehiculos foreign key (id_vehiculo) references VehiculosLocales
 )
 
 create table Tareas(

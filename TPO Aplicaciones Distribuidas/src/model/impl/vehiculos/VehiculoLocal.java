@@ -19,7 +19,7 @@ public class VehiculoLocal extends Vehiculo {
 	
 	@Transient
 	private PlanMantenimiento planMantenimiento;
-	@Column(name = "vencimientoGarantia")
+	@Column(name = "vencimiento_garantia")
 	private Date vencimientoGarantia;
 	
 	public VehiculoLocal(){

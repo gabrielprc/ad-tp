@@ -1,4 +1,10 @@
---use master drop database TPAD
+use master 
+
+if exists (select name from master.dbo.sysdatabases where name = 'TPAD')
+begin
+	drop database TPAD
+end
+go
 
 create database TPAD
 go
@@ -41,7 +47,7 @@ create table Empleados(
 	puesto varchar(20),	
 
 	constraint pk_empleados primary key(id_empleado, cuit),
-	constraint fk_tipo_puesto foreign key(id_puesto) references Tipo_Puestos
+	--constraint fk_tipo_puesto foreign key(puesto) references Tipo_Puestos
 )
 
 create table Clientes(
@@ -205,7 +211,7 @@ create table Seguros(
 	
 	constraint pk_seguros primary key (id_seguro),
 	constraint fk_seguros_companiasseguros foreign key (id_compania_seguros) references Companias_Seguros,
-	constraint fk_seguros_tipo_carga foreign key (id_tipo_carga) references Tipos_Carga
+	--constraint fk_seguros_tipo_carga foreign key (id_tipo_carga) references Tipos_Carga
 )
 
 create table Viajes(
@@ -245,7 +251,6 @@ create table Cargas(
 	constraint fk_cargas_clientes foreign key (id_cliente) references Clientes,
 	constraint fk_cargas_ubicacionesOrigen foreign key (id_ubicacionOrigen) references Ubicaciones,
 	constraint fk_cargas_ubicacionesDestino foreign key (id_ubicacionDestino) references Ubicaciones,
-	constraint fk_cargas_depositos foreign key (id_deposito) references Depositos,
 	constraint fk_cargas_viajes foreign key (id_viaje) references Viajes
 )
 
@@ -255,7 +260,7 @@ create table Sucursal_Cargas(
 	id_sucursal int,
 	id_carga int,
 	
-	constraint pk_suc_car primary key (id_deposito),
+	constraint pk_suc_car primary key (id_sucursal_carga),
 	constraint fk_suc_sucursales foreign key (id_sucursal) references Sucursales,
 	constraint fk_suc_cargas foreign key (id_carga) references Cargas
 )
@@ -345,8 +350,14 @@ create table Cargas_Productos(
 	constraint fk_cargas foreign key(id_carga) references Cargas
 )
 
---drop login ADUser
-create login ADuser with password = 'ADpassword'
+
+if exists (select name from master.sys.server_principals where name = 'ADUser')
+begin
+	drop login ADuser
+end
+go
+
+create login ADUser with password = 'ADPassword'
 go
 
 create user ADuser for login ADuser

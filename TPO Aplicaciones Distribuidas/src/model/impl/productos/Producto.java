@@ -1,22 +1,22 @@
 package model.impl.productos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import model.impl.PersistentObject;
 import model.impl.misc.Tamano;
+
+import org.hibernate.annotations.CollectionOfElements;
 
 @Entity
 @Table(name = "Productos")
@@ -56,16 +56,25 @@ public class Producto extends PersistentObject {
 	@Column(name = "consideraciones")
 	private String consideraciones;
 
-	@OneToMany
-	@JoinColumn(name = "id_producto")
+	@Enumerated(EnumType.STRING)
+	@CollectionOfElements(targetElement = CondicionEspecial.class)
+	// el @elementcollection no anda con las librerias de wc
+	@JoinTable(name = "Productos_CondicionesEspeciales", joinColumns = @JoinColumn(name = "id_producto"))
+	// @CollectionTable(name = "Productos_CondicionesEspeciales", joinColumns =
+	// @JoinColumn(name = "id_producto"))
+	@Column(name = "condicion_especial")
 	private List<CondicionEspecial> condicionesEspeciales;
 
 	@Column(name = "refrigerada")
 	private boolean refrigerada;
 
-	public Producto(Integer codigoProducto, String nombre, Float peso,
-			Tamano tamano, TipoFragilidad fragilidad, Integer apilable,
-			String manipulacion, String material, TipoTratamiento tratamiento,
+	public Producto() {
+
+	}
+
+	public Producto(String nombre, Float peso, Tamano tamano,
+			TipoFragilidad fragilidad, Integer apilable, String manipulacion,
+			String material, TipoTratamiento tratamiento,
 			String consideraciones,
 			List<CondicionEspecial> condicionesEspeciales) {
 
@@ -79,12 +88,6 @@ public class Producto extends PersistentObject {
 		this.tratamiento = tratamiento;
 		this.consideraciones = consideraciones;
 		this.condicionesEspeciales = condicionesEspeciales;
-	}
-
-	@Id
-	@Column(name = "id_producto")
-	public Integer getId() {
-		return this.id;
 	}
 
 	public String getNombre() {
@@ -197,5 +200,11 @@ public class Producto extends PersistentObject {
 			total += ce.getFactorCondicion();
 		}
 		return total;
+	}
+
+	public void agregarCondicionEspecial(CondicionEspecial condicion) {
+		if (condicionesEspeciales == null)
+			condicionesEspeciales = new ArrayList<CondicionEspecial>();
+		condicionesEspeciales.add(condicion);
 	}
 }

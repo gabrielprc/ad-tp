@@ -3,6 +3,8 @@ package model.persistence;
 import model.impl.misc.Coordenada;
 import model.impl.misc.Tamano;
 import model.impl.misc.Ubicacion;
+import model.impl.productos.CondicionEspecial;
+import model.impl.productos.Producto;
 import model.impl.vehiculos.Vehiculo;
 import model.impl.vehiculos.VehiculoExterno;
 import model.impl.vehiculos.VehiculoLocal;
@@ -38,6 +40,7 @@ public class HibernateUtil
         	 config.addAnnotatedClass(VehiculoLocal.class);
         	 config.addAnnotatedClass(VehiculoExterno.class);
         	 config.addAnnotatedClass(Tamano.class);
+        	 config.addAnnotatedClass(Producto.class);
              sessionFactory = config.buildSessionFactory();
         }
         catch (Throwable ex)

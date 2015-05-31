@@ -338,6 +338,14 @@ create table Cargas_Productos(
 	constraint pk_cargas_productos primary key (id_carga_producto),
 	constraint fk_productos foreign key (id_producto) references Productos,
 	constraint fk_cargas foreign key(id_carga) references Cargas
+)
+
+create table Productos_CondicionesEspeciales (
+	id_producto int,
+	condicion_especial varchar(50),
+	
+	constraint pk_pce primary key (id_producto, condicion_especial),
+	constraint fk_pce_productos foreign key (id_producto) references Productos
 )	
 
 

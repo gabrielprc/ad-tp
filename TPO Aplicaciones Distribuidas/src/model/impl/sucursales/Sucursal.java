@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import model.impl.PersistentObject;
@@ -27,9 +25,6 @@ public class Sucursal extends PersistentObject {
 	 * 
 	 */
 	private static final long serialVersionUID = -2534989790774285551L;
-
-	@Column(name = "numero")
-	private Integer numero;
 	
 	@Column(name = "nombre")
 	private String nombre;
@@ -50,21 +45,16 @@ public class Sucursal extends PersistentObject {
 	@JoinColumn(name = "id_vehiculo")
 	private List<VehiculoLocal> vehiculos;
 
-	public Sucursal(int numero, String nombre, Ubicacion ubicacion) {
-		this.numero = numero;
+	public Sucursal () {
+		
+	}
+	
+	public Sucursal(String nombre, Ubicacion ubicacion) {
 		this.nombre = nombre;
 		this.ubicacion = ubicacion;
 		vehiculos = new ArrayList<VehiculoLocal>();
 		cargas = new ArrayList<Carga>();
 		empleados = new ArrayList<Empleado>();
-	}
-
-	public Integer getNumero() {
-		return numero;
-	}
-
-	public void setNumero(Integer numero) {
-		this.numero = numero;
 	}
 
 	public String getNombre() {

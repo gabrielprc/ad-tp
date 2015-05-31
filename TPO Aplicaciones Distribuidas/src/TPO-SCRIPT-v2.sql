@@ -229,7 +229,6 @@ create table Cargas(
 	id_carga int identity not null,
 	id_sucursal int,
 	id_cliente int,
-	id_viaje int,
 	id_ubicacionOrigen int,
 	id_ubicacionDestino int,
 	tipoCarga varchar(50),
@@ -246,15 +245,16 @@ create table Cargas(
 	constraint fk_cargas_sucursales foreign key (id_sucursal) references Sucursales
 )
 
-create table Sucursal_Cargas(
-	
-	id_sucursal_carga int identity not null,
-	id_sucursal int,
+create table Viajes_Cargas(
+
+	id_viaje_carga int identity not null,
+	id_viaje int,
 	id_carga int,
+	fecha datetime,
 	
-	constraint pk_suc_car primary key (id_sucursal_carga),
-	constraint fk_suc_sucursales foreign key (id_sucursal) references Sucursales,
-	constraint fk_suc_cargas foreign key (id_carga) references Cargas
+	constraint pk_viaj_carg primary key (id_viaje_carga),
+	constraint fk_viaj_viaje foreign key (id_viaje) references Viajes,
+	constraint fk_viaj_carg foreign key (id_carga) references Cargas
 )
 
 create table Facturas(

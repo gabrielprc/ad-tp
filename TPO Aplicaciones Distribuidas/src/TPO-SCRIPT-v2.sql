@@ -371,25 +371,6 @@ go
 
 -- sp auxiliares
 
-create procedure borrartodo as
-begin
-	set nocount on
-	declare @nombreTabla varchar(200)
-	declare cursorTablas cursor fast_forward
-	for select name as nombreTabla from sys.objects where type = 'U'
-	open cursorTablas
-	fetch next from cursorTablas into @nombreTabla
-	while (@@FETCH_STATUS <> -1)
-	begin
-		execute ('delete from ' +  @nombretabla)
-		fetch next from cursorTablas into @nombretabla
-	end
-	close cursorTablas
-	deallocate cursorTablas
-end
-
-go
-
 create procedure seleccionartodo as
 begin
 	declare @nombreTabla varchar(200)

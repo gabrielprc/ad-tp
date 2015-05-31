@@ -33,6 +33,13 @@ public class TestPersistenciaArbelo {
 	public static void main(String[] args) {
 		crearCosas();
 		//levantarProducto(4);
+		//levantarEmpresa(6);
+	}
+	
+	private static void levantarEmpresa(int i) {
+		Session s = sf.openSession();
+		Empresa e = (Empresa) s.get(Empresa.class, i);
+		System.out.println(e.getCuentaCorriente().getMontoActual());
 	}
 	
 	private static void levantarProducto(int i) {
@@ -120,7 +127,6 @@ public class TestPersistenciaArbelo {
 		s.save(vehiculoLocal);
 		s.save(vehiculoExterno);
 		s.save(producto);
-		s.save(cuentaCorriente);
 		s.save(empresa);
 		s.save(receptor);
 		s.save(particular);

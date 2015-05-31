@@ -61,6 +61,9 @@ create table Clientes_Empresas(
 	
 	id_cliente int not null,
 	regular bit,
+	deposito_previo bit,
+	monto_autorizado float,
+	monto_actual float,
 
 	constraint pk_clientes_empresas primary key (id_cliente)
 )
@@ -73,18 +76,6 @@ create table Clientes_Particulares(
 	dni varchar(20),
 
 	constraint pk_clientes_particulares primary key (id_cliente)
-)
-
-create table Cuentas_Corrientes(
-
-	id_cuenta_corriente int identity not null,
-	id_cliente int,
-	deposito_previo bit,
-	monto_autorizado float,
-	monto_actual float,
-
-	constraint pk_cuentas primary key (id_cuenta_corriente),
-	constraint fk_cuentas_clientes foreign key(id_cliente) references Clientes_Empresas
 )
 
 create table Ubicaciones(

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import model.impl.productos.Producto;
@@ -23,8 +23,7 @@ public class Empresa extends Cliente {
 
 	@Column(name = "regular")
 	private boolean regular;
-	@OneToOne
-	@JoinColumn(name = "id_cliente")
+	@Embedded
 	private CuentaCorriente cuentaCorriente;
 	@ManyToMany
 	@JoinTable(name = "Empresas_Productos", joinColumns = @JoinColumn(name = "id_empresa"), inverseJoinColumns = @JoinColumn(name = "id_producto"))

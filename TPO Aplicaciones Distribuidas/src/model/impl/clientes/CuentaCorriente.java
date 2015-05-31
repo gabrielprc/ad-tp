@@ -1,20 +1,10 @@
 package model.impl.clientes;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 
-import model.impl.PersistentObject;
-
-@Entity
-@Table(name = "Cuentas_Corrientes")
-@AttributeOverride(name = "id", column = @Column(name = "id_cuenta_corriente"))
-public class CuentaCorriente extends PersistentObject {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8724917442960945342L;
+@Embeddable
+public class CuentaCorriente {
 
 	@Column(name = "deposito_previo")
 	private boolean depositoPrevio;

@@ -1,35 +1,47 @@
 package model.impl.sucursales;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import model.impl.PersistentObject;
+
 @Entity
-@Table(name = "DistanciaEntreSucursales")
-public class DistanciaEntreSucursales {
-	
+@Table(name = "Distancia_Sucursales")
+@AttributeOverride(name = "id", column = @Column(name = "id_distancia_sucursales"))
+public class DistanciaEntreSucursales extends PersistentObject {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7127719412272598512L;
 	@ManyToOne
-	@JoinColumn(name = "idSucursalA")
+	@JoinColumn(name = "id_sucursal_a")
 	private Sucursal sucursalA;
 	@ManyToOne
-	@JoinColumn(name = "idSucursalB")
+	@JoinColumn(name = "id_sucursal_b")
 	private Sucursal sucursalB;
-	@Column(name = "distanciaEnKm")
+	@Column(name = "distancia")
 	private float distanciaEnKm;
-	@Column(name = "duracionEnHoras")
+	@Column(name = "duracion")
 	private float duracionEnHoras;
 	@Column(name = "costo")
 	private float costo;
-	
-	public DistanciaEntreSucursales (Sucursal sucursalA, Sucursal sucursalB, float distanciaEnKm,
-			float duracionEnHoras, float costo){
+
+	public DistanciaEntreSucursales(Sucursal sucursalA, Sucursal sucursalB,
+			float distanciaEnKm, float duracionEnHoras, float costo) {
 		this.sucursalA = sucursalA;
 		this.sucursalB = sucursalB;
 		this.distanciaEnKm = distanciaEnKm;
 		this.duracionEnHoras = duracionEnHoras;
 		this.costo = costo;
+	}
+
+	public DistanciaEntreSucursales() {
+
 	}
 
 	public Sucursal getSucursalA() {

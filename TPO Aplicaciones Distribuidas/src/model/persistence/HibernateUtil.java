@@ -15,6 +15,7 @@ import model.impl.misc.Ubicacion;
 import model.impl.personal.Empleado;
 import model.impl.productos.ItemProducto;
 import model.impl.productos.Producto;
+import model.impl.sucursales.DistanciaEntreSucursales;
 import model.impl.sucursales.Sucursal;
 import model.impl.vehiculos.Vehiculo;
 import model.impl.vehiculos.VehiculoExterno;
@@ -58,6 +59,7 @@ public class HibernateUtil
         	 config.addAnnotatedClass(Sucursal.class);
         	 config.addAnnotatedClass(Empleado.class);
         	 config.addAnnotatedClass(Pago.class);
+        	 config.addAnnotatedClass(DistanciaEntreSucursales.class);
              sessionFactory = config.buildSessionFactory();
         }
         catch (Throwable ex)

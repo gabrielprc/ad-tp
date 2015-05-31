@@ -20,6 +20,7 @@ import model.impl.productos.CondicionEspecial;
 import model.impl.productos.Producto;
 import model.impl.productos.TipoFragilidad;
 import model.impl.productos.TipoTratamiento;
+import model.impl.sucursales.DistanciaEntreSucursales;
 import model.impl.sucursales.Sucursal;
 import model.impl.vehiculos.TipoVehiculo;
 import model.impl.vehiculos.VehiculoExterno;
@@ -140,6 +141,13 @@ public class TestPersistenciaArbelo {
 		pago.setFecha(new Date());
 		pago.setMonto(123f);
 		pago.setEstado(true);
+		Sucursal sucursalB = sucursalB();
+		DistanciaEntreSucursales des = new DistanciaEntreSucursales();
+		des.setCosto(456f);
+		des.setDistanciaEnKm(7889f);
+		des.setSucursalA(sucursal);
+		des.setSucursalB(sucursalB);
+		des.setDuracionEnHoras(5f);
 
 		s.beginTransaction();
 		s.save(u);
@@ -158,6 +166,9 @@ public class TestPersistenciaArbelo {
 		s.save(empleado);
 		s.save(sucursal);
 		s.save(pago);
+		s.save(sucursalB.getUbicacion());
+		s.save(sucursalB);
+		s.save(des);
 		s.flush();
 		s.getTransaction().commit();
 		s.close();
@@ -170,17 +181,32 @@ public class TestPersistenciaArbelo {
 		return o;
 	}
 	
+	private static Sucursal sucursalB() {
+		Sucursal sucursalB = new Sucursal();
+		sucursalB.setNombre("sucursal b");
+		Ubicacion uSucursalB = new Ubicacion("ay123y", "l2222o", "rio cudaso", "sobreasdasdnte", "92132", "sad", "asd", new Coordenada(800, 454));
+		sucursalB.setUbicacion(uSucursalB);
+		return sucursalB;
+	}
+	
 /*
-	   ____       ____     __ ____     __           .---.     ,---.    ,---.   ____        ,-----.     
-	   .'  __ `.    \   \   /  /\   \   /  /          | ,_|     |    \  /    | .'  __ `.   .'  .-,  '.   
-	  /   '  \  \    \  _. /  '  \  _. /  '         ,-./  )     |  ,  \/  ,  |/   '  \  \ / ,-.|  \ _ \  
-	  |___|  /  |     _( )_ .'    _( )_ .'          \  '_ '`)   |  |\_   /|  ||___|  /  |;  \  '_ /  | : 
-	     _.-`   | ___(_ o _)' ___(_ o _)'            > (_)  )   |  _( )_/ |  |   _.-`   ||  _`,/ \ _/  | 
-	  .'   _    ||   |(_,_)' |   |(_,_)'            (  .  .-'   | (_ o _) |  |.'   _    |: (  '\_/ \   ; 
-	  |  _( )_  ||   `-'  /  |   `-'  /              `-'`-'|___ |  (_,_)  |  ||  _( )_  | \ `"/  \  ) /  
-	  \ (_ o _) / \      /    \      /                |        \|  |      |  |\ (_ o _) /  '. \_/``".'   
-	   '.(_,_).'   `-..-'      `-..-'                 `--------`'--'      '--' '.(_,_).'     '-----'     
-	                                                                                                     
+░░░░░░░░░░░░▄▐
+░░░░░░▄▄▄░░▄██▄
+░░░░░▐▀█▀▌░░░░▀█▄
+░░░░░▐█▄█▌░░░░░░▀█▄
+░░░░░░▀▄▀░░░▄▄▄▄▄▀▀
+░░░░▄▄▄██▀▀▀▀
+░░░█▀▄▄▄█░▀▀
+░░░▌░▄▄▄▐▌▀▀▀
+▄░▐░░░▄▄░█░▀▀ GET SPOOKT
+▀█▌░░░▄░▀█▀░▀
+░░░░░░░▄▄▐▌▄▄
+░░░░░░░▀███▀█░▄
+░░░░░░▐▌▀▄▀▄▀▐▄
+░░░░░░▐▀░░░░░░▐▌
+░░░░░░█░░░░░░░░█
+░░░░░▐▌░░░░░░░░░█
+░░░░░█░░░░░░░░░░▐▌﻿	                                                                                                     
 */
 	
 }

@@ -6,11 +6,12 @@ begin
 	drop database TPAD
 end
 create database TPAD
+
 go
 
-use TPAD
-
 -- crear tablas
+
+use TPAD
 
 create table Materiales_Restringidos(
 	nombre varchar(50),

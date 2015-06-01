@@ -36,30 +36,32 @@ import org.hibernate.SessionFactory;
 
 public class TestPersistenciaArbelo {
 	private static SessionFactory sf = HibernateUtil.getSessionFactory();
-	
+
 	public static void main(String[] args) {
 		try {
 			crearCosas();
-			//System.out.println(((Sucursal)levantarAlgo(Sucursal.class, 1)).getEmpleados().get(0).getApellido());
-		} catch(Exception e) {
-			System.out.println("\nexplotó algo\n");
+			// System.out.println(((Sucursal)levantarAlgo(Sucursal.class,
+			// 1)).getEmpleados().get(0).getApellido());
+		} catch (Exception e) {
+			System.out.println("\nexploto algo\n");
 			e.printStackTrace();
 		} finally {
 			System.exit(0);
-		}		
+		}
 	}
-	
+
 	private static void crearCosas() {
 		Session s = sf.openSession();
-		Ubicacion u = new Ubicacion("ayy", "lmao", "rio cuarto", "sobremonte", "982", "1", "A", new Coordenada(45, 55));
-		Seguro seguro = new Seguro();		
+		Ubicacion u = new Ubicacion("ayy", "lmao", "rio cuarto", "sobremonte",
+				"982", "1", "A", new Coordenada(45, 55));
+		Seguro seguro = new Seguro();
 		seguro.setNombre("seguro contra quesos");
 		seguro.setTarifa(55f);
-		seguro.setTipoCarga(TipoCarga.BOLSA); //devolvela
-		Proveedor proveedor = new Proveedor("123", "alvaro");	
+		seguro.setTipoCarga(TipoCarga.BOLSA); // devolvela
+		Proveedor proveedor = new Proveedor("123", "alvaro");
 		CompaniaSeguro companiaSeguro = new CompaniaSeguro();
 		companiaSeguro.setCuil("123");
-		companiaSeguro.setNombre("compania1");		
+		companiaSeguro.setNombre("compania1");
 		companiaSeguro.agregarSeguro(seguro);
 		ParadaIntermedia pi = new ParadaIntermedia();
 		pi.setLlegada(new Date());
@@ -68,15 +70,15 @@ public class TestPersistenciaArbelo {
 		VehiculoLocal vehiculoLocal = new VehiculoLocal();
 		vehiculoLocal.setPatente("ABC-123");
 		vehiculoLocal.setPeso(456f);
-		vehiculoLocal.setTamano(new Tamano(5f,8f,9f));
+		vehiculoLocal.setTamano(new Tamano(5f, 8f, 9f));
 		vehiculoLocal.setTara(5f);
 		vehiculoLocal.setTarifa(8f);
 		vehiculoLocal.setTipo(TipoVehiculo.CAMION_CON_TANQUE);
-		vehiculoLocal.setVencimientoGarantia(new Date());		
+		vehiculoLocal.setVencimientoGarantia(new Date());
 		VehiculoExterno vehiculoExterno = new VehiculoExterno();
 		vehiculoExterno.setPatente("DEF-456");
 		vehiculoExterno.setPeso(456f);
-		vehiculoExterno.setTamano(new Tamano(8f,45f,22f));
+		vehiculoExterno.setTamano(new Tamano(8f, 45f, 22f));
 		vehiculoExterno.setTara(8f);
 		vehiculoExterno.setTarifa(89f);
 		vehiculoExterno.setTipo(TipoVehiculo.TRACTOR);
@@ -90,7 +92,7 @@ public class TestPersistenciaArbelo {
 		producto.setMaterial("jajajajsacja");
 		producto.setRefrigerada(true);
 		producto.setTratamiento(TipoTratamiento.PELIGROSO);
-		producto.setTamano(new Tamano(2f,8f,9f));
+		producto.setTamano(new Tamano(2f, 8f, 9f));
 		producto.agregarCondicionEspecial(CondicionEspecial.SEGURIDAD);
 		producto.setNombre("queso");
 		CuentaCorriente cuentaCorriente = new CuentaCorriente();
@@ -180,40 +182,21 @@ public class TestPersistenciaArbelo {
 		s.getTransaction().commit();
 		s.close();
 	}
-	
+
 	private static Object levantarAlgo(Class<?> className, int id) {
 		Session s = sf.openSession();
 		Object o = (Object) s.get(className, id);
 		s.close();
 		return o;
 	}
-	
+
 	private static Sucursal sucursalB() {
 		Sucursal sucursalB = new Sucursal();
 		sucursalB.setNombre("sucursal b");
-		Ubicacion uSucursalB = new Ubicacion("ay123y", "l2222o", "rio cudaso", "sobreasdasdnte", "92132", "sad", "asd", new Coordenada(800, 454));
+		Ubicacion uSucursalB = new Ubicacion("ay123y", "l2222o", "rio cudaso",
+				"sobreasdasdnte", "92132", "sad", "asd", new Coordenada(800,
+						454));
 		sucursalB.setUbicacion(uSucursalB);
 		return sucursalB;
 	}
-	
-/*
-░░░░░░░░░░░░▄▐
-░░░░░░▄▄▄░░▄██▄
-░░░░░▐▀█▀▌░░░░▀█▄
-░░░░░▐█▄█▌░░░░░░▀█▄
-░░░░░░▀▄▀░░░▄▄▄▄▄▀▀
-░░░░▄▄▄██▀▀▀▀
-░░░█▀▄▄▄█░▀▀
-░░░▌░▄▄▄▐▌▀▀▀
-▄░▐░░░▄▄░█░▀▀ GET SPOOKT
-▀█▌░░░▄░▀█▀░▀
-░░░░░░░▄▄▐▌▄▄
-░░░░░░░▀███▀█░▄
-░░░░░░▐▌▀▄▀▄▀▐▄
-░░░░░░▐▀░░░░░░▐▌
-░░░░░░█░░░░░░░░█
-░░░░░▐▌░░░░░░░░░█
-░░░░░█░░░░░░░░░░▐▌﻿	                                                                                                     
-*/
-	
 }

@@ -6,6 +6,8 @@ begin
 	drop database TPAD
 end
 create database TPAD
+go
+
 use TPAD
 
 -- crear tablas
@@ -241,7 +243,7 @@ create table Cargas(
 	constraint fk_cargas_clientes foreign key (id_cliente) references Clientes,
 	constraint fk_cargas_ubicacionesOrigen foreign key (id_ubicacionOrigen) references Ubicaciones,
 	constraint fk_cargas_ubicacionesDestino foreign key (id_ubicacionDestino) references Ubicaciones,
-	constraint fk_cargas_viajes foreign key (id_viaje) references Viajes,
+	--constraint fk_cargas_viajes foreign key (id_viaje) references Viajes,
 	constraint fk_cargas_sucursales foreign key (id_sucursal) references Sucursales
 )
 
@@ -354,7 +356,7 @@ if exists (select name from master.sys.server_principals where name = 'ADuser')
 begin
 	drop login ADuser
 end
-create login ADuser with password = 'ADpassword'
+create login ADuser with password = 'ADpassword', check_policy = off
 create user ADuser for login ADuser
 exec sp_addrolemember 'db_owner', 'ADuser'
 

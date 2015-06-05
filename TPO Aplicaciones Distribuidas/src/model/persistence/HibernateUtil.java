@@ -24,53 +24,56 @@ import model.impl.viajes.CompaniaSeguro;
 import model.impl.viajes.ParadaIntermedia;
 import model.impl.viajes.Proveedor;
 import model.impl.viajes.Seguro;
+import model.impl.viajes.Viaje;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
-public class HibernateUtil
-{
-    private static final SessionFactory sessionFactory;
-    static
-    {
-        try
-        {
-        	 AnnotationConfiguration config = new AnnotationConfiguration();
-        	 config.addAnnotatedClass(CompaniaSeguro.class);
-        	 config.addAnnotatedClass(ParadaIntermedia.class);
-        	 config.addAnnotatedClass(Proveedor.class);
-        	 config.addAnnotatedClass(Seguro.class);
-        	 config.addAnnotatedClass(Ubicacion.class);
-        	 config.addAnnotatedClass(Coordenada.class);
-        	 config.addAnnotatedClass(Vehiculo.class);
-        	 config.addAnnotatedClass(VehiculoLocal.class);
-        	 config.addAnnotatedClass(VehiculoExterno.class);
-        	 config.addAnnotatedClass(Tamano.class);
-        	 config.addAnnotatedClass(Producto.class);
-        	 config.addAnnotatedClass(Empresa.class);
-        	 config.addAnnotatedClass(CuentaCorriente.class);
-        	 config.addAnnotatedClass(Cliente.class);
-        	 config.addAnnotatedClass(Receptor.class);
-        	 config.addAnnotatedClass(Particular.class);
-        	 config.addAnnotatedClass(Carga.class);
-        	 config.addAnnotatedClass(ItemProducto.class);
-        	 config.addAnnotatedClass(Factura.class);
-        	 config.addAnnotatedClass(CobroParcial.class);
-        	 config.addAnnotatedClass(Sucursal.class);
-        	 config.addAnnotatedClass(Empleado.class);
-        	 config.addAnnotatedClass(Pago.class);
-        	 config.addAnnotatedClass(DistanciaEntreSucursales.class);
-             sessionFactory = config.buildSessionFactory();
-        }
-        catch (Throwable ex)
-        {
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
-  
-    public static SessionFactory getSessionFactory()
-    {
-        return sessionFactory;
-    }
+public class HibernateUtil {
+	private static final SessionFactory sessionFactory;
+	private static final ServiceRegistry serviceRegistry;
+
+	static {
+		try {
+			Configuration config = new Configuration();
+			config.addAnnotatedClass(CompaniaSeguro.class);
+			config.addAnnotatedClass(ParadaIntermedia.class);
+			config.addAnnotatedClass(Proveedor.class);
+			config.addAnnotatedClass(Seguro.class);
+			config.addAnnotatedClass(Ubicacion.class);
+			config.addAnnotatedClass(Coordenada.class);
+			config.addAnnotatedClass(Vehiculo.class);
+			config.addAnnotatedClass(VehiculoLocal.class);
+			config.addAnnotatedClass(VehiculoExterno.class);
+			config.addAnnotatedClass(Tamano.class);
+			config.addAnnotatedClass(Producto.class);
+			config.addAnnotatedClass(Empresa.class);
+			config.addAnnotatedClass(CuentaCorriente.class);
+			config.addAnnotatedClass(Cliente.class);
+			config.addAnnotatedClass(Receptor.class);
+			config.addAnnotatedClass(Particular.class);
+			config.addAnnotatedClass(Carga.class);
+			config.addAnnotatedClass(ItemProducto.class);
+			config.addAnnotatedClass(Factura.class);
+			config.addAnnotatedClass(CobroParcial.class);
+			config.addAnnotatedClass(Sucursal.class);
+			config.addAnnotatedClass(Empleado.class);
+			config.addAnnotatedClass(Pago.class);
+			config.addAnnotatedClass(DistanciaEntreSucursales.class);
+			config.addAnnotatedClass(Viaje.class);
+
+			serviceRegistry = new StandardServiceRegistryBuilder()
+					.applySettings(config.getProperties()).build();
+			sessionFactory = config.buildSessionFactory(serviceRegistry);
+		} catch (Throwable ex) {
+			System.err.println("Initial SessionFactory creation failed." + ex);
+			throw new ExceptionInInitializerError(ex);
+		}
+	}
+
+	public static SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
 }

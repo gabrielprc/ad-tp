@@ -20,7 +20,7 @@ public class ParadaIntermedia extends PersistentObject {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_ubicacion")
 	private Ubicacion ubicacion;
@@ -52,5 +52,4 @@ public class ParadaIntermedia extends PersistentObject {
 	public void setLlegada(Date llegada) {
 		this.llegada = llegada;
 	}
-
 }

@@ -29,6 +29,7 @@ import model.impl.viajes.CompaniaSeguro;
 import model.impl.viajes.ParadaIntermedia;
 import model.impl.viajes.Proveedor;
 import model.impl.viajes.Seguro;
+import model.impl.viajes.Viaje;
 import model.persistence.HibernateUtil;
 
 import org.hibernate.Session;
@@ -157,6 +158,17 @@ public class TestPersistenciaArbelo {
 		des.setSucursalA(sucursal);
 		des.setSucursalB(sucursalB);
 		des.setDuracionEnHoras(5f);
+		Viaje viaje = new Viaje();
+		viaje.setVehiculo(vehiculoLocal);
+		viaje.agregarCarga(carga);
+		viaje.setDestino(u);
+		viaje.setOrigen(sucursalB.getUbicacion());
+		viaje.setEstaAtrasado(true);
+		viaje.setFechaSalida(new Date());
+		viaje.setFechaLlegada(new Date());
+		viaje.setSeguro(seguro);
+		viaje.agregarCondicionEspecial(CondicionEspecial.TEMPERATURA);
+		viaje.agregarParadaIntermedia(pi);
 
 		s.beginTransaction();
 		s.save(u);
@@ -178,6 +190,7 @@ public class TestPersistenciaArbelo {
 		s.save(sucursalB.getUbicacion());
 		s.save(sucursalB);
 		s.save(des);
+		s.save(viaje);
 		s.flush();
 		s.getTransaction().commit();
 		s.close();

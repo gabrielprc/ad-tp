@@ -3,6 +3,7 @@
 use master 
 if exists (select name from master.dbo.sysdatabases where name = 'TPAD')
 begin
+	alter database TPAD set single_user with rollback immediate
 	drop database TPAD
 end
 create database TPAD
@@ -218,6 +219,7 @@ create table Viajes(
 	fecha_salida datetime,
 	fecha_llegada datetime,
 	condicion_especial varchar(50),
+	esta_atrasado bit,
 
 	constraint pk_viajes primary key(id_viaje),
 	constraint fk_viajes_origen foreign key(id_origen) references Ubicaciones,
@@ -349,6 +351,14 @@ create table Empresas_Productos (
 	constraint pk_ep primary key (id_empresa, id_producto),
 	constraint fk_ep_empresas foreign key (id_empresa) references Clientes_Empresas,
 	constraint fk_ep_productos foreign key (id_producto) references Productos
+)
+
+create table Viajes_CondicionesEspeciales (
+	id_viaje int,
+	condicion_especial varchar(50),
+
+	constraint pk_viajes_ce primary key (id_viaje, condicion_especial),
+	constraint fk_viajece_viajes foreign key (id_viaje) references Viajes
 )
 
 -- crear usuario

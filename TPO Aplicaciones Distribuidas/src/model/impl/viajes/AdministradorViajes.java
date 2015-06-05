@@ -3,16 +3,13 @@ package model.impl.viajes;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import model.impl.cargas.Carga;
 import model.impl.productos.CondicionEspecial;
 import model.impl.sucursales.AdministradorSucursales;
 import model.impl.sucursales.Sucursal;
 import model.impl.vehiculos.EstrategiaMantenimiento;
-import model.impl.vehiculos.TipoVehiculo;
 import model.impl.vehiculos.Vehiculo;
 
 public class AdministradorViajes {
@@ -38,20 +35,22 @@ public class AdministradorViajes {
 	
 	public Viaje obtenerViaje(Integer codigoViaje) {
 		for (Viaje viaje : viajes) {
-			if (viaje.getCodigo().equals(codigoViaje)) {
+			if (viaje.getId().equals(codigoViaje)) {
 				return viaje;
 			}
 		}
 		return null;
 	}
 	
+	
+	//REVISAR ESTE METODO QUE NO SE PUEDEN USAR VECTORES EN HIBERNATE
 	public void determinarCostoViaje(Viaje v, List<Sucursal> sucursales) {
 		if (v == null)
 			return;
 
 		AdministradorSucursales admSuc = AdministradorSucursales.getInstance();
 		Calendar cal;
-
+		ArrayList<ParadaIntermedia> paradasIntermedias = (ArrayList<ParadaIntermedia>) v.getParadasIntermedias();
 		if (v.getParadasIntermedias().size() == 0) {
 			cal = Calendar.getInstance();
 			Sucursal sucursalA = null, sucursalB = null;
@@ -72,7 +71,7 @@ public class AdministradorViajes {
 			cal.add(Calendar.MINUTE, minutos);
 			v.setFechaLlegada(cal.getTime());
 		} else if (v.getParadasIntermedias().size() > 0) {
-			float horasDistancia = admSuc.calcularHorasEntreSucursales(admSuc.obtenerSucursalCercana(v.getOrigen()), admSuc.obtenerSucursalCercana(v.getParadasIntermedias().firstElement().getUbicacion()));
+			float horasDistancia = admSuc.calcularHorasEntreSucursales(admSuc.obtenerSucursalCercana(v.getOrigen()), admSuc.obtenerSucursalCercana(paradasIntermedias.get(0).getUbicacion()));
 			int horas = (int) horasDistancia;
 			int minutos = (int) (60 * (horasDistancia - horas));
 
@@ -80,12 +79,12 @@ public class AdministradorViajes {
 			cal.add(Calendar.HOUR, horas);
 			cal.add(Calendar.MINUTE, minutos);
 
-			v.getParadasIntermedias().firstElement().setLlegada(cal.getTime());
+			v.getParadasIntermedias().iterator().next().setLlegada(cal.getTime());
 
 			if (v.getParadasIntermedias().size() > 1) {
 				for (int i = 1; i < v.getParadasIntermedias().size() - 1; i++) {
-					Sucursal sucA = admSuc.obtenerSucursalCercana(v.getParadasIntermedias().get(i - 1).getUbicacion());
-					Sucursal sucB = admSuc.obtenerSucursalCercana(v.getParadasIntermedias().get(i).getUbicacion());
+					Sucursal sucA = admSuc.obtenerSucursalCercana(paradasIntermedias.get(i - 1).getUbicacion());
+					Sucursal sucB = admSuc.obtenerSucursalCercana(paradasIntermedias.get(i).getUbicacion());
 
 					horasDistancia = admSuc.calcularHorasEntreSucursales(sucA, sucB);
 					horas = (int) horasDistancia;
@@ -93,11 +92,11 @@ public class AdministradorViajes {
 					cal.add(Calendar.HOUR, horas);
 					cal.add(Calendar.MINUTE, minutos);
 
-					v.getParadasIntermedias().get(i).setLlegada(cal.getTime());
+					paradasIntermedias.get(i).setLlegada(cal.getTime());
 				}
 			}
 
-			Sucursal sucA = admSuc.obtenerSucursalCercana(v.getParadasIntermedias().get(v.getParadasIntermedias().size() - 1).getUbicacion());
+			Sucursal sucA = admSuc.obtenerSucursalCercana(paradasIntermedias.get(v.getParadasIntermedias().size() - 1).getUbicacion());
 			Sucursal sucB = admSuc.obtenerSucursalCercana(v.getDestino());
 
 			horasDistancia = admSuc.calcularHorasEntreSucursales(sucA, sucB);
@@ -112,7 +111,7 @@ public class AdministradorViajes {
 
 	}
 	
-	public void altaViaje(List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida, List<CondicionEspecial> condicionesEspeciales, Vector<ParadaIntermedia> paradasIntermedias) {
+	public void altaViaje(List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida, List<CondicionEspecial> condicionesEspeciales, ArrayList<ParadaIntermedia> paradasIntermedias) {
 		viajes.add(new Viaje(cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, paradasIntermedias));
 	}
 	

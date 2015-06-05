@@ -1,18 +1,23 @@
 package model.impl.viajes;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import model.impl.PersistentObject;
@@ -30,71 +35,84 @@ public class Viaje extends PersistentObject {
 	 * 
 	 */
 	private static final long serialVersionUID = 5092108929260301459L;
-
-	@Column(name = "codigo")
-	private Integer codigo;
-	// @ManyToMany
-	// @JoinTable(name = "ViajesCargas", joinColumns = {@JoinColumn(name =
-	// "idViaje")}, inverseJoinColumns = {@JoinColumn(name = "idCarga")})
-	
-	@OneToMany
-	@JoinColumn(name = "id_viaje")
+	@ManyToMany
+	@JoinTable(name = "Viajes_Cargas", joinColumns = { @JoinColumn(name = "id_viaje") }, inverseJoinColumns = { @JoinColumn(name = "id_carga") })
 	private List<Carga> cargas;
-	
-	@OneToOne
+
+	@ManyToOne
 	@JoinColumn(name = "id_seguro")
 	private Seguro seguro;
-	
-	@OneToOne
+
+	@ManyToOne
 	@JoinColumn(name = "id_vehiculo")
 	private Vehiculo vehiculo;
-	
-	@OneToOne
+
+	@ManyToOne
 	@JoinColumn(name = "id_origen")
 	private Ubicacion origen;
-	
-	@OneToOne
-	@JoinColumn(name = "id_destino")	
+
+	@ManyToOne
+	@JoinColumn(name = "id_destino")
 	private Ubicacion destino;
-	
-	@Column(name = "fechaSalida")
+
+	@Column(name = "fecha_salida")
 	private Date fechaSalida;
 
-	@Column(name = "fechaLlegada")
+	@Column(name = "fecha_llegada")
 	private Date fechaLlegada;
 
-	//@CollectionOfElements
-	@JoinTable(name = "CondicionesViajes", joinColumns = { @JoinColumn(name = "idViaje") })
+	@ElementCollection(targetClass = CondicionEspecial.class)
+	@CollectionTable(name = "Viajes_CondicionesEspeciales", joinColumns = @JoinColumn(name = "id_viaje"))
+	@Column(name = "condicion_especial")
 	@Enumerated(EnumType.STRING)
 	private List<CondicionEspecial> condicionesEspeciales;
-	
-	@Column(name = "estaAtrasado")
+
+	@Column(name = "esta_atrasado")
 	private boolean estaAtrasado;
-	
+
 	@OneToMany
-	@JoinColumn(name = "idViaje")
-	private Vector<ParadaIntermedia> paradasIntermedias;
+	@JoinColumn(name = "id_viaje")
+	@OrderBy(value = "llegada asc")
+	private Collection<ParadaIntermedia> paradasIntermedias;
 
 	public Viaje(List<Carga> cargas, Seguro seguro, Vehiculo vehiculo,
 			Date fechaSalida, List<CondicionEspecial> condicionesEspeciales,
-			Vector<ParadaIntermedia> paradasIntermedias) {
+			Collection<ParadaIntermedia> paradasIntermedias) {
 		this.cargas = cargas;
 		this.seguro = seguro;
 		this.vehiculo = vehiculo;
 		this.fechaSalida = fechaSalida;
 		this.condicionesEspeciales = condicionesEspeciales;
 		this.paradasIntermedias = paradasIntermedias;
-		paradasIntermedias = new Vector<ParadaIntermedia>();
+		paradasIntermedias = new ArrayList<ParadaIntermedia>();
+	}
+
+	public Viaje() {
+	
 	}
 
 	public void agregarCarga(Carga carga) {
-
+		if (cargas == null)
+			cargas = new ArrayList<Carga>();
 		if (puedeTransportar(carga))
 			cargas.add(carga);
 	}
 
-	public float calcularPesoDisponible() {
+	public void agregarCondicionEspecial(CondicionEspecial condicion) {
+		if (condicionesEspeciales == null)
+			condicionesEspeciales = new ArrayList<CondicionEspecial>();
+		condicionesEspeciales.add(condicion);
+	}
 
+	public void agregarParadaIntermedia(ParadaIntermedia pi) {
+		if (paradasIntermedias == null)
+			paradasIntermedias = new ArrayList<ParadaIntermedia>();
+		paradasIntermedias.add(pi);
+	}
+
+	public float calcularPesoDisponible() {
+		if (vehiculo == null)
+			return 0;
 		float peso = 0;
 		for (Carga c : cargas)
 			peso += c.calcularPesoTotal();
@@ -118,10 +136,6 @@ public class Viaje extends PersistentObject {
 
 	}
 
-	public Integer getCodigo() {
-		return codigo;
-	}
-
 	public List<CondicionEspecial> getCondicionesEspeciales() {
 		return condicionesEspeciales;
 	}
@@ -134,7 +148,7 @@ public class Viaje extends PersistentObject {
 		return fechaSalida;
 	}
 
-	public Vector<ParadaIntermedia> getParadasIntermedias() {
+	public Collection<ParadaIntermedia> getParadasIntermedias() {
 		return paradasIntermedias;
 	}
 
@@ -148,10 +162,6 @@ public class Viaje extends PersistentObject {
 
 	public boolean isEstaAtrasado() {
 		return estaAtrasado;
-	}
-
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
 	}
 
 	public void setCondicionesEspeciales(
@@ -172,7 +182,7 @@ public class Viaje extends PersistentObject {
 	}
 
 	public void setParadasIntermedias(
-			Vector<ParadaIntermedia> paradasIntermedias) {
+			Collection<ParadaIntermedia> paradasIntermedias) {
 		this.paradasIntermedias = paradasIntermedias;
 	}
 
@@ -190,10 +200,6 @@ public class Viaje extends PersistentObject {
 
 	public void setCargas(List<Carga> cargas) {
 		this.cargas = cargas;
-	}
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
 	}
 
 	public Ubicacion getOrigen() {
@@ -251,13 +257,4 @@ public class Viaje extends PersistentObject {
 		return null;
 	}
 
-	@Override
-	public boolean equals(Object v) {
-		if (v instanceof Viaje) {
-			if (this.codigo == ((Viaje) v).getCodigo()) {
-				return true;
-			}
-		}
-		return false;
-	}
 }

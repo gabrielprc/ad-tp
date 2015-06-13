@@ -2,13 +2,20 @@ package model.impl.vehiculos;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@DiscriminatorValue(value = "Temporal")
 public class PlanMantenimientoTemporal extends PlanMantenimiento {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8994537799759906446L;
-	
+	@Column(name = "intervalo_mantenimiento")
 	private int intervaloMantenimiento;
 	
 	public PlanMantenimientoTemporal(int intervaloMantenimiento) {

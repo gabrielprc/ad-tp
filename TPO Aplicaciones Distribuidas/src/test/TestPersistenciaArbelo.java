@@ -22,6 +22,8 @@ import model.impl.productos.TipoFragilidad;
 import model.impl.productos.TipoTratamiento;
 import model.impl.sucursales.DistanciaEntreSucursales;
 import model.impl.sucursales.Sucursal;
+import model.impl.vehiculos.PlanMantenimientoKilometraje;
+import model.impl.vehiculos.Tarea;
 import model.impl.vehiculos.TipoVehiculo;
 import model.impl.vehiculos.VehiculoExterno;
 import model.impl.vehiculos.VehiculoLocal;
@@ -169,6 +171,15 @@ public class TestPersistenciaArbelo {
 		viaje.setSeguro(seguro);
 		viaje.agregarCondicionEspecial(CondicionEspecial.TEMPERATURA);
 		viaje.agregarParadaIntermedia(pi);
+		PlanMantenimientoKilometraje plan = new PlanMantenimientoKilometraje(20f);
+		plan.setFechaFabricacion(new Date());
+		plan.setKilometraje(2321f);
+		Tarea tarea = new Tarea();
+		tarea.setFechaDevolucion(new Date());
+		tarea.setFechaEntrega(new Date());
+		tarea.setKilometraje(123f);
+		plan.agregarTarea(tarea);
+		vehiculoLocal.setPlanMantenimiento(plan);
 
 		s.beginTransaction();
 		s.save(u);

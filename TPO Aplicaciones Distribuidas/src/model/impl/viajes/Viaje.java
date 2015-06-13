@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -13,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -35,9 +34,9 @@ public class Viaje extends PersistentObject {
 	 * 
 	 */
 	private static final long serialVersionUID = 5092108929260301459L;
-	@ManyToMany
-	@JoinTable(name = "Viajes_Cargas", joinColumns = { @JoinColumn(name = "id_viaje") }, inverseJoinColumns = { @JoinColumn(name = "id_carga") })
-	private List<Carga> cargas;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_viaje")
+	private List<ItemCarga> cargas;
 
 	@ManyToOne
 	@JoinColumn(name = "id_seguro")
@@ -75,7 +74,7 @@ public class Viaje extends PersistentObject {
 	@OrderBy(value = "llegada asc")
 	private Collection<ParadaIntermedia> paradasIntermedias;
 
-	public Viaje(List<Carga> cargas, Seguro seguro, Vehiculo vehiculo,
+	public Viaje(List<ItemCarga> cargas, Seguro seguro, Vehiculo vehiculo,
 			Date fechaSalida, List<CondicionEspecial> condicionesEspeciales,
 			Collection<ParadaIntermedia> paradasIntermedias) {
 		this.cargas = cargas;
@@ -88,14 +87,14 @@ public class Viaje extends PersistentObject {
 	}
 
 	public Viaje() {
-	
+
 	}
 
 	public void agregarCarga(Carga carga) {
 		if (cargas == null)
-			cargas = new ArrayList<Carga>();
-		if (puedeTransportar(carga))
-			cargas.add(carga);
+			cargas = new ArrayList<ItemCarga>();
+		// if (puedeTransportar(carga))
+		cargas.add(new ItemCarga(carga));
 	}
 
 	public void agregarCondicionEspecial(CondicionEspecial condicion) {
@@ -114,16 +113,16 @@ public class Viaje extends PersistentObject {
 		if (vehiculo == null)
 			return 0;
 		float peso = 0;
-		for (Carga c : cargas)
-			peso += c.calcularPesoTotal();
+		for (ItemCarga c : cargas)
+			peso += c.getCarga().calcularPesoTotal();
 		return vehiculo.getPeso() - peso;
 	}
 
 	public float calcularVolumenDisponible() {
 
 		float volumen = 0;
-		for (Carga c : cargas)
-			volumen += c.calcularVolumenTotal();
+		for (ItemCarga c : cargas)
+			volumen += c.getCarga().calcularVolumenTotal();
 		return vehiculo.getTamano().calcularVolumen() - volumen;
 	}
 
@@ -194,11 +193,11 @@ public class Viaje extends PersistentObject {
 		this.vehiculo = vehiculo;
 	}
 
-	public List<Carga> getCargas() {
+	public List<ItemCarga> getCargas() {
 		return cargas;
 	}
 
-	public void setCargas(List<Carga> cargas) {
+	public void setCargas(List<ItemCarga> cargas) {
 		this.cargas = cargas;
 	}
 

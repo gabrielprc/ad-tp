@@ -1,7 +1,6 @@
 package model.impl.cargas;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +11,7 @@ import model.impl.sucursales.Sucursal;
 import model.impl.vehiculos.AdministradorVehiculos;
 import model.impl.vehiculos.Vehiculo;
 import model.impl.viajes.AdministradorViajes;
+import model.impl.viajes.ItemCarga;
 import model.impl.viajes.ParadaIntermedia;
 import model.impl.viajes.Viaje;
 
@@ -58,17 +58,15 @@ public class AdministradorCargas {
 				vehiculo = v;
 			}
 		}
-
 		
-		
-		admVi.altaViaje(Arrays.asList(carga), null, vehiculo, salida, null, null);
+		//mira como te lo comento admVi.altaViaje(null, vehiculo, salida, null, null);
 	}
 	
 	public Date fechaMaximaDeSalida(Viaje viaje) {
 		Date salidaMaxima = null;
 		
-		for (Carga carga : viaje.getCargas()) {
-			Date salidaCarga = fechaMaximaDeSalida(carga);
+		for (ItemCarga carga : viaje.getCargas()) {
+			Date salidaCarga = fechaMaximaDeSalida(carga.getCarga());
 			if (salidaMaxima == null || salidaMaxima.after(salidaCarga)) {
 				salidaMaxima = salidaCarga;
 			}

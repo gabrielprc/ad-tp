@@ -111,8 +111,8 @@ public class AdministradorViajes {
 
 	}
 	
-	public void altaViaje(List<Carga> cargas, Seguro seguro, Vehiculo vehiculo, Date fechaSalida, List<CondicionEspecial> condicionesEspeciales, ArrayList<ParadaIntermedia> paradasIntermedias) {
-		viajes.add(new Viaje(cargas, seguro, vehiculo, fechaSalida, condicionesEspeciales, paradasIntermedias));
+	public void altaViaje(List<ItemCarga> list, Seguro seguro, Vehiculo vehiculo, Date fechaSalida, List<CondicionEspecial> condicionesEspeciales, ArrayList<ParadaIntermedia> paradasIntermedias) {
+		viajes.add(new Viaje(list, seguro, vehiculo, fechaSalida, condicionesEspeciales, paradasIntermedias));
 	}
 	
 //	public void altaViajeExterno(List<Carga> cargas, Seguro seguro, Date fechaSalida, Date fechaLLegada, 

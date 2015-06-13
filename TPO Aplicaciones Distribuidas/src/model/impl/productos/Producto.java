@@ -25,6 +25,8 @@ public class Producto extends PersistentObject {
 	 * 
 	 */
 	private static final long serialVersionUID = 2506118120974790841L;
+	private static final String[] materialesRestringidos = { "Material1",
+			"Material2", "Material3" };
 
 	@Column(name = "nombre")
 	private String nombre;
@@ -202,5 +204,14 @@ public class Producto extends PersistentObject {
 		if (condicionesEspeciales == null)
 			condicionesEspeciales = new ArrayList<CondicionEspecial>();
 		condicionesEspeciales.add(condicion);
+	}
+
+	public boolean esRestringido() {
+		for (int i = 0; i < materialesRestringidos.length; i++) {
+			if (material.equals(materialesRestringidos[i])) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

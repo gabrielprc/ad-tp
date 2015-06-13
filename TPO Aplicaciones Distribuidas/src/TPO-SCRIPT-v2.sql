@@ -14,11 +14,6 @@ go
 
 use TPAD
 
-create table Materiales_Restringidos(
-	nombre varchar(50),
-	constraint PK_MaterialesRestringidos primary key (nombre)
-)
-
 create table Productos(
 
 	id_producto int identity not null,
@@ -55,7 +50,8 @@ create table Clientes_Empresas(
 	monto_autorizado float,
 	monto_actual float,
 
-	constraint pk_clientes_empresas primary key (id_cliente)
+	constraint pk_clientes_empresas primary key (id_cliente),
+	constraint fk_ce_clientes foreign key (id_cliente) references Clientes
 )
 
 create table Clientes_Particulares(
@@ -64,7 +60,8 @@ create table Clientes_Particulares(
 	apellido varchar(50),
 	dni varchar(20),
 
-	constraint pk_clientes_particulares primary key (id_cliente)
+	constraint pk_clientes_particulares primary key (id_cliente),
+	constraint fk_cp_clientes foreign key (id_cliente) references Clientes
 )
 
 create table Ubicaciones(
@@ -131,6 +128,31 @@ create table Proveedores(
 	constraint pk_proveedores primary key(id_proveedor)
 )
 
+create table PlanesMantenimiento(
+
+	id_plan_mantenimiento int identity not null	,
+	kilometraje float,
+	fecha_fabricacion datetime,
+	punto_control float,
+	intervalo_mantenimiento int,
+	discriminador varchar(20),
+
+	constraint PK_PlanesMantenimiento primary key (id_plan_mantenimiento)
+	--constraint FK_PlanesMantenimiento_Vehiculos foreign key (id_vehiculo) references VehiculosLocales
+)
+
+create table Tareas(
+
+	id_tarea int identity not null,
+	id_plan_mantenimiento int,
+	kilometraje float,
+	fecha_entrega datetime,
+	fecha_devolucion datetime,
+
+	constraint PK_Tareas primary key (id_tarea),
+	constraint FK_Tareas_PlanesMantenimiento foreign key (id_plan_mantenimiento) references PlanesMantenimiento
+)	
+
 create table Vehiculos(
 	
 	id_vehiculo int identity not null,
@@ -159,32 +181,13 @@ create table VehiculosLocales(
 
 	id_vehiculo int not null,
 	id_sucursal int,
+	id_plan_mantenimiento int,
 	vencimiento_garantia datetime,
  
 	constraint pk_vehiculos_locales primary key(id_vehiculo),
-	constraint fk_vehiculos_sucursales foreign key(id_sucursal) references Sucursales
+	constraint fk_vehiculos_sucursales foreign key(id_sucursal) references Sucursales,
+	constraint fk_vehiculos_planes foreign key(id_plan_mantenimiento) references PlanesMantenimiento
 )
-
-create table Planes_Mantenimiento(
-
-	id_plan_mantenimiento int identity not null	,
-	id_vehiculo int,
-	kilometrajeActual float,
-	puntoControl float,
-
-	constraint PK_PlanesMantenimiento primary key (id_plan_mantenimiento),
-	constraint FK_PlanesMantenimiento_Vehiculos foreign key (id_vehiculo) references VehiculosLocales
-)
-
-create table Tareas(
-
-	id_plan_mantenimiento int,
-	kilometraje float,
-	fecha_Entrega datetime,
-	fecha_devolucion datetime,
-
-	constraint FK_Tareas_PlanesMantenimiento foreign key (id_plan_mantenimiento) references Planes_Mantenimiento
-)	
 
 create table Companias_Seguros(
 	
@@ -250,14 +253,14 @@ create table Cargas(
 	constraint fk_cargas_sucursales foreign key (id_sucursal) references Sucursales
 )
 
-create table Viajes_Cargas(
+create table ItemsCarga(
 
-	id_viaje_carga int identity not null,
+	id_item_carga int identity not null,
 	id_viaje int,
 	id_carga int,
 	fecha datetime,
 	
-	constraint pk_viaj_carg primary key (id_viaje_carga),
+	constraint pk_viaj_carg primary key (id_item_carga),
 	constraint fk_viaj_viaje foreign key (id_viaje) references Viajes,
 	constraint fk_viaj_carg foreign key (id_carga) references Cargas
 )

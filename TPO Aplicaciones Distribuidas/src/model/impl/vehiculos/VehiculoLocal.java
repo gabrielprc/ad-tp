@@ -2,10 +2,12 @@ package model.impl.vehiculos;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import model.impl.misc.Tamano;
 
@@ -17,7 +19,8 @@ public class VehiculoLocal extends Vehiculo {
 	 */
 	private static final long serialVersionUID = -8225795586920003275L;
 	
-	@Transient
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_plan_mantenimiento")
 	private PlanMantenimiento planMantenimiento;
 	@Column(name = "vencimiento_garantia")
 	private Date vencimientoGarantia;

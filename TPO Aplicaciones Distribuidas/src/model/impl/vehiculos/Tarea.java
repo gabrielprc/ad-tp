@@ -2,6 +2,7 @@ package model.impl.vehiculos;
 
 import java.util.Date;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -10,6 +11,7 @@ import model.impl.PersistentObject;
 
 @Entity
 @Table(name = "Tareas")
+@AttributeOverride(name = "id", column = @Column(name = "id_tarea"))
 public class Tarea extends PersistentObject {
 	/**
 	 * 
@@ -18,9 +20,9 @@ public class Tarea extends PersistentObject {
 	
 	@Column(name = "kilometraje")
 	private Float kilometraje;
-	@Column(name = "fechaEntrega")
+	@Column(name = "fecha_entrega")
 	private Date fechaEntrega;
-	@Column(name = "fechaDevolucion")
+	@Column(name = "fecha_devolucion")
 	private Date fechaDevolucion;
 	
 	public Tarea(Float kilometraje, Date fechaEntrega, Date fechaDevolucion) {
@@ -29,6 +31,10 @@ public class Tarea extends PersistentObject {
 		this.fechaDevolucion = fechaDevolucion;
 	}
 	
+	public Tarea() {
+		
+	}
+
 	public Date getFechaEntrega() {
 		return fechaEntrega;
 	}
